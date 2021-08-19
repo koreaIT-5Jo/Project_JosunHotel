@@ -17,10 +17,15 @@ public class HomeController {
 		return "brand/brandStory";
 	}
 	
-	//Q&A게시판
+	//게시판 - Q&A게시판
 	@RequestMapping(value = "/qna")
 	public String qna() {
-		return "board/qna";
+		return "board/board_qna";
+	}
+	//게시판 - 이벤트, 공지사항 목록
+	@RequestMapping(value = "/enList")
+	public String enList() {
+		return "board/board_event_noticeList";
 	}
 	
 	//회원가입
@@ -43,6 +48,26 @@ public class HomeController {
 	@RequestMapping(value = "/reserveConfirm")
 	public String reserveConfirm() {
 		return "member/reserveConfirm";
+	}
+	//마이페이지 - 회원정보 수정
+	@RequestMapping(value = "/memberModify")
+	public String memberModify() {
+		return "member/memberModify";
+	}
+	//마이페이지 - 비밀번호 변경
+	@RequestMapping(value = "/memberPwChange")
+	public String memberPwChange() {
+		return "member/memberPwChange";
+	}
+	//마이페이지 - 회원 탈퇴
+	@RequestMapping(value = "/memberDelete")
+	public String memberDelete() {
+		return "member/memberDelete1";
+	}
+	//마이페이지 - 회원 탈퇴2
+	@RequestMapping(value = "/memberDelete/next")
+	public String memberDeleteNext() {
+		return "member/memberDelete2";
 	}
 	
 	//관리자페이지 - 회원

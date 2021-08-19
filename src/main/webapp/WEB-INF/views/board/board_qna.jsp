@@ -9,10 +9,10 @@
 <title>CUSTOMER SERVICE - 문의하기 | 그랜드 조선 호텔</title>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
-<link rel="stylesheet" href="resources/css/board/qna.css">
+<link rel="stylesheet" href="resources/css/board/board_qna.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
-<script type="text/javascript" src="resources/js/board/qna.js"></script>
+<script type="text/javascript" src="resources/js/board/board_qna.js"></script>
 </head>
 <body>
 	<div class="wrapper">

@@ -209,7 +209,7 @@
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+								<li><a href="reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
@@ -261,7 +261,7 @@
 					</li>
 					<li>개인정보관리
 						<ul>
-							<li><a href="/ProjectWepJosun/memberModify.jsp">회원 정보 수정 </a></li>
+							<li><a href="memberModify">회원 정보 수정 </a></li>
 							<li><a href="/ProjectWepJosun/memberPwChange.jsp">비밀번호 변경</a></li>
 							<li><a href="/ProjectWepJosun/memberDelete1.jsp">회원 탈퇴</a></li>
 						</ul>
