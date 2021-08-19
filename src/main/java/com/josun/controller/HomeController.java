@@ -11,8 +11,56 @@ public class HomeController {
 		return "home";
 	}
 	
+	//브랜드스토리
 	@RequestMapping(value = "/brand")
-	public String main() {
+	public String brand() {
 		return "brand/brandStory";
 	}
+	
+	//Q&A게시판
+	@RequestMapping(value = "/qna")
+	public String qna() {
+		return "board/qna";
+	}
+	
+	//회원가입
+	@RequestMapping(value = "/register")
+	public String register() {
+		return "member/register";
+	}
+	//로그인
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "member/login";
+	}
+	//아이디 비번 찾기
+	@RequestMapping(value = "/find")
+	public String find() {
+		return "member/findIdPw";
+	}
+
+	//마이페이지 - 예약확인
+	@RequestMapping(value = "/reserveConfirm")
+	public String reserveConfirm() {
+		return "member/reserveConfirm";
+	}
+	
+	//관리자페이지 - 회원
+	@RequestMapping(value = "/adminMember")
+	public String adminMember() {
+		return "admin/adminMember";
+	}
+	//관리자페이지 - 예약
+	@RequestMapping(value = "/adminReservation")
+	public String adminReservation() {
+		return "admin/adminReservation";
+	}
+	//관리자페이지 - Q&A목록
+	@RequestMapping(value = "/adminQnaList")
+	public String adminQnaList() {
+		return "admin/adminQnaList";
+	}
+	
+	
+	
 }

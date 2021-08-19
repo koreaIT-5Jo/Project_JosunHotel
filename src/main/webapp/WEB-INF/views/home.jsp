@@ -45,7 +45,7 @@
 							</li>
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
+									<li><a href="qna">Q&amp;A</a></li>
 									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
 								</ul>
 							</li>
@@ -56,8 +56,8 @@
 				<div class="gnbUtil">
 					<ul>
 						<%if(id == null || id == ""){%>
-						<li><a href="Login?url=<%= request.getServletPath() %>">로그인</a></li>
-						<li><a href="Join">회원가입</a></li>
+						<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
+						<li><a href="register">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
 						<li><a href="Logout">로그아웃</a></li>
 						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
