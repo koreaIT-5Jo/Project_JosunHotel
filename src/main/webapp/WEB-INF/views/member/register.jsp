@@ -4,11 +4,11 @@
 <%@ page import="java.sql.Connection" %>
 <%-- <%@ page import="member.MemberDAO" %> --%>
 <%@ page import="java.io.PrintWriter" %>
-<%
+<%-- <%
 request.setCharacterEncoding("UTF-8");
 String cp = request.getContextPath();
 String id = (String) session.getAttribute("idKey");
-%>
+%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,17 +63,11 @@ String id = (String) session.getAttribute("idKey");
 				<!-- //allMenu -->
 				<div class="gnbUtil">
 					<ul>
-						<%if(id == null || id == ""){%>
 						<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
 						<li><a href="register">회원가입</a></li>
-						<%}else if(id.equals("admin")){ %>
 						<li><a href="Logout">로그아웃</a></li>
 						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
 						<li><a href="/ProjectWepJosun/adminMember.jsp">관리자페이지</a></li>
-						<%}else{ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<%} %>
 					</ul>
 				</div>
 				<!-- //gnbUtil -->
@@ -175,7 +169,7 @@ String id = (String) session.getAttribute("idKey");
 								}
 							}
 						</script>
-						<form action="Controller" id="joinform" name="joinform" method="post">
+						<form action="registerMember" id="joinform" name="joinform" method="post">
 						<input type="hidden" name="command" value="joinAction">
 						<ul class="intList">
 							<li>
@@ -194,7 +188,7 @@ String id = (String) session.getAttribute("idKey");
                                 <div class="intWrap"><span class="tit"><label for="id">ID</label><span class="essential">*</span></span></div>
                                 <div class="intInner">
                                     <span class="intArea">
-                                    	<input type="hidden" id="idCheck" name="idCheck" value="N">
+                                    	<input type="hidden" id="idCheck" name="idCheck" value="Y">
                                     	<input type="text" id="id" name="id" placeholder="영문/숫자 조합으로 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
                                     	<span class="alertMessage">아이디를 입력해주세요.</span>
                                     </span>
@@ -254,10 +248,8 @@ String id = (String) session.getAttribute("idKey");
 								        oncomplete: function(data) {
 								            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
 								            // http://postcode.map.daum.net/guide 에서 예제를 활용하여 커스텀
-								
 											$('input[name=postcode]').val(data.zonecode);      // 우편번호(5자리)
 											$('input[name=addr]').val(data.address);       // 기본주소
-											//$('input[name=addr2]').val(data.buildingName);  // 건물명
 								        }
 								    }).open();                               		
                                	}

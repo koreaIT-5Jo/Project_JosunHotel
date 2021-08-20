@@ -20,6 +20,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
 <script type="text/javascript" src="resources/js/member/login.js"></script>
+<%
+if(request.getAttribute("msg") != null){
+	String msg = (String)request.getAttribute("msg");
+%>
+<script>
+	alert('<%=msg%>');
+</script>
+<%
+}
+%>
 </head>
 <body>
 <%
