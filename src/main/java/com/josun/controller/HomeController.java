@@ -85,7 +85,19 @@ public class HomeController {
 	public String adminQnaList() {
 		return "admin/adminQnaList";
 	}
-	
-	
-	
+	// 예약페이지 - 방선택
+	@RequestMapping(value = "/reservation/step1")
+	public String reservationStep1() {
+		return "reservation/step1";
+	}
+	// 예약페이지 - 옵션선택
+	@RequestMapping(value = "/reservation/step2")
+	public String reservationStep2() {
+		return "reservation/step2";
+	}
+	// 예약페이지 - 옵션선택
+	@RequestMapping(value = "/reservation/step3")
+	public String reservationStep3() {
+		return "reservation/step3";
+	}	
 }
