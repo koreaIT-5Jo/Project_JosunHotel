@@ -13,5 +13,13 @@
 	<select id="loginAction" resultType="int">
 		select count(*) from member where id = #{id} and pw = #{pw}
 	</select>
+	
+	<select id="findId" resultType="string">
+		select id from member where name = #{name} and phone = #{phone} and email = #{email}
+	</select>
+	
+	<select id="findPw" resultType="string">
+		select pw from member where name = #{name} and id = #{id} and pw_hint_q = #{pwHintQ} and pw_hint_a = #{pwHintA}
+	</select>
 </mapper>
 

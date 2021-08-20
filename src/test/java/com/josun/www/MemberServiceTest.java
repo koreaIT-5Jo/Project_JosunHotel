@@ -29,4 +29,9 @@ public class MemberServiceTest {
 		System.out.println("로그인 실패 " + service.login("test1111", "test"));
 		System.out.println("로그인 성공 " + service.login("test1111", "test1111!"));
 	}
+	
+	@Test
+	public void findId() throws Exception{
+		System.out.println(service.findId("테스트", "010-1111-1111", "test1111@naver.com"));
+	}
 }

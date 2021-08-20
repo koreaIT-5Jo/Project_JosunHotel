@@ -7,7 +7,6 @@
 	String endDate = request.getParameter("endDate");		// endDate
 	String adltCntArr = request.getParameter("adltCntArr");	// adltCntArr
 	String chldCntArr = request.getParameter("chldCntArr");	// chldCntArr
-	String id = (String) session.getAttribute("idKey");
 %>
 <!DOCTYPE html>
 <html>
@@ -25,7 +24,7 @@ if(request.getAttribute("msg") != null){
 	String msg = (String)request.getAttribute("msg");
 %>
 <script>
-	alert('<%=msg%>' );
+	alert('<%=msg%>');
 </script>
 <%
 }

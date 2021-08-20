@@ -27,5 +27,16 @@ public class MemberServiceImpl implements MemberService {
 		return dao.login(id, pw);
 	}
 
+	//아이디, 비밀번호 찾기
+	@Override
+	public String findId(String name, String phone, String email) {
+		return dao.findId(name, phone, email);
+	}
+	
+	@Override
+	public String findPw(String name, String id, int pwHintQ, String pwHintA) {
+		return dao.findPw(name, id, pwHintQ, pwHintA);
+	}
+
 
 }

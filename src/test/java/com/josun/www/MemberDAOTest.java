@@ -26,4 +26,12 @@ public class MemberDAOTest {
 	public void login() throws Exception{
 		System.out.println(dao.login("test1111", "test1111!"));
 	}
+	@Test
+	public void findId() throws Exception{
+		System.out.println(dao.findId("관리자", "010-4315-7788", "sol6327@naver.com"));
+	}
+	@Test
+	public void findPw() throws Exception{
+		System.out.println(dao.findPw("테스트", "test1111", 1, "1"));
+	}
 }

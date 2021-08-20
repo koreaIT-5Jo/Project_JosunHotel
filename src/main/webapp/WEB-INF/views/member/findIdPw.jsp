@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%String id = (String) session.getAttribute("idKey");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +34,12 @@
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+									<li><a href="enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+									<li><a href="reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
@@ -55,17 +54,8 @@
 				<!-- //allMenu -->
 				<div class="gnbUtil">
 					<ul>
-						<%if(id == null || id == ""){%>
-						<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
+						<li><a href="login">로그인</a></li>
 						<li><a href="register">회원가입</a></li>
-						<%}else if(id.equals("admin")){ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
-						<%}else{ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<%} %>
 					</ul>
 				</div>
 				<!-- //gnbUtil -->
@@ -134,7 +124,7 @@
 						}else{
 							$.ajax({
 								type : 'POST',
-								url : './findIdServlet',
+								url : 'findId',
 								data : {name : name, phone : phone, email : email},
 								success : function(data){
 									if(data == 'null' || data == ""){
@@ -267,7 +257,7 @@
 						}else{
 							$.ajax({
 								type : 'POST',
-								url : './findPwServlet',
+								url : 'findPw',
 								data : {name : name, id : id, pwHintQ : pwHintQ, pwHintA : pwHintA},
 								success : function(data){
 									if(data == 'null' || data == ""){

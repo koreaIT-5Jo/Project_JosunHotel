@@ -41,4 +41,26 @@ public class MemberDAOImpl implements MemberDAO {
 		int result = sqlsession.selectOne("com.josun.mapper.MemberMapper.loginAction", map);
 		return result;
 	}
+	
+	//아이디, 비밀번호 찾기
+	@Override
+	public String findId(String name, String phone, String email) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("name", name);
+		map.put("phone", phone);
+		map.put("email", email);
+		String result = sqlsession.selectOne("com.josun.mapper.MemberMapper.findId", map);
+		return result;
+	}
+
+	@Override
+	public String findPw(String name, String id, int pwHintQ, String pwHintA) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("name", name);
+		map.put("id", id);
+		map.put("pwHintQ", pwHintQ);
+		map.put("pwHintA", pwHintA);
+		String result = sqlsession.selectOne("com.josun.mapper.MemberMapper.findPw", map);
+		return result;
+	}
 }

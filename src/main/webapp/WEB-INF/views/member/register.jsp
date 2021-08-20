@@ -65,9 +65,6 @@ String id = (String) session.getAttribute("idKey");
 					<ul>
 						<li><a href="login">로그인</a></li>
 						<li><a href="register">회원가입</a></li>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="reserveConfirm">마이페이지</a></li>
-						<li><a href="adminMember">관리자페이지</a></li>
 					</ul>
 				</div>
 				<!-- //gnbUtil -->

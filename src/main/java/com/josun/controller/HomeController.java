@@ -81,10 +81,24 @@ public class HomeController {
 		return "home";
 	}
 	
-	//아이디 비번 찾기
+	//아이디 비번 찾기 
 	@RequestMapping(value = "/find")
 	public String find() {
 		return "member/findIdPw";
+	}
+	//아이디 찾기
+	@RequestMapping(value = "/findId")
+	@ResponseBody
+	public String findId(String name, String phone, String email) {
+		String result = memberservice.findId(name, phone, email);
+		return result;
+	}
+	//비밀번호 찾기
+	@RequestMapping(value = "/findPw")
+	@ResponseBody
+	public String findPw(String name, String id, int pwHintQ, String pwHintA) {
+		String result = memberservice.findPw(name, id, pwHintQ, pwHintA);
+		return result;
 	}
 
 	//마이페이지 - 예약확인
