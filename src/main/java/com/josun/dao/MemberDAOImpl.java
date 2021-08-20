@@ -10,7 +10,8 @@ import com.josun.dto.MemberDTO;
 public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlsession; 
-
+	
+	//회원가입
 	@Override
 	public int idCheck(String id) {
 		int result = sqlsession.selectOne("com.josun.mapper.MemberMapper.idCheck", id);
@@ -29,5 +30,15 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("phone", phone);
 		map.put("email", email);
 		sqlsession.insert("com.josun.mapper.MemberMapper.registerMember", map);
+	}
+
+	//로그인
+	@Override
+	public int login(String id, String pw) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("pw", pw);
+		int result = sqlsession.selectOne("com.josun.mapper.MemberMapper.loginAction", map);
+		return result;
 	}
 }

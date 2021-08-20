@@ -1,6 +1,7 @@
 package com.josun.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,8 +52,7 @@ public class HomeController {
 	//회원가입 확인
 	@RequestMapping(value = "/registerMember")
 	public String registerMember(HttpServletRequest requeset, String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
-		String msg = "회원가입이 완료되었습니다.";
-		requeset.setAttribute("msg", msg);
+		requeset.setAttribute("msg", "회원가입이 완료되었습니다.");
 		memberservice.registerMember(name, id, pw, pwHintQ, pwHintA, address, phone, email);
 		return "member/login";
 	}
@@ -62,6 +62,25 @@ public class HomeController {
 	public String login() {
 		return "member/login";
 	}
+	//로그인 액션
+	@RequestMapping(value = "/loginAction")
+	public String loginAction(HttpServletRequest requeset, HttpSession session, String id, String pw) {
+		int result = memberservice.login(id, pw);
+		if(result == 1) {
+			session.setAttribute("id", id);
+			return "home";
+		}else {
+			requeset.setAttribute("msg", "입력된 정보가 없습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			return "member/login";
+		}
+	}
+	//로그아웃
+	@RequestMapping(value = "/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "home";
+	}
+	
 	//아이디 비번 찾기
 	@RequestMapping(value = "/find")
 	public String find() {

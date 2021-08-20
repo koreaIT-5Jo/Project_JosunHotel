@@ -9,5 +9,9 @@
 	<insert id="registerMember">
 		insert into member(name, id, pw, pw_hint_q, pw_hint_a, address, phone, email) values(#{name}, #{id}, #{pw}, #{pwHintQ}, #{pwHintA}, #{address}, #{phone}, #{email})
 	</insert>
+	
+	<select id="loginAction" resultType="int">
+		select count(*) from member where id = #{id} and pw = #{pw}
+	</select>
 </mapper>
 

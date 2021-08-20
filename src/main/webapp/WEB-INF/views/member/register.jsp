@@ -43,12 +43,12 @@ String id = (String) session.getAttribute("idKey");
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+									<li><a href="enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+									<li><a href="reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
@@ -63,11 +63,11 @@ String id = (String) session.getAttribute("idKey");
 				<!-- //allMenu -->
 				<div class="gnbUtil">
 					<ul>
-						<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
+						<li><a href="login">로그인</a></li>
 						<li><a href="register">회원가입</a></li>
 						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<li><a href="/ProjectWepJosun/adminMember.jsp">관리자페이지</a></li>
+						<li><a href="reserveConfirm">마이페이지</a></li>
+						<li><a href="adminMember">관리자페이지</a></li>
 					</ul>
 				</div>
 				<!-- //gnbUtil -->
@@ -173,152 +173,151 @@ String id = (String) session.getAttribute("idKey");
 							}
 						</script>
 						<form action="registerMember" id="joinform" name="joinform" method="post">
-						<input type="hidden" name="command" value="joinAction">
-						<ul class="intList">
-							<li>
-								<div class="intWrap">
-									<span class="tit"><label for="name">NAME</label> <span class="essential">*</span>
-									</span>
-								</div>
-								<div class="intInner">
-									<span class="intArea"> 
-										<input type="text" id="name" name="name" placeholder="국문 이름을 입력하세요." style="width: 550px" aria-required="true" value="">
-										<span class="alertMessage">이름을 입력해주세요.</span>
-									</span>
-								</div>
-							</li>
-							<li>
-                                <div class="intWrap"><span class="tit"><label for="id">ID</label><span class="essential">*</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea">
-                                    	<input type="hidden" id="idCheck" name="idCheck" value="N">
-                                    	<input type="text" id="id" name="id" placeholder="영문/숫자 조합으로 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
-                                    	<span class="alertMessage">아이디를 입력해주세요.</span>
-                                    </span>
-                                    <button type="button" class="btnSC btnM" onclick="fncIdDupChk()">ID 중복 확인</button>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="intWrap"><span class="tit"><label for="pw">PASSWORD</label><span class="essential">*</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea">
-                                    	<input type="password" id="pw" name="pw" placeholder="영문/숫자/특수문자를 사용하며, 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
-                                    	<span class="alertMessage">비밀번호를 입력해주세요.</span>
-                                    </span>
-                                </div>
-                                <!-- <p class="txtGuide">* 비밀번호 내 ID가 포함되거나, 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다.</p> -->
-                                <p class="txtGuide">* 특수문자(~!@#$%^&amp;*()_+)중 하나를 선택하시면 됩니다.</p><!-- 2021-02-03 추가 -->
-                            </li>
-                            <li class="intList-repwd" style="margin-top: -137px !important;">
-                                <div class="intWrap"><span class="tit"><label for="pwRe">CONFIRM PASSWORD</label><span class="essential">*</span></span></div>
-                                <div class="intInner">
-                                    <span class="intArea">
-                                    	<input type="password" id="pwRe" name="pwRe" placeholder="영문/숫자/특수문자를 사용하며, 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
-                                    	<span class="alertMessage">동일한 비밀번호를 입력해주세요.</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li>
-                            	<div class="intWrap"><span class="tit"><label for="pwHintQ">PASSWORD HINT</label><span class="essential">*</span></span></div>
-                            	<div class="intInner">
-	                            	<div class="intArea selectWrap" style="width: 400px;">
-										<select name="pwHintQ" id="pwHintType" class="form-control">
-											<option value="none">질문을 선택하세요</option>
-											<option value="1">태어난 곳의 이름은?</option>
-											<option value="2">기억하고 싶은 날짜는?</option>
-											<option value="3">부모님의 성함은?</option>
-											<option value="4">꼭 가장 가보고 싶은 나라는?</option>
-											<option value="5">가장 좋아했던 선생님의 성함은?</option>
-										</select>
+							<ul class="intList">
+								<li>
+									<div class="intWrap">
+										<span class="tit"><label for="name">NAME</label> <span class="essential">*</span>
+										</span>
 									</div>
-								</div>
-                            </li>
-                            <li class="intList-repwhint" style="margin-top: -60px !important;">
-								<div class="intInner">
-                                    <span class="intArea">
-	                                    <input type="text" id="userPwHint" name="pwHintA" placeholder="답변을 입력해주세요." style="width:515px" aria-required="true">	
-                               			<span class="alertMessage" style="left:-422px;">비밀번호 힌트를 작성해주세요.</span>
-                                    </span>
-                                </div>
-                            </li>
-                            <li class="intList-address">
-                            	<input type="hidden" id="address" name="address">
-                                <div class="intWrap"><span class="tit"><label for="address">Address</label><span class="essential">*</span></span></div>
-                                <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-                               	<script>
-                               	function execDaumPostcode(){
-								    new daum.Postcode({
-								        oncomplete: function(data) {
-								            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-								            // http://postcode.map.daum.net/guide 에서 예제를 활용하여 커스텀
-											$('input[name=postcode]').val(data.zonecode);      // 우편번호(5자리)
-											$('input[name=addr]').val(data.address);       // 기본주소
-								        }
-								    }).open();                               		
-                               	}
-								</script>
-                                <div class="intInner">
-                                    <span class="intArea"><input type="text" id="postcode" name="postcode" style="width:328px" aria-required="true" readonly=""></span>
-                                    <button type="button" class="btnSC btnM" onclick="execDaumPostcode();">우편번호 검색</button>
-                                </div>
-                                <div class="intInner duobuleInp">
-                                    <span class="intArea">
-                                    	<input type="text" id="addr" name="addr" style="width:513px" title="주소" aria-required="true" readonly="">
-                                    </span>
-                                    <span class="intArea">
-                                    	<input type="text" id="detailAddr" name="detailAddr" style="width:513px" title="상세주소" placeholder="상세주소를 입력해주세요." aria-required="true">
-                                    </span>
-                                    <span class="alertMessage" style="top:-90px;">주소를 입력해주세요.</span><!-- 20200528 수정 : 경고문구case(추가2) -->
-                                    <span class="alertMessage" style="top:-90px;">상세주소를 입력해주세요.</span>
-                                </div>
-                            </li>
-                            <li>
-                            	<input type="hidden" id="phone" name="phone">
-								<div class="intWrap">
-									<span class="tit"><label for="idPhone">PHONE NUMBER</label><span class="essential">*</span></span>
-								</div>
-								<div class="intInner phoneInp">
-									<span class="intArea">
-										<input type="text" id="idPhone1" name="idPhone" title="first phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="3">
-									</span>
-									<span class="dash"></span> 
-									<span class="intArea">
-										<input type="text" id="idPhone2" name="idPhone" title="second phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="4">
-									</span> 
-									<span class="dash"></span> 
-									<span class="intArea">
-										<input type="text" id="idPhone3" name="idPhone" title="last phone number" role="last" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="4">
-									</span> 
-									<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
-								</div>
-							</li>
-                            <li>
-                            	<input type="hidden" id="email" name="email">
-								<div class="intWrap">
-									<span class="tit"><label for="eMail">E-MAIL</label><span class="essential">*</span></span>
-								</div>
-								<div class="intInner emailInp">
-									<span class="intArea">
-										<input type="text" id="emailId" style="width: 244px" aria-required="true" value="">
-									</span> 
-									<span class="dash">@</span> 
-									<span class="intArea">
-										<input type="text" id="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value="">
-									</span>
-									<div class="intArea selectWrap" style="width: 244px">
-										<select name="emailType" id="emailType" class="form-control">
-											<option value="">직접입력</option>
-											<option value="naver.com">naver.com</option>
-											<option value="hanmail.net">hanmail.net</option>
-											<option value="hotmail.com">hotmail.com</option>
-											<option value="nate.com">nate.com</option>
-											<option value="gmail.com">gmail.com</option>
-										</select>
+									<div class="intInner">
+										<span class="intArea"> 
+											<input type="text" id="name" name="name" placeholder="국문 이름을 입력하세요." style="width: 550px" aria-required="true" value="">
+											<span class="alertMessage">이름을 입력해주세요.</span>
+										</span>
 									</div>
-									<span class="alertMessage">이메일 주소를 입력해주세요.</span>
-								</div>
-							</li>
-						</ul>
+								</li>
+								<li>
+	                                <div class="intWrap"><span class="tit"><label for="id">ID</label><span class="essential">*</span></span></div>
+	                                <div class="intInner">
+	                                    <span class="intArea">
+	                                    	<input type="hidden" id="idCheck" name="idCheck" value="N">
+	                                    	<input type="text" id="id" name="id" placeholder="영문/숫자 조합으로 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
+	                                    	<span class="alertMessage">아이디를 입력해주세요.</span>
+	                                    </span>
+	                                    <button type="button" class="btnSC btnM" onclick="fncIdDupChk()">ID 중복 확인</button>
+	                                </div>
+	                            </li>
+	                            <li>
+	                                <div class="intWrap"><span class="tit"><label for="pw">PASSWORD</label><span class="essential">*</span></span></div>
+	                                <div class="intInner">
+	                                    <span class="intArea">
+	                                    	<input type="password" id="pw" name="pw" placeholder="영문/숫자/특수문자를 사용하며, 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
+	                                    	<span class="alertMessage">비밀번호를 입력해주세요.</span>
+	                                    </span>
+	                                </div>
+	                                <!-- <p class="txtGuide">* 비밀번호 내 ID가 포함되거나, 연속되는 문자 또는 숫자는 3자리 이상 사용할 수 없습니다.</p> -->
+	                                <p class="txtGuide">* 특수문자(~!@#$%^&amp;*()_+)중 하나를 선택하시면 됩니다.</p><!-- 2021-02-03 추가 -->
+	                            </li>
+	                            <li class="intList-repwd" style="margin-top: -137px !important;">
+	                                <div class="intWrap"><span class="tit"><label for="pwRe">CONFIRM PASSWORD</label><span class="essential">*</span></span></div>
+	                                <div class="intInner">
+	                                    <span class="intArea">
+	                                    	<input type="password" id="pwRe" name="pwRe" placeholder="영문/숫자/특수문자를 사용하며, 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
+	                                    	<span class="alertMessage">동일한 비밀번호를 입력해주세요.</span>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                            <li>
+	                            	<div class="intWrap"><span class="tit"><label for="pwHintQ">PASSWORD HINT</label><span class="essential">*</span></span></div>
+	                            	<div class="intInner">
+		                            	<div class="intArea selectWrap" style="width: 400px;">
+											<select name="pwHintQ" id="pwHintType" class="form-control">
+												<option value="none">질문을 선택하세요</option>
+												<option value="1">태어난 곳의 이름은?</option>
+												<option value="2">기억하고 싶은 날짜는?</option>
+												<option value="3">부모님의 성함은?</option>
+												<option value="4">꼭 가장 가보고 싶은 나라는?</option>
+												<option value="5">가장 좋아했던 선생님의 성함은?</option>
+											</select>
+										</div>
+									</div>
+	                            </li>
+	                            <li class="intList-repwhint" style="margin-top: -60px !important;">
+									<div class="intInner">
+	                                    <span class="intArea">
+		                                    <input type="text" id="userPwHint" name="pwHintA" placeholder="답변을 입력해주세요." style="width:515px" aria-required="true">	
+	                               			<span class="alertMessage" style="left:-422px;">비밀번호 힌트를 작성해주세요.</span>
+	                                    </span>
+	                                </div>
+	                            </li>
+	                            <li class="intList-address">
+	                            	<input type="hidden" id="address" name="address">
+	                                <div class="intWrap"><span class="tit"><label for="address">Address</label><span class="essential">*</span></span></div>
+	                                <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	                               	<script>
+	                               	function execDaumPostcode(){
+									    new daum.Postcode({
+									        oncomplete: function(data) {
+									            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+									            // http://postcode.map.daum.net/guide 에서 예제를 활용하여 커스텀
+												$('input[name=postcode]').val(data.zonecode);      // 우편번호(5자리)
+												$('input[name=addr]').val(data.address);       // 기본주소
+									        }
+									    }).open();                               		
+	                               	}
+									</script>
+	                                <div class="intInner">
+	                                    <span class="intArea"><input type="text" id="postcode" name="postcode" style="width:328px" aria-required="true" readonly=""></span>
+	                                    <button type="button" class="btnSC btnM" onclick="execDaumPostcode();">우편번호 검색</button>
+	                                </div>
+	                                <div class="intInner duobuleInp">
+	                                    <span class="intArea">
+	                                    	<input type="text" id="addr" name="addr" style="width:513px" title="주소" aria-required="true" readonly="">
+	                                    </span>
+	                                    <span class="intArea">
+	                                    	<input type="text" id="detailAddr" name="detailAddr" style="width:513px" title="상세주소" placeholder="상세주소를 입력해주세요." aria-required="true">
+	                                    </span>
+	                                    <span class="alertMessage" style="top:-90px;">주소를 입력해주세요.</span><!-- 20200528 수정 : 경고문구case(추가2) -->
+	                                    <span class="alertMessage" style="top:-90px;">상세주소를 입력해주세요.</span>
+	                                </div>
+	                            </li>
+	                            <li>
+	                            	<input type="hidden" id="phone" name="phone">
+									<div class="intWrap">
+										<span class="tit"><label for="idPhone">PHONE NUMBER</label><span class="essential">*</span></span>
+									</div>
+									<div class="intInner phoneInp">
+										<span class="intArea">
+											<input type="text" id="idPhone1" name="idPhone" title="first phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="3">
+										</span>
+										<span class="dash"></span> 
+										<span class="intArea">
+											<input type="text" id="idPhone2" name="idPhone" title="second phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="4">
+										</span> 
+										<span class="dash"></span> 
+										<span class="intArea">
+											<input type="text" id="idPhone3" name="idPhone" title="last phone number" role="last" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="" maxlength="4">
+										</span> 
+										<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
+									</div>
+								</li>
+	                            <li>
+	                            	<input type="hidden" id="email" name="email">
+									<div class="intWrap">
+										<span class="tit"><label for="eMail">E-MAIL</label><span class="essential">*</span></span>
+									</div>
+									<div class="intInner emailInp">
+										<span class="intArea">
+											<input type="text" id="emailId" style="width: 244px" aria-required="true" value="">
+										</span> 
+										<span class="dash">@</span> 
+										<span class="intArea">
+											<input type="text" id="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value="">
+										</span>
+										<div class="intArea selectWrap" style="width: 244px">
+											<select name="emailType" id="emailType" class="form-control">
+												<option value="">직접입력</option>
+												<option value="naver.com">naver.com</option>
+												<option value="hanmail.net">hanmail.net</option>
+												<option value="hotmail.com">hotmail.com</option>
+												<option value="nate.com">nate.com</option>
+												<option value="gmail.com">gmail.com</option>
+											</select>
+										</div>
+										<span class="alertMessage">이메일 주소를 입력해주세요.</span>
+									</div>
+								</li>
+							</ul>
 						</form>
 					</div>
 				</div>

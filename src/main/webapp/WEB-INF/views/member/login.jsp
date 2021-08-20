@@ -25,7 +25,7 @@ if(request.getAttribute("msg") != null){
 	String msg = (String)request.getAttribute("msg");
 %>
 <script>
-	alert('<%=msg%>');
+	alert('<%=msg%>' );
 </script>
 <%
 }
@@ -57,12 +57,12 @@ if(request.getAttribute("msg") != null){
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+									<li><a href="enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+									<li><a href="reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
@@ -126,8 +126,7 @@ if(request.getAttribute("msg") != null){
 			}
 		</script>
 		<!--(페이지 URL)-->
-		<form id="loginform" name="loginform" action="Controller" method="post">
-			<input type="hidden" name="command" value="loginAction">
+		<form id="loginform" name="loginform" action="loginAction" method="post">
 			<input type="hidden" id="nextUrl" name="nextUrl" value="<%=request.getParameter("url")%>">
 			<!-- 룸보기에서 로그인할 경우 -->
 			<input type="hidden" name="startDate" value="<%=startDate%>">

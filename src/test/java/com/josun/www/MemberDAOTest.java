@@ -22,4 +22,8 @@ public class MemberDAOTest {
 	public void idCheck() throws Exception{
 		System.out.println(dao.idCheck("test1111"));
 	}
+	@Test
+	public void login() throws Exception{
+		System.out.println(dao.login("test1111", "test1111!"));
+	}
 }
