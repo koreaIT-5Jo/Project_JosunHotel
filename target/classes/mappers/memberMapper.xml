@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.josun.mapper.MemberMapper">
+	<select id="idCheck" resultType="int">
+		select count(*) from member where id = #{id}
+	</select>
 	<insert id="registerMember">
 		insert into member(name, id, pw, pw_hint_q, pw_hint_a, address, phone, email) values(#{name}, #{id}, #{pw}, #{pwHintQ}, #{pwHintA}, #{address}, #{phone}, #{email})
 	</insert>

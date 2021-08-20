@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.josun.service.MemberService;
 
@@ -41,7 +42,12 @@ public class HomeController {
 	public String register() {
 		return "member/register";
 	}
-	
+	//회원가입 아이디 중복확인
+	@RequestMapping(value = "/idCheck")
+	@ResponseBody
+	public Integer idCheck(String id) {
+		return memberservice.idCheck(id);
+	}
 	//회원가입 확인
 	@RequestMapping(value = "/registerMember")
 	public String registerMember(HttpServletRequest requeset, String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {

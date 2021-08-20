@@ -15,6 +15,11 @@ public class MemberServiceTest {
 	private MemberService service;
 	
 	@Test
+	public void idCheck() throws Exception{
+		System.out.println(service.idCheck("test1111"));
+	}
+	
+	@Test
 	public void register() throws Exception{
 		service.registerMember("테스트", "test1111", "test1111", 1, "test1111", "test1111", "test1111", "test1111");
 	}

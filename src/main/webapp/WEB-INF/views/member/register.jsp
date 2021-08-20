@@ -151,19 +151,22 @@ String id = (String) session.getAttribute("idKey");
 									alert("아이디는 영문,숫자를 혼합하여 입력해주세요.");
 									return false;
 								}else{
-									var sendData = id;
 									$.ajax({
 										type : 'POST',
-										url : './idCheckServlet',
-										data : {id : sendData},
-										success : function(result){
-											if(result == 1){
-												$('#idCheck').val('Y');
-												alert("사용가능한 아이디 입니다.");
-											}else{
+										url : 'idCheck',
+										data : {id : id},
+										success : function(data){
+											console.log(data);
+											if(data == 1){
 												$('#idCheck').val('N');
 												alert("이미 등록되어 있는 아이디입니다.");
+											}else{
+												$('#idCheck').val('Y');
+												alert("사용가능한 아이디 입니다.");
 											}
+										},
+										error : function(){
+											console.log("idCheck 오류발생");
 										}
 									});
 								}
@@ -188,7 +191,7 @@ String id = (String) session.getAttribute("idKey");
                                 <div class="intWrap"><span class="tit"><label for="id">ID</label><span class="essential">*</span></span></div>
                                 <div class="intInner">
                                     <span class="intArea">
-                                    	<input type="hidden" id="idCheck" name="idCheck" value="Y">
+                                    	<input type="hidden" id="idCheck" name="idCheck" value="N">
                                     	<input type="text" id="id" name="id" placeholder="영문/숫자 조합으로 8 ~ 12자리로만 가능합니다." style="width:515px" aria-required="true">
                                     	<span class="alertMessage">아이디를 입력해주세요.</span>
                                     </span>

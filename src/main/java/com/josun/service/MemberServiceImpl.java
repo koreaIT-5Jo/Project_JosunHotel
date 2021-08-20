@@ -11,8 +11,14 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO dao;
 
 	@Override
+	public int idCheck(String id) {
+		return dao.idCheck(id);
+	}
+
+	@Override
 	public void registerMember(String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
 		dao.registerMember(name, id, pw, pwHintQ, pwHintA, address, phone, email);
 	}
+
 
 }
