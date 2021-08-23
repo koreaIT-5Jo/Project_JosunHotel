@@ -43,7 +43,7 @@ public class HomeController {
 	public String qna() {
 		return "board/board_qna";
 	}
-	//게시판 - Q&A게시판
+	//게시판 - Q&A게시판 글쓰기
 	@RequestMapping(value = "/insertBoardQna")
 	public String insertBoardQna(BoardQnaDTO qnadto, HttpServletRequest request, HttpSession session) {
 		String filePath = session.getServletContext().getRealPath("/resources/upload/");
@@ -53,6 +53,7 @@ public class HomeController {
 		String filename = "첨부파일 없음";
 		if(!multipart.isEmpty()) {
 			filename = uuid + "_" + multipart.getOriginalFilename();
+			System.out.println("filename(uuid 추가) : " + filename); //파일명
 			File file = new File(filePath, filename);
 			if(!file.exists()) {
 				file.mkdirs();

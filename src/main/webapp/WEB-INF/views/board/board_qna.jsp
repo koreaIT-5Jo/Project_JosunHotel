@@ -321,7 +321,6 @@ if(request.getAttribute("msg") != null){
 									<span class="tit"><label for="uploadBtn">ATTACHED FILE</label></span>
 								</div>
 								<div class="intInner">
-									<!-- 스크립트 위임 적용 commonJs.setFileUpload('.fileUpload'); -->
 									<div class="fileUpload">
 										<div class="intDel">
 											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px" readonly>

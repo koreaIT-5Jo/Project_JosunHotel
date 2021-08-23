@@ -6,5 +6,6 @@
 	<insert id="insertBoard">
 		insert into board_qna(idx, category, content, name, phone, email, reply_by, write_date, file_name) values(QNA_SEQ.nextval,#{category},#{content},#{name},#{phone},#{email},#{reply},sysdate,#{fileName})
 	</insert>
+	
 </mapper>
 
