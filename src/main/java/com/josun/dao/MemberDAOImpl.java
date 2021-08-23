@@ -1,6 +1,7 @@
 package com.josun.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,12 +35,12 @@ public class MemberDAOImpl implements MemberDAO {
 
 	//로그인
 	@Override
-	public int login(String id, String pw) {
+	public List<MemberDTO> login(String id, String pw) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("id", id);
 		map.put("pw", pw);
-		int result = sqlsession.selectOne("com.josun.mapper.MemberMapper.loginAction", map);
-		return result;
+		List<MemberDTO> list = sqlsession.selectList("com.josun.mapper.MemberMapper.loginAction", map);
+		return list;
 	}
 	
 	//아이디, 비밀번호 찾기

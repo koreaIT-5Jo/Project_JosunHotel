@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.BoardQnaMapper">
+	<insert id="insertBoard">
+		insert into board_qna(idx, category, content, name, phone, email, reply_by, write_date, file_name) values(QNA_SEQ.nextval,#{category},#{content},#{name},#{phone},#{email},#{reply},sysdate,#{fileName})
+	</insert>
+</mapper>
+

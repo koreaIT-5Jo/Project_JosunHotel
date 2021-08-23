@@ -1,9 +1,12 @@
 package com.josun.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.josun.dao.MemberDAO;
+import com.josun.dto.MemberDTO;
 
 @Service
 public class MemberServiceImpl implements MemberService {
@@ -23,8 +26,9 @@ public class MemberServiceImpl implements MemberService {
 	
 	//로그인
 	@Override
-	public int login(String id, String pw) {
-		return dao.login(id, pw);
+	public List<MemberDTO> login(String id, String pw) {
+		List<MemberDTO> list = dao.login(id, pw); 
+		return list;
 	}
 
 	//아이디, 비밀번호 찾기

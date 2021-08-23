@@ -26,9 +26,7 @@ if(request.getAttribute("msg") != null){
 <script>
 	alert('<%=msg%>');
 </script>
-<%
-}
-%>
+<%}%>
 </head>
 <body>
 <%

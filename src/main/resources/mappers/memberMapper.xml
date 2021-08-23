@@ -10,8 +10,8 @@
 		insert into member(name, id, pw, pw_hint_q, pw_hint_a, address, phone, email) values(#{name}, #{id}, #{pw}, #{pwHintQ}, #{pwHintA}, #{address}, #{phone}, #{email})
 	</insert>
 	
-	<select id="loginAction" resultType="int">
-		select count(*) from member where id = #{id} and pw = #{pw}
+	<select id="loginAction" resultType="com.josun.dto.MemberDTO">
+		select name, address, phone, email from member where id = #{id} and pw = #{pw}
 	</select>
 	
 	<select id="findId" resultType="string">
@@ -21,5 +21,6 @@
 	<select id="findPw" resultType="string">
 		select pw from member where name = #{name} and id = #{id} and pw_hint_q = #{pwHintQ} and pw_hint_a = #{pwHintA}
 	</select>
+	
 </mapper>
 

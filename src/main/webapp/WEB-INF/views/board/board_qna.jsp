@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.io.PrintWriter"%>
-<%String id = (String) session.getAttribute("idKey");%>
+<%String id = (String) session.getAttribute("id");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,6 +13,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
 <script type="text/javascript" src="resources/js/board/board_qna.js"></script>
+<%
+if(request.getAttribute("msg") != null){
+	String msg = (String)request.getAttribute("msg");
+%>
+<script>
+	alert('<%=msg%>');
+</script>
+<%}%>
 </head>
 <body>
 	<div class="wrapper">
@@ -39,7 +47,7 @@
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+									<li><a href="reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
@@ -55,15 +63,15 @@
 				<div class="gnbUtil">
 					<ul>
 						<%if(id == null || id == ""){%>
-						<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
+						<li><a href="login">로그인</a></li>
 						<li><a href="register">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
+						<li><a href="logout">로그아웃</a></li>
+						<li><a href="reserveConfirm">마이페이지</a></li>
+						<li><a href="adminMember">관리자페이지</a></li>
 						<%}else{ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+						<li><a href="logout">로그아웃</a></li>
+						<li><a href="reserveConfirm">마이페이지</a></li>
 						<%} %>
 					</ul>
 				</div>
@@ -84,7 +92,7 @@
 				<!-- LNB -->
 				<div class="lnbArea">
 					<ul class="lnb ctmType">
-						<li class="on"><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
+						<li class="on"><a href="qna">Q&amp;A</a></li>
 						<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
 					</ul>
 				</div>
@@ -183,15 +191,14 @@
 							}
  						}
 					}else{
-						name = (String) session.getAttribute("nameKey");
-						userPhone = (String) session.getAttribute("phoneKey");
+						name = (String) session.getAttribute("name");
+						userPhone = (String) session.getAttribute("phone");
 						phone = userPhone.split("-");
-						userEmail = (String) session.getAttribute("emailKey");
+						userEmail = (String) session.getAttribute("email");
 						email = userEmail.split("@");
 					}
 				%>
-				<form id="vocForm" name="writeform" method="post" action="QnaServlet" enctype="multipart/form-data">
-				<!-- <input type="hidden" name="command" value="qnaAction"> -->
+				<form id="vocForm" name="writeform" method="post" action="insertBoardQna" enctype="multipart/form-data">
 				<input type="hidden" id="idPhone" name="phone" value="">
 				<input type="hidden" id="email" name="email" value="">
 				<div class="myContents">
@@ -199,7 +206,7 @@
 					<% if(id==null || id.equals("")){ %>
 						<div class="txtBox" style="">
 			                <span class="txt">조선호텔앤리조트 회원이신가요?</span>
-			                <a href="Login?url=<%= request.getServletPath() %>" class="btnSC btnM icoArr" style="background: transparent;">로그인하기</a>
+			                <a href="login?url=qna" class="btnSC btnM icoArr" style="background: transparent;">로그인하기</a>
 		            	</div>
 					<% } %>
 					<div class="frmInfo">
@@ -245,8 +252,7 @@
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-										<input type="text" id="korNm" name="name" placeholder="국문 이름을 입력하세요." style="width: 440px" aria-required="true" value="<%=name %>"> 
-										<span class="test"></span>
+										<input type="text" id="korNm" name="name" placeholder="국문 이름을 입력하세요." style="width: 440px" aria-required="true" value="<%=name%>"> 
 										<span class="alertMessage">이름을 입력해주세요.</span>
 									</span>
 								</div>
@@ -257,15 +263,15 @@
 								</div>
 								<div class="intInner phoneInp">
 									<span class="intArea">
-										<input type="text" id="idPhone1" title="first phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[0] %>" maxlength="3">
+										<input type="text" id="idPhone1" title="first phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[0]%>" maxlength="3">
 									</span>
 									<span class="dash"></span> 
 									<span class="intArea">
-										<input type="text" id="idPhone2" title="second phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[1] %>" maxlength="4">
+										<input type="text" id="idPhone2" title="second phone number" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[1]%>" maxlength="4">
 									</span> 
 									<span class="dash"></span> 
 									<span class="intArea">
-										<input type="text" id="idPhone3" title="last phone number" role="last" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[2] %>" maxlength="4">
+										<input type="text" id="idPhone3" title="last phone number" role="last" style="width: 165px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phone[2]%>" maxlength="4">
 									</span> 
 									<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
 								</div>
@@ -276,7 +282,7 @@
 								</div>
 								<div class="intInner emailInp">
 									<span class="intArea">
-										<input type="text" id="emailId" style="width: 244px" aria-required="true" value="<%= email[0]%>">
+										<input type="text" id="emailId" style="width: 244px" aria-required="true" value="<%=email[0]%>">
 									</span> 
 									<span class="dash">@</span> 
 									<span class="intArea">
@@ -324,7 +330,7 @@
 											<!-- //btnDel -->
 										</div>
 										<label for="uploadFile" class="btnSC btnM">파일선택</label> 
-										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png" onchange="checkSize(this)">
+										<input type="file" id="uploadFile" name="multipart" class="uploadBtn" accept=".jpg, .jpeg, .png" onchange="checkSize(this)">
 									</div>
 								</div>
 								<p class="txtGuide">* 첨부가능 파일종류 : jpg, png, jpeg (용량 5MB)</p>
@@ -374,7 +380,7 @@
 						</li>
 					</ul>
 					<div class="btnArea">
-	                	<button type="button" class="btnSC btnL active" onclick="fncRegist()">저장</button>
+	                	<button type="button" class="btnSC btnL active" onclick="fncRegist();">저장</button>
 	           		</div>
 				</div>
 				</form>
