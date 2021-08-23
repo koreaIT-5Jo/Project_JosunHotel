@@ -1,8 +1,12 @@
 package com.josun.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.josun.dto.ReservationDTO;
+import com.josun.util.TimeUtil;
 
 @Controller
 public class HomeController {
@@ -87,17 +91,26 @@ public class HomeController {
 	}
 	// 예약페이지 - 방선택
 	@RequestMapping(value = "/reservation/step1")
-	public String reservationStep1() {
-		return "reservation/step1";
+	public String reservationStep1(ReservationDTO reservationDto, Model model,TimeUtil util) {
+		
+		String ckinDay = util.DaysCheck(reservationDto.getStartDate());
+		String ckoutDay = util.DaysCheck(reservationDto.getEndDate());
+		int dateDays = util.seDay(reservationDto.getStartDate(), reservationDto.getEndDate());
+		model.addAttribute("reservationDto",reservationDto);
+		model.addAttribute("ckinDay",ckinDay);
+		model.addAttribute("ckoutDay",ckoutDay);
+		model.addAttribute("dateDays",dateDays);
+		
+		return "reservation/reserveStep1";
 	}
 	// 예약페이지 - 옵션선택
 	@RequestMapping(value = "/reservation/step2")
 	public String reservationStep2() {
-		return "reservation/step2";
+		return "reservation/reserveStep2";
 	}
 	// 예약페이지 - 옵션선택
 	@RequestMapping(value = "/reservation/step3")
 	public String reservationStep3() {
-		return "reservation/step3";
+		return "reservation/reserveStep3";
 	}	
 }

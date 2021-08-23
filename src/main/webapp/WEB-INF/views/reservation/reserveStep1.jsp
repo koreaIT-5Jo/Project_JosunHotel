@@ -1,40 +1,233 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
- pageEncoding="UTF-8"%>
-<%-- <%@page import="room.CheckInOutDay"%>
-<%@page import="conn.DBConn" %>
-<%@page import="room.RoomDAO" %>
-<%@page import="room.RoomDTO" %> --%>
-<%@page import="java.sql.*" %>
-<%@page import="java.util.*" %>
-<%
-	request.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; UTF-8");
-
+	pageEncoding="UTF-8"%>
+ <%
 	String id = (String) session.getAttribute("idKey");
-	String startDate = (String)request.getAttribute("startDate");
-	String endDate = (String)request.getAttribute("endDate");
-	String adltCntArr = (String)request.getAttribute("adltCnt");
-	String chldCntArr = (String)request.getAttribute("chldCnt");
-	String ckinDate = (String)request.getAttribute("ckinDay");
-	String ckoutDate = (String)request.getAttribute("ckoutDay");
-	String dateDays = (String)request.getAttribute("dateDays");
-	HashMap<String, Object> map  = (HashMap)request.getAttribute("room");
+	//List<RoomDTO> lists = (List<RoomDTO>)request.getAttribute("list");  */
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>옵션 선택 | 그랜드 조선 호텔</title>
-<link rel="stylesheet" href="css/selectOption.css">
-<link rel="stylesheet" href="css/headerfooter.css">
-<link rel="stylesheet" href="css/default.css">
+<title>객실 선택 | 그랜드 조선 호텔</title>
+<link rel="stylesheet" href="../resources/css/reservation/reserveStep1.css">
+<link rel="stylesheet" href="../resources/css/headerfooter.css">
+<link rel="stylesheet" href="../resources/css/default.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="../resources/js/header.js"></script>
+<script type="text/javascript" src="../resources/js/reservation/reserveStep1.js"></script>
+<script>
+<%-- //list 없을때
+$(document).ready(function(){
+   let list = <%=lists.size()%>;
+      //alert(list.length);
+      if(list == 0) {
+         $(".noData").css("display", "");
+      } 
+});
+ --%>
+function fncOpenRoomInfo(num){
+	var num = num;
+	$.ajax({
+		type : 'POST',
+		url : './RoomInfoServlet',
+		data : {num : num},
+		dataType : "json",
+		success : function(data){
+			$('#layerPopup .title').text(data.name);
+			$('.contBox1 img').attr('src',data.img);
+			$('.contBox2 li:nth-child(1) dd').text(data.location);
+			$('.contBox2 li:nth-child(2) dd').text(data.beds);
+			$('.contBox2 li:nth-child(3) dd').text(data.size);
+			$('.contBox2 li:nth-child(4) dd').text(data.features);
+			$('.contBox2 li:nth-child(5) dd').text(data.view);
+			
+			var bath = (data.bath).split('//');
+			for(var i=0; i<bath.length; i++){
+				$('#tab01 ul').append("<li>" + bath[i] + "</li>");
+			}
+			var bed = (data.bed).split('//');
+			for(var i=0; i<bed.length; i++){
+				$('#tab02 ul').append("<li>" + bed[i] + "</li>");
+			}
+			var minibar = (data.minibar).split('//');
+			for(var i=0; i<minibar.length; i++){
+				$('#tab03 ul').append("<li>" + minibar[i] + "</li>");
+			}
+			var closet = (data.closet).split('//');
+			for(var i=0; i<closet.length; i++){
+				$('#tab04 ul').append("<li>" + closet[i] + "</li>");
+			}
+			
+			$('#layerPopup').fadeIn("fast");
+		}
+	});
+}
+
+//비교함 빼기
+function fncSubCompareProduct(roomNum){
+	var removeTarget = jQuery(".compList li[role="+roomNum+"]");
+	var removeTargetDetail = jQuery(".compList02 li[role="+roomNum+"]");
+	var renameTarget = jQuery("#room_"+roomNum);
+	var newFloatingStr = ""; //새로 그려줄 영역 STR
+	var compareCnt = 0; //비교함 갯수
+	
+	//비교함, 팝업창 지우기
+	removeTarget.remove();
+	removeTargetDetail.remove();
+	
+	//str에 넣을거 적고
+	newFloatingStr += "<li>";
+	newFloatingStr += "<div class=\'compWrap noCont'\>";
+	newFloatingStr += "<p class=\'txt'\>비교할 상품을 추가하실 수 있습니다.</p>";
+	newFloatingStr += "<span class=\'thum'\></span>";
+	newFloatingStr += "</div>";
+	newFloatingStr += "</li>";
+	
+	//str 추가
+	jQuery(".compList").append(newFloatingStr);
+	
+	//버튼 글자 및 onclick 변경
+	renameTarget.find("button.btnRsv2").text("COMPARE");
+	renameTarget.find("button.btnRsv2").attr("onclick", "fncAddCompareProduct("+roomNum+")");
+	
+	//li에  인덱스값 다시 부여하기
+	jQuery(".compList li").each(function(idx){
+		jQuery(this).attr("data-index",idx);
+	});
+	
+	//비교하기 갯수 구하기
+	jQuery(".compList li").find(".compWrap").each(function(){
+		if(!jQuery(this).hasClass("noCont")){
+			compareCnt++;
+		}
+	});
+	
+	//비교하기 갯수 반영
+	jQuery(".comparison .btnArea button").text(compareCnt+"개 비교하기");
+	
+	//비교하기가 2개 이하일 때는 안되야함 - 알럿창
+	if(compareCnt < 2){
+		jQuery(".comparison .btnWrap button").attr("onclick", "alert('비교할 상품을 2개 이상 담아주세요.'); return false;");
+	}
+	
+	//비교함 갯수가 0일때는 비교함전체화면 숨기기
+	if(compareCnt == 0){
+		jQuery(".comparison").hide();
+	}
+}
+
+//비교함 추가
+function fncAddCompareProduct(roomNum){
+	var targetIdx = -1; 
+	var listRoom = jQuery("#room_"+roomNum);
+	var compareCnt = 0; //비교함 개수
+	var compareStr = ""; //플로팅 str
+	var compareDetailStr = ""; //팝업 str
+	var duplicateYn = false;
+	
+	//비교함 html
+	compareStr += "<div class=\'compWrap'\>";
+	compareStr += "<p class=\'txt'\ style=\'color:#fff'\>" + listRoom.find(".roomName").text() + "</p>";
+	compareStr += "<span class=\'thum'\><img src=\'" + listRoom.find(".thum img").attr("src") + "'\></span>";
+	compareStr += "</div>";
+	compareStr += "<button type=\'button'\ class=\'btnDel'\ onclick=\'fncSubCompareProduct("+roomNum+")'\>비교함 삭제</button>";
+	
+	//팝업창 html
+	compareDetailStr += "<li role=\'" + roomNum + "'\>";
+	compareDetailStr += "<dl>";
+	compareDetailStr += "<dt class=\'tit'\>" + listRoom.find(".roomName").text() + "</dt>";
+	compareDetailStr += "<dd class=\'thum'\><img src=\'" + listRoom.find(".thum img").attr("src") + "'\></dd>";
+	compareDetailStr += "<dd class=\'txt'\>" + listRoom.find(".roomIntro .roomBenefit").text() + "</dd>";
+	compareDetailStr += "<dd class=\'price'\>" + listRoom.find(".priceWrap .price").text().replace("~"," ") + "</dd>";
+	compareDetailStr += "<dd><button type=\'button'\ class=\'btnToggle btnSC btnRsv'\ onclick=\'roomReserveBtn("+roomNum+")'\>예약하기</button></dd>";
+	compareDetailStr += "</dl>";
+	compareDetailStr += "</li>";
+	
+	//비교함에 동일한 상품이 있는지 체크
+	jQuery(".compList").find("li").each(function(){
+		if(jQuery(this).attr("role") == roomNum){
+			duplicateYn = true;
+			return false;
+		}
+	});
+	
+	//동일한 상품이 있다면 이미 등록되어 있다고 알림
+	if(duplicateYn){
+		alert("이미 동일한 상품이 들어있습니다.");
+		return false;
+	}
+	
+	//동일한 상품이 없다면 등록하기
+	//추가할 영역 index 찾기
+	jQuery(".compList").find(".compWrap").each(function(){
+		compareCnt++;
+		if(jQuery(this).hasClass("noCont")){
+			targetIdx = jQuery(this).closest("li").data("index");
+			return false;
+		}
+	});
+	
+	//console.log(compareCnt);
+	//최대 3개까지 --> 이건 방이 더 있을 경우에 발생함
+	if(targetIdx == -1){
+		alert("상품은 최대 3개까지 추가 가능합니다.");
+		return false;
+	}
+	
+	//버튼 글자 및 onclick 변경
+	listRoom.find("button.btnRsv2").text("UNCOMPARE");
+	listRoom.find("button.btnRsv2").attr("onclick", "fncSubCompareProduct("+roomNum+")");
+	
+	//비교하기 갯수 추가
+	jQuery(".comparison .btnArea button").text(compareCnt+"개 비교하기"); 
+	
+	if(compareCnt > 1){
+		jQuery(".comparison .btnWrap button").attr("onclick", "popShow('#layerPop1');");
+	}
+	
+	//그 index에 role 값과 str 넣기
+	jQuery(".compList").find("li[data-index='"+targetIdx+"']").attr("role",roomNum);
+	jQuery(".compList").find("li[data-index='"+targetIdx+"']").html(compareStr);
+	jQuery("#layerPop1").find(".compList02").append(compareDetailStr);
+}
+
+//비교함 팝업창 보이기
+function popShow(){
+	var layerCont = jQuery("#layerPop1").find(".layerCont");
+	jQuery("#layerPop1").fadeIn("fase");
+	layerCont.css({
+		'top':'50%',
+		'left':'50%',
+		'margin-top':-(layerCont.outerHeight() / 2),
+		'margin-left':-(layerCont.outerWidth() / 2)
+	});
+}
+
+//비교함 팝업창 숨기기
+function popClose(){
+	jQuery("#layerPop1").fadeOut("fase");
+}
+
+function roomReserveBtn(roomNum){
+	var form = document.step1Form;
+	document.getElementById("roomNum").value = roomNum; 
+	document.getElementById("command").value = "optionSelect";
+	var loginCheck = "<%=session.getAttribute("idKey")%>";
+	console.log(loginCheck);
+	
+	if(loginCheck == "null"){
+		alert('회원가입 또는 로그인 후 예약 가능합니다.');
+		<%-- location.href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>; --%>
+	}else{
+		form.action= "Controller";
+		form.submit();
+	}
+}
+</script>
 </head>
 <body>
-<!-- 바디 수정 210622 -->
-	<div class="wrapper ">
+<div class="wrapper ">
 		<div class="header">
 			<div class="headArea">
 				<strong class="logo"><a href="/ProjectWepJosun/main.jsp">JOSUN HOTELS &amp; RESORTS</a></strong>
@@ -73,7 +266,7 @@
 						<%
 						if(id == null || id == ""){
 						%>
-						<li><a href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>">로그인</a></li>
+						<li><a href="<%-- /ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%> --%>">로그인</a></li>
 						<li><a href="Join">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
 						<li><a href="Logout">로그아웃</a></li>
@@ -88,31 +281,29 @@
 				<!-- //gnbUtil -->
 			</div>
 		</div>
-		<!-- End. header -->	
-	
-		<form action="" name="step2Form" id="step2Form" method="post">
-		<input type="hidden" name="startDate" id="startDate" value="${startDate}">
-		<input type="hidden" name="endDate" id="endDate" value="${endDate }">
-		<input type="hidden" name="adltCntArr" id="adltCntArr" value="${adltCnt}">
-		<input type="hidden" name="chldCntArr" id="chldCntArr" value="${chldCnt}">
-		<input type="hidden" name="ckinDay" id="ckinDay" value="${ckinDay}">
-		<input type="hidden" name="ckoutDay" id="ckoutDay" value="${ckoutDay }">
-		<input type="hidden" name="dateDays" id="dateDays" value="${dateDays }">
-		<input type="hidden" name="roomPrice" id="roomPrice" value="<%=map.get("price")%> "/>
-		<input type="hidden" name="roomNum" id="roomNum" value="${roomNum}">
-		<input type="hidden" name="command" id="command" value=""/>
-			<div id="container" class="container">
-				<h1 class="hidden">예약</h1>
+		<!-- End. header -->
+		<form action="" name="step1Form" id="step1Form" method="post">
+			<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
+			<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
+			<input type="hidden" name="adltCnt" id="adlutCnt" value="${reservationDto.adultCnt}">
+			<input type="hidden" name="chldCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
+			<input type="hidden" name="ckinDay" id="ckinDay" value="${ckinDay}">
+			<input type="hidden" name="ckoutDay" id="ckoutDay" value="${ckoutDay }">
+			<input type="hidden" name="dateDays" id="dateDays" value="${dateDays }">
+			<input type="hidden" name="roomNum" id="roomNum" value="">
+			<input type="hidden" name="command" id="command" value=""/>
+			<div id="container" class="container" style="margin-top: 0px;">
+				<!-- 컨텐츠 S -->
 				<div class="topArea">
 					<div class="topInner">
 						<h2 class="titDep1">Booking</h2>
 						<div class="stepWrap">
 							<ol>
-								<li class="prev">
-								<em>객실, 요금 선택</em>
-								</li>
 								<li class="on">
 								<span class="hidden">현재단계</span>
+								<em>객실, 요금 선택</em>
+								</li>
+								<li>
 								<em>옵션 선택</em>
 								</li>
 								<li>
@@ -122,7 +313,6 @@
 						</div>
 					</div>
 				</div>
-				<!-- //topArea -->
 				<div class="selResult">
 					<div class="inner">
 						<div class="infoArea">
@@ -132,7 +322,7 @@
 							</dl>
 							<dl class="dlType02">
 								<dt>DATE</dt>
-								<dd id="dateText"><%=startDate %>&nbsp;<%=ckinDate %>&nbsp;-&nbsp;<%=endDate %>&nbsp;<%=ckoutDate %><span><%=dateDays %>&nbsp;박</span></dd>
+								<dd id="dateText">${reservationDto.startDate}&nbsp;${ckinDay}&nbsp;-&nbsp;${reservationDto.endDate }&nbsp;${ckoutDay }<span>${dateDays } 박</span></dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>ROOMS</dt>
@@ -140,140 +330,323 @@
 							</dl>
 							<dl class="dlType03">
 								<dt>ADULTS</dt>
-								<dd id="adultsNum"><%=adltCntArr %></dd>
+								<dd>${reservationDto.adultCnt }</dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>CHILDREN</dt>
-								<dd id="childrenNum"><%=chldCntArr %></dd>
+								<dd>${reservationDto.childrenCnt }</dd>
 							</dl>
 						</div>
 					</div>
-				</div>
-				<!-- //selResult -->
+				</div>			
 				<div class="inner">
-					<!-- rsvRoomWrap -->
-					<div class="rsvRoomWrap">
-						<div class="lCont">
-							<h2 class="titDep2"><%=map.get("name") %></h2>
-							<p class="categoryTxt">
-								 <%=map.get("view") %> / Size : <%=map.get("size") %> ㎡
-							</p>
-							<ul class="toggleList rsvList roomRsv" id="optInfo">
-								<li class="toggleOn" data-roomidx="0">
-								<!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
-								<strong class="listTit">객실</strong>
-								<button type="button" class="btnToggle">
-								<span class="hidden">상세내용 닫기</span>
-								</button>
-								<div class="toggleCont" style="display: block;">
-									<div class="toggleInner">
-										<h3 class="opTit">BREAKFAST</h3>
-										<div class="addOption" data-type="optA">
-											<span class="txt">성인 조식 추가</span>
-											<span class="price">KRW <%=map.get("audlts_price") %></span>
-											<div class="numPeople type02">
-												<input type="hidden" name="optAAmount" id="optAAmount0" value="<%=map.get("audlts_price") %>">
-												<input type="hidden" name="adult_breakfast" id="adult_breakfast" value="0"/>
-												<button type="button" class="btnDown blank" data-btntype="down" disabled="disabled">인원 수 감소</button>
-												<span>0</span>
-												<button type="button" class="btnUp" data-btntype="up">인원 수 증가</button>
-											</div>
-										</div>
-										<div class="addOption" data-type="optC">
-											<span class="txt">어린이 조식 추가</span>
-											<span class="price">KRW <%=map.get("children_price") %></span>
-											<div class="numPeople type02">
-												<input type="hidden" name="optCAmount" id="optCAmount0" value="<%=map.get("children_price") %>">
-												<input type="hidden" name="children_breakfast" id="children_breakfast" value="0"/>
-												<button type="button" class="btnDown blank" data-btntype="down" disabled="disabled">인원 수 감소</button>
-												<span>0</span>
-												<button type="button" class="btnUp" data-btntype="up" disabled="disabled">인원 수 증가</button>
-											</div>
-										</div>
-										<ul class="txtGuide">
-											<li>투숙 일수와 동일한 횟수의 조식이 제공됩니다.</li>
-											<li>인원 추가 금액에는 조식이 포함되어 있지 않습니다. 조식 추가 기능을 통해 별도로 추가가 가능합니다.</li>
-											<li>어린이 조식 추가 비용 적용 대상은 37개월 이상 만 12세 이하입니다.</li>
-											<li>사전 추가된 조식의 경우 특별요금이 적용된 혜택으로, 체크인 후 미사용 시 환불이 불가합니다.
-											<!-- 사전 추가된 조식의 경우 특별요금이 적용된 혜택으로, 체크인 후 미사용 시 환불이 불가합니다. -->
-											</li>
-											<li>코로나19에 따른 사회적 거리두기 정부 시책이 진행될 경우, 뷔페 조식은 다른 장소 및 단품 메뉴로 대체 제공될 수 있습니다.
-											<!-- 코로나19에 따른 사회적 거리두기 정부 시책이 진행될 경우, 뷔페 조식은 다른 장소 및 단품 메뉴로 대체 제공될 수 있습니다. -->
-											</li>
-										</ul>
-										<h3 class="opTit">
-										REQUESTS
-										</h3>
-										<textarea name="contArr" placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." maxlength="200"></textarea>
-										<p class="txtGuide">
-											전달해주신 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br>
-											다만, 부득이하게 반영되지 않을 수 있는 점, 양해 부탁드립니다.
-										</p>
+					<div class="roomContainer" style="display: none;">
+						<h3 class="hidden">상품으로 보기</h3>
+					</div>
+					<!-- //roomContainer -->
+					<div class="roomContainer" style="">
+						<h3 class="hidden">객실로 보기</h3>
+						<ul class="toggleList roomList" id="roomList">
+							<li class="noData" style="display:none;">
+								<p class="txt">
+									예약 가능한 객실이 없습니다.<br>
+									다시 검색해주세요.
+								</p>
+								<!-- 객실 내 상품이 없을 경우 -->
+							</li>
+							<%-- <% for(RoomDTO dto : lists){ %>
+							<li id="room_<%=dto.getNum() %>">
+								<dl class="roomIntro">
+									<dt class="roomName"><%=dto.getName() %></dt>
+									<dd class="roomBenefit"><%=dto.getDetailView() %> | Size : <%=dto.getrSize() %>㎡</dd>
+									<dd class="btnView">
+										<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo(<%=dto.getNum()%>);">객실 상세보기 </a>
+									</dd>
+									<dd class="priceWrap">
+										<span class="price">
+											<%=dto.getPrice() %><em>KRW ~</em>
+										</span>
+										<span class="day">1박 / 세금 별도</span>
+									</dd>
+									<dd class="thum">
+										<img src="<%=dto.getImg() %>" alt="<%=dto.getName() %>">
+									</dd>
+									<dd>
+										<button type=button class="btnToggle btnSC btnRsv" onclick="roomReserveBtn(<%=dto.getNum() %>)">RESERVE</button>
+										<button type=button class="btnToggle btnSC btnRsv2" onclick="fncAddCompareProduct(<%=dto.getNum()%>)">COMPARE</button>
+									</dd>
+								</dl>
+							</li>
+							<% } %> --%>
+						</ul>
+						<!-- //roomList -->
+					</div>
+				</div>
+				<!-- //inner -->
+				<!-- 비교함 -->
+				<div class="comparison" style="display:none;">
+					<div class="btnArea">
+						<button type="button" class="btnComp">0개 비교하기</button> <!-- 열렸을 때 on 클래스 추가 -->
+					</div>
+					<div class="compCont" style="display:none;">
+						<div class="compInner">
+							<ul class="compList">
+								<li data-index="0">	
+									<div class="compWrap noCont">
+										<p class="txt">비교할 상품을 추가하실 수 있습니다.</p>	
+										<span class="thum"></span>									
 									</div>
-								</div>
+								</li>
+								<li data-index="1">	
+									<div class="compWrap noCont">
+										<p class="txt">비교할 상품을 추가하실 수 있습니다.</p>	
+										<span class="thum"></span>									
+									</div>
+								</li>
+								<li data-index="2">	
+									<div class="compWrap noCont">
+										<p class="txt">비교할 상품을 추가하실 수 있습니다.</p>	
+										<span class="thum"></span>									
+									</div>
 								</li>
 							</ul>
+							<div class="btnWrap">
+								<button type="button" class="btnSC btnM active" onclick="alert('비교할 상품을 2개 이상 담아주세요.'); return false;">비교하기</button>
+								<p class="txtGuide">최대 3개 비교 가능</p>
+							</div>
 						</div>
-						<div class="rCont floating" style="transition: margin-top 0.3s ease-out 0s;">
-							<ul class="toggleList rsvList" id="roomInfo">
-								<li class="toggleOn">
-								<!-- 기본으로 펼쳐진 경우 toggleOn  추가 -->
-								<strong class="listTit">
-								객실 <span class="price" id="roomAmount0"><em></em>KRW</span>
-								</strong>
-								<button type="button" class="btnToggle"><span class="hidden">상세내용 닫기</span></button>
-								<div class="toggleCont" style="display: block;">
-									<div class="toggleInner">
-										<div class="designScroll">
-											<div class="optionTotal scrollWrap" style="">
-												<div class="customScrollBox">
-													<input type="hidden" id="roomAmount" value="">	<!-- 사용 -->
-													<input type="hidden" id="breakfastAmount" value=""> <!-- 사용 -->
-													<ul class="infoData" id="dateInfo">
-												
-													</ul>
-													<ul class="infoData" id="roomOptInfo0" style="display:none;">
-														<li style="display:none;">
-															<span class="lfData">성인 조식</span>
-															<span class="rtData">0</span>
-														</li>
-													</ul>
-													<ul class="infoData">
-														<li><span class="lfData">세금</span><span class="rtData" id="roomTax0">91,000</span></li>
-													</ul>
-												</div>
-											</div>
-										</div>
+					</div>
+				</div>
+				<!-- //비교함 -->
+			</div>
+			<!-- //container -->
+			<div id="layerPopup" class="popup">
+				<div class="layerContainer">
+					<div class="layerContents">
+						<h2 class="title">Prestige Hill Suite</h2>
+						<div class="scrollWrap">
+							<div class="designScroll">
+								<div class="contBox contBox1">
+									<img src="../resources/img/Room/1.jpg">
+									<p class="txtGuide">* 상기 이미지는 이해를 돕기 위한 이미지 컷으로 실제와 다를 수 있습니다.</p>
+								</div>
+								<div class="contBox contBox2">
+									<ul>
+										<li>
+											<dl>
+												<dt>LOCATION</dt>
+												<dd>1층 - 6층</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>BEDS</dt>
+												<dd>수퍼킹1, 퀸2 또는 퀸4</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>SIZE</dt>
+												<dd>193.1</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>ROOM FEATURES</dt>
+												<dd>거실 1, 응접실 1, 침실 2, 화장실 2, 펜트리 1, 발코니 1, 프라이빗 풀</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>VIEW</dt>
+												<dd>파노라마뷰, 오션뷰</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>CHECK-IN/CHECK-OUT</dt>
+												<dd>15:00 / 12:00</dd>
+											</dl>
+										</li>
+									</ul>
+								</div>
+								<div class="contBox contBox3">
+									<h2 class="titDep2">객실 어메니티</h2>
+									<ul class="tabType01 tabToggle">
+										<li class="on"><a href="#tab01" role="button">Bath Room</a></li>
+										<li><a href="#tab02" role="button">Bed Room</a></li>
+										<li><a href="#tab03" role="button">Mini Bar</a></li>
+										<li><a href="#tab04" role="button">Closet</a></li>
+									</ul>
+									<div id="tab01" class="tabCont" style="display:block;">
+										<ul class="tabRoomInfo">
+										</ul>
+									</div>
+									<div id="tab02" class="tabCont">
+										<ul class="tabRoomInfo">
+										</ul>
+										<p class="txtGuide">* 침구 브랜드 : 150년 역사의 이태리 럭셔리 브랜드 FRETTE (프레떼)</p>
+									</div>
+									<div id="tab03" class="tabCont">
+										<ul class="tabRoomInfo">
+										</ul>
+									</div>
+									<div id="tab04" class="tabCont">
+										<ul class="tabRoomInfo">
+										</ul>
 									</div>
 								</div>
-								</li>
-							</ul>
-							<div class="totalCont">
-								<div class="totalPrice">
-									<span class="txt">총 예약금액</span>
-									<span class="subTxt">+ 세금(10%)</span>
-									<span class="price"><em id="resvTotalAmount"></em>KRW</span>
-									<input type="hidden" name="totalpay" id="totalpay" value="">
-								</div>
-								<div class="btnArea">
-									<div>
-										<a href="#none" class="btnSC btnL active" onclick="writeInfo()">
-										예약하기 </a>
-									</div>
+								<div class="contBox contBox4">
+									<h2 class="titDep2">특별 서비스</h2>
+									<ul class="packageCont22">
+										<li>
+											<dl>
+												<dt>GRAN J</dt>
+												<dd class="txtArea">
+													<p class="txt" style="margin-bottom: 61px;">그랜드 조선 힐 스위트 투숙 고객만을 위한 프라이빗 라운지 그랑 제이, 제주 식재료를 활용한 미식의 향연은<br>여러분의 시간을 더욱 품격있게 만들어 드립니다.</p>
+													<div class="sInfo">
+														<ul>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">위치</span>
+																<span class="txt">그랜드 조선 힐 스위트 1층</span>
+															</li>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">시간</span>
+																<span class="txt">
+																	BREAKFAST 07:30 - 11:00 (서양식 또는 한식 한상차림 제공)
+																	<br>COFFEE &amp; TEA SERVICE 12:00 – 17:00
+																	<br>GRAN CHOICE 18:00 - 23:00
+																</span>
+					                                        </li>
+														</ul>
+													</div>
+													<ul class="txtGuide" style="margin-top: 8px;">
+					                                    <li style="margin-top: 3px;">* 그랑초이스 : 웰컴 샴페인 1잔 + A LA CARTE 1가지 + 와인/위스키/맥주/칵테일 중 1인당 2잔 선택</li>
+					                                    <li style="margin-top: 3px;">* 조식과 그랑초이스는 유료로 제공됩니다.</li>
+													</ul>
+												</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>HEAVENLY POOL</dt>
+												<dd class="txtArea">
+													<p class="txt" style="margin-bottom: 61px;">그랜드 조선 힐 스위트 투숙고객만을 위한 헤븐리 풀&라운지, 사계절 따뜻한 온수풀에서<br>마치 하늘 위에 있는듯한 기분을 만끽해보세요.</p>
+													<div class="sInfo">
+														<ul>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">위치</span>
+																<span class="txt">그랜드 조선 힐 스위트 6층</span>
+															</li>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">시간</span>
+																<span class="txt">
+																	09:00 - 22:00
+																</span>
+					                                        </li>
+														</ul>
+													</div>
+												</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>GX ROOM & SAUNA</dt>
+												<dd class="txtArea">
+													<p class="txt" style="margin-bottom: 61px;">그랜드 조선 힐 스위트 투숙 고객만을 위한 GX ROOM과 사우나에서 일상에 지친 몸과 마음을<br>시원하게 풀어드립니다.</p>
+													<div class="sInfo">
+														<ul>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">위치</span>
+																<span class="txt">그랜드 조선 힐 스위트 3층</span>
+															</li>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">시간</span>
+																<span class="txt">
+																	07:00 - 22:00
+																</span>
+					                                        </li>
+														</ul>
+													</div>
+													<ul class="txtGuide" style="margin-top: 8px;">
+					                                    <li style="margin-top: 3px;">* 코로나 19 확산방지를 위해 신관 힐 스위트 사우나는 한시적으로 미운영됩니다.</li>
+													</ul>
+												</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>GARDEN POOL</dt>
+												<dd class="txtArea">
+													<p class="txt" style="margin-bottom: 61px;">사계절 온수풀로 운영되는 가든 풀은 아이부터 어른까지 모두가 즐길 수 있는 공간입니다.<br>이국적인 정취를 느끼며 완벽한 힐링타임을 경험해보세요.</p>
+													<div class="sInfo">
+														<ul>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">위치</span>
+																<span class="txt">그랜드 조선 제주 1층</span>
+															</li>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">시간</span>
+																<span class="txt">
+																	09:00 - 23:00
+																</span>
+					                                        </li>
+														</ul>
+													</div>
+													<ul class="txtGuide" style="margin-top: 8px;">
+					                                    <li style="margin-top: 3px;">* 코로나 확산방지를 위해 시설운영이 22시까지로 조정됩니다.<br>&nbsp;&nbsp; 본 이용 지침은 추후 정부 지침에 따라 변경 될 수 있습니다.</li>
+													</ul>
+												</dd>
+											</dl>
+										</li>
+										<li>
+											<dl>
+												<dt>PEAK. POOL</dt>
+												<dd class="txtArea">
+													<p class="txt" style="margin-bottom: 61px;">제주 중문의 아름다운 바다를 보며 스위밍을 즐길 수 있는 성인 전용 온수풀에서 매일 밤 펼쳐지는<br>라이브 디제잉과 함께 특별한 제주의 밤을 만나보세요.</p>
+													<div class="sInfo">
+														<ul>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">위치</span>
+																<span class="txt">그랜드 조선 제주 R층 (루프탑)</span>
+															</li>
+															<li>
+																<span class="tit" style="padding: 5px 15px 5px 0;">시간</span>
+																<span class="txt">
+																	09:00 - 24:00
+																</span>
+					                                        </li>
+														</ul>
+													</div>
+													<ul class="txtGuide" style="margin-top: 8px;">
+					                                    <li style="margin-top: 3px;">* 코로나 확산방지를 위해 시설운영이 22시까지로 조정됩니다.<br>&nbsp;&nbsp; 본 이용 지침은 추후 정부 지침에 따라 변경 될 수 있습니다.</li>
+													</ul>
+												</dd>
+											</dl>
+										</li>
+									</ul>
 								</div>
 							</div>
 						</div>
 					</div>
-					<!-- //rsvRoomWrap -->
+					<button type="button" class="btnClose">닫기</button>
 				</div>
-				<!-- //inner -->
-				<!-- 컨텐츠 E -->
 			</div>
+			<div id="layerPop1" class="layerPop">
+				<div class="layerCont">
+					<div class="compLayer">
+						<h2 class="compTit">패키지 비교하기</h2>
+						<ul class="compList02"></ul>
+					</div>
+					<button type="button" class="btnClose" onclick="popClose('#layerPop1');">닫기</button>
+				</div>
+			</div>
+			<!-- // layerpopup -->
 		</form>
 		<!-- //container -->
 		<div style="background:#000;"><!-- Start. footer -->
 			<div id="footer">
-				<div class="foot-logo"><img src="img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
+				<div class="foot-logo"><img src="../resources/img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
 				</div>
 				<div class="foot-txt">
 					서울시 중구 소공로 106 대표이사 한채양 T. 02-771-0500<br>
@@ -282,266 +655,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- End. footer -->		
-		
-	</div>
-<script>
-
-//콤마찍기
-function comma(str) {
-    str = String(str);
-    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-}
-// 콤마풀기
-function uncomma(str) {
-    str = String(str);
-    return str.replace(/[^\d]+/g, '');
-}
-
-function addDate(num) {
-	let start = document.getElementById("startDate").value;
-	var tDate = new Date(start);
-	tDate.setDate(tDate.getDate()+num)
-	tDate = tDate.toISOString();
-	//alert(tDate);
-	startDate = tDate.toString().substring(0,10);
-	startDate = startDate.replaceAll("-",".");
-	
-	return startDate;
-}
-
-function writeInfo(){
-	var form = document.step2Form;
-	form.command.value = "goWriteInfo";
-	form.action = "Controller";
-	form.submit();
-	
-}
-
-/*		버전업 
- * 	추후 업그레이드 숙박일수에 따라 가격표에 숙박일수 가격 +++
- * 	박수 계산해서 가격에 곱해야함..... 추후   
- 
- *  -- 버전업 완료 (21.07.05)
- *  - 숙박일에 따른 가격
- */ 
- 
-$(document).ready(function(){
-	
-	// 가격표에 날짜별 가격 표시
-	let sucbacDay =(Number)($("#dateDays").val());
-	price = $("#roomPrice").val();
-	for(let i=1; i<=sucbacDay; i++) {
-		date = addDate(i);
-		$("#dateInfo").append("<li>	<span class='lfData'>"+date+"</span><span class='rtData'>"+price+"</span></li>")
-		
-	}
-	
-	
-// 날짜별 가격 총합
-let roomPriceArray = new Array();	// 방가격 배열
-let roomAmount=0;				
-
-$("#dateInfo li .rtData").each(function(){
-	let s = uncomma($(this).text());
-	roomPriceArray.push(s);
-});	
-for(let i=0; i<roomPriceArray.length; i++) {
-	roomAmount += Number(roomPriceArray[i]);
-}
-$("#roomAmount").val(roomAmount);
-
-
-// 조식가격 총합
-function josic(){	
-	let breakfastArray = new Array();	// 조식 배열
-	let breakfastAmount = 0;
-	$("#roomOptInfo0 li .rtData").each(function(){
-		let s = uncomma($(this).text());
-		breakfastArray.push(s);
-	})
-	for(let i=0; i<breakfastArray.length; i++) {
-		breakfastAmount += Number(breakfastArray[i]);
-	}
-	$("#breakfastAmount").val(breakfastAmount);
-	return breakfastAmount;
-}
-
-// 아이예약 확인 하고 버튼 disable 풀기
-let childrenNum = Number($("#childrenNum").text());
-if(childrenNum != 0){
-	$(".btnUp").removeAttr('disabled')
-	$("#roomOptInfo0").append("<li style=\"display: none;\"><span class=\"lfData\">어린이 조식</span><span class=\"rtData\">0</span></li>")
-	/*<li><span class="lfData">어린이 조식</span><span class="rtData">27,000</span></li>*/
-}
-
-//토글 슬라이드
-$(".floating .btnToggle").click(function() {
-	$(".floating .toggleInner").slideToggle();
-	$(".floating .rsvList > li .btnToggle").parent().toggleClass("toggleOn");
-});
-$(".lCont .btnToggle").click(function() {
-	$(".lCont .toggleInner").slideToggle();
-	$(".lCont .rsvList > li .btnToggle").parent().toggleClass("toggleOn");
-});
-
-// 스크롤 이벤트
-$(window).scroll(function(){
-	var scroll_top=$(this).scrollTop();
-	//console.log(scroll_top);
-	if(scroll_top<=550){
-		scroll_top=0;
-	}else{
-		scroll_top -=550;
-		if(scroll_top>=171) {
-			scroll_top = 171;
-		}
-	}
-	
-	$(".rCont.floating").animate({
-		top : scroll_top
-	},30,'swing');
-});
-
-// 세금 기본값 셋팅
-$("#roomTax0").text(comma($("#roomAmount").val()*0.1));
-// 합계 기본값 셋팅
-$("#roomAmount0 em").html(comma(roomAmount+($("#roomAmount").val()*0.1)));
-$("#resvTotalAmount").html(comma(roomAmount+($("#roomAmount").val()*0.1)));
-$("#totalpay").val(roomAmount+$("#roomAmount").val()*0.1);
-/*
- * 		 ' + ' 버튼 이벤트
- * */
-$(".btnUp").click(function(){
-	let s = $(this).parent().prev().prev().text().substring(0,2); //어린인지 어른인지 확인
-	// *************s의 선택자는 추후에 수정 어차피 값을 넘겨 받아오는 숫자이기때문에 그걸로 활용할거임  * 그냥 이대로 쓸게요
-	let max ;	// 최대값	
-	if(s=="성인"){
-		max = Number($("#adultsNum").text());
-	} else if(s=="어린"){
-		max = Number($("#childrenNum").text());
-	}
-	
-	let $changeSpan = $(this).prev();	//변경할 위치
-	let changeNum = Number($changeSpan.text());	// 1 2 3
-	
-	if(changeNum < max){
-		changeNum ++;
-		$changeSpan.text(changeNum);
-		if(changeNum == max){$changeSpan.next().attr('disabled','true')}	
-	}
-	
-	if(changeNum >= 1){
-		$changeSpan.prev().attr('class','btnDown');	// 색상
-		$changeSpan.prev().removeAttr('disabled');	// 버튼 클릭 풀기
-	
-	 
-		let i = 0;
-		let sucbacDay =(Number)($("#dateDays").val()); //숙박일
-		if(s=="성인"){
-			$("#roomOptInfo0 >li:first-child").css('display','');
-			i=(Number)(uncomma($("#optAAmount0").val()));		// 조식 가격
-			let price = changeNum*i*sucbacDay;	//추후 숙박일 곱해야함  *완료
-			
-			$("#roomOptInfo0 > li:first-child .rtData").html(comma(price));
-			$("#adult_breakfast").val(changeNum);
-		} 
-		else if(s=="어린"){
-			$("#roomOptInfo0 > li:nth-child(2)").css('display','');
-			i=(Number)(uncomma($("#optCAmount0").val()));		// 조식 가격
-			let price = changeNum*i*sucbacDay;
-			$("#roomOptInfo0  li:nth-child(2) .rtData").html(comma(price));
-			$("#children_breakfast").val(changeNum);
-		}
-	}
-	if(Number($(".type02>span").text()) !=0 ){
-		$("#roomOptInfo0").css('display','')
-	}
-	
-	let tax = (josic() + roomAmount)*0.1;
-	$("#roomTax0").text(comma(tax));
-	
-	let total = Number($("#roomAmount").val()) + Number($("#breakfastAmount").val()) + tax;
-	$("#roomAmount0 em").html(comma(total));
-	$("#resvTotalAmount").html(comma(total));
-	$("#totalpay").val(total);
-});
-
-/*
- *		' - '버튼 이벤트 	
- * */
-$(".btnDown").click(function(){
-	let s = $(this).parent().prev().prev().text().substring(0,2); //어린인지 어른인지 확인
-	//************s의 선택자는 추후에 수정 어차피 값을 넘겨 받아오는 숫자이기때문에 그걸로 활용할거임 * 그냥 이대로 쓸게요
-	let max ;	// 최대값	
-	if(s=="성인"){
-		max = Number($("#adultsNum").text());
-	} else if(s=="어린"){
-		max = Number($("#childrenNum").text());
-	}
-	let $changeSpan = $(this).parent().find("span");	//변경할 위치
-	let changeNum = Number($changeSpan.text()) - 1;	//변경할 숫자
-	
-	if(changeNum != max){		// 변경할 숫자가 예약인원수가 되면
-		$changeSpan.next().removeAttr('disabled')	// +버튼 막은거 풀기
-		
-		let i = 0;
-		let sucbacDay =(Number)($("#dateDays").val()); //숙박일
-		if(s=="성인"){
-			i=(Number)(uncomma($("#optAAmount0").val()));		// 조식가격
-			let price = changeNum*i*sucbacDay;
-			$("#roomOptInfo0 > li:first-child .rtData").html(comma(price));
-			$("#adult_breakfast").val(changeNum);
-		} 
-		else if(s=="어린"){
-			i=(Number)(uncomma($("#optCAmount0").val()));	// 조식가격
-			let price = changeNum*i*sucbacDay;
-			$("#roomOptInfo0  li:nth-child(2) .rtData").html(comma(price));
-			$("#children_breakfast").val(changeNum);
-		}
-	}
-	if(changeNum === 0){		//변경할 숫자가 0이 되면
-		$changeSpan.prev().attr('class','btnDown blank')	// 클래스 명 변경 색상이 변함
-		$changeSpan.prev().attr('disabled','true')	// 버튼 클릭 막기
-//		$("#roomOptInfo0").css('display','none')	// 가격 표 항목 없애기
-		if(s=="성인"){
-			$("#roomOptInfo0 >li:first-child").css('display','none');
-		} 
-		else if(s=="어린"){
-			$("#roomOptInfo0 > li:nth-child(2)").css('display','none');
-		}
-	}
-	
-	$changeSpan.html(changeNum); // 세터 (값변경)
-	$changeSpan.change();
-	
-	if(Number($(".type02>span").text()) === 0 ){
-		$("#roomOptInfo0").css('display','none');
-	}
-	
-	let tax = (josic() + roomAmount)*0.1;
-	$("#roomTax0").text(comma(tax));
-	
-	let total = Number($("#roomAmount").val()) + Number($("#breakfastAmount").val()) + tax;
-	$("#roomAmount0 em").html(comma(total));
-	$("#resvTotalAmount").html(comma(total));
-	$("#totalpay").val(total);
-});
-
-/*
- * 		합계계산
- * */	
-
-//resvTotalAmount
-/*$("#roomAmount").val();
-$("#breakfastAmount").val();
-$("#roomTax0").val();*/
-//let total = $("#roomAmount").val() + $("#breakfastAmount").val() + $("#roomTax0").();
-//alert(total);
-
-
-});
-</script>
-	
+		<!-- End. footer -->
+</div>
 </body>
 </html>

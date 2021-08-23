@@ -166,5 +166,16 @@ public class ReservationDTO {
 	public void setRnum(int rnum) {
 		this.rnum = rnum;
 	}
+	@Override
+	public String toString() {
+		return "ReservationDTO [rnum=" + rnum + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
+				+ ", adultCnt=" + adultCnt + ", childrenCnt=" + childrenCnt + ", adult_breakfast=" + adult_breakfast
+				+ ", chil_breakfast=" + chil_breakfast + ", request=" + request + ", phoneNum=" + phoneNum + ", email="
+				+ email + ", card_type=" + card_type + ", card_num=" + card_num + ", card_expiration=" + card_expiration
+				+ ", birth=" + birth + ", total_pay=" + total_pay + ", pay=" + pay + ", room_number=" + room_number
+				+ ", card_pw=" + card_pw + ", memeberId=" + memeberId + "]";
+	}
+	
+	
 	
 }
