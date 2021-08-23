@@ -9,6 +9,16 @@
 - 개발환경 : Eclipse, Windows 10
 - 개발언어 및 프레임워크 : Java, Servlet&JSP, Oracle 11gR2
 
+👍 수행 기간
+
+
+2021.05.10 ~ 2021.07.26
+
+👍 참여자
+
+
+김겸, 엄민미, 정소라
+
 👍 기능
 - 로그인 / 회원가입
 - 아이디 / 비밀번호 찾기
@@ -18,9 +28,18 @@
 - Q&A 게시판
 - 관리자 페이지(회원/예약/Q&A관리)
 
-
 👍 특장점
 - 실제 조선호텔리조트 사이트와 유사한 완성도
 - 호텔 업종을 고려하여 고급스러운 홈페이지 디자인 반영
 - 주요기능인 예약을 메인화면에서 바로 진행할 수 있음
 - 유저의 접근성과 편의성의 관리도를 높여주는 관리자 페이지
+
+👍 스토리보드
+
+
+https://docs.google.com/presentation/d/197nvtOZbm2csEU8T9lEj4BHzo5-ivte4qIOqjfjyTkc/edit?usp=sharing
+
+👍 발표자료
+
+
+https://docs.google.com/presentation/d/1X0kST-A5Wprsblpzlzm2ESEftF9Ai24fN-jS7HAmdZc/edit?usp=sharing
