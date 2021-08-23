@@ -70,7 +70,7 @@ public class TimeUtil {
 				sb.append(", '"+addDay(startDate, i)+"'");
 			}
 			String date = sb.toString();	//"1994.03.07","yyyy.MM.dd" ,"끝날짜"
-			System.out.println("returnReserveDate() : "+date);
+//			System.out.println("returnReserveDate() : "+date);
 			return date;
 		}
 		
