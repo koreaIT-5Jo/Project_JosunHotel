@@ -3,6 +3,7 @@ package com.josun.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -48,9 +49,10 @@ public class HomeController {
 		String filePath = session.getServletContext().getRealPath("/resources/upload/");
 		System.out.println("filePath(절대경로) : " + filePath); //절대경로
 		MultipartFile multipart = qnadto.getMultipart();
+		String uuid = UUID.randomUUID().toString();
 		String filename = "첨부파일 없음";
 		if(!multipart.isEmpty()) {
-			filename = multipart.getOriginalFilename();
+			filename = uuid + "_" + multipart.getOriginalFilename();
 			File file = new File(filePath, filename);
 			if(!file.exists()) {
 				file.mkdirs();
