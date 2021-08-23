@@ -65,11 +65,11 @@ public class TimeUtil {
 		
 		// 날짜 나열 메소드
 		public String returnReserveDate(String startDate, String endDate ) throws Exception {  
-			StringBuilder sb = new StringBuilder("'"+startDate+"'");
+			StringBuffer sb = new StringBuffer("'"+startDate+"'");
 			for(int i = 1; i< seDay(startDate,endDate); i++) {
 				sb.append(", '"+addDay(startDate, i)+"'");
 			}
-			String date = sb.toString();	//"1994.03.07","yyyy.MM.dd" ,"끝날짜"
+			String date = sb.toString();	//"시작일","시작일 +1","시작일 +2","시작일 +3" ,"끝날짜"
 //			System.out.println("returnReserveDate() : "+date);
 			return date;
 		}
