@@ -8,26 +8,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.josun.dao.RoomDAO;
 import com.josun.dto.RoomDTO;
+import com.josun.service.RoomService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class RoomDAOTest {
+public class RoomServiceTest {
 
 	@Autowired
-	RoomDAO dao;
+	RoomService service;
 	
 	@Test
 	public void getRoomList() throws Exception {
-		List<RoomDTO> list = dao.getRoomList("2021.08.23", "2021.08.26");
+		List<RoomDTO> list = service.getRoomList("2021.08.23", "2021.08.26");
 		System.out.println(list);
-	}
-	
-	@Test
-	public void getduplicateRoomList() throws Exception {
-		String roomNum = dao.getDuplicateCheckRoomNumList("2021.07.19", "2021.07.21");
-		System.out.println(roomNum);
-		
 	}
 }

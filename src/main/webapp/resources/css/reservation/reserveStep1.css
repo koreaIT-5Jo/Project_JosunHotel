@@ -34,7 +34,7 @@ em, address {    font-style: normal;}
 .selResult .infoArea dl.dlType02 dd span:before {    content: '';    display: inline-block;    position: relative;    top: 2px;    width: 1px;    height: 18px;    background: #ccc;    margin: 0 15px;}
 .selResult .infoArea dl.dlType03 {    text-align: center;    padding-right: 100px;}
 .roomContainer .roomList > li {border-bottom: 1px solid #ccc;padding: 71px 0;}
-.noData .txt:before {content: ''; display: block; width: 3px; height: 45px; margin: 0 auto 30px; background: url(../resources/img/btn_icon/ico_nodata.gif) no-repeat 0 0;}
+.noData .txt:before {content: ''; display: block; width: 3px; height: 45px; margin: 0 auto 30px; background: url(../../img/btn_icon/ico_nodata.gif) no-repeat 0 0;}
 
 
 .toggleList > li {position: relative;}
@@ -116,13 +116,13 @@ img, fieldset, iframe {    border: 0;    vertical-align: top;}
 
 .packageCont22 .txtGuide li {color: #888; font-size: 16px; letter-spacing: -.01em;}
 
-#layerPopup .btnClose {overflow: hidden; text-indent: -9999px; position: absolute; top: 12px; right: 13px; width: 50px; height: 50px; background: url(../resources/img/btn_icon/btn_close_25x25.png) no-repeat 50% 50%; z-index: 999;}
+#layerPopup .btnClose {overflow: hidden; text-indent: -9999px; position: absolute; top: 12px; right: 13px; width: 50px; height: 50px; background: url(../../img/btn_icon/btn_close_25x25.png) no-repeat 50% 50%; z-index: 999;}
 
 /*비교함*/
 .comparison {/* display: none; */ position: fixed; left: 0; right: 0; bottom: 0; background: #807f6c; z-index: 99;}
 .comparison .btnArea {text-align:center; margin: 0; background: #72715c;}
 .comparison .btnArea .btnComp {font-size: 16px; color: #fff; height: 50px; line-height: 50px;}
-.comparison .btnArea .btnComp:after {content: ''; display: inline-block; vertical-align: middle; margin-left: 15px; width: 11px; height: 7px; background: url(../resources/img/btn_icon/ico_comparison.png) no-repeat -11px 0;}
+.comparison .btnArea .btnComp:after {content: ''; display: inline-block; vertical-align: middle; margin-left: 15px; width: 11px; height: 7px; background: url(../../img/btn_icon/ico_comparison.png) no-repeat -11px 0;}
 .comparison .btnArea .btnComp.on:after {background-position: 0 0;}
 .comparison .compCont {display: table; position: relative; width: 1400px; margin: 0 auto;}
 .comparison .compInner {padding: 40px 0;}
@@ -133,10 +133,10 @@ img, fieldset, iframe {    border: 0;    vertical-align: top;}
 .comparison .compList > li .compWrap .txt {font-size: 15px; color: #d9d9d3; padding-top: 10px;}
 .comparison .compList > li .compWrap .thum {position: absolute; left: 50%; top: 0; margin-left: -110px; width: 220px; height: 152px; overflow: hidden;}
 .comparison .compList > li .compWrap .thum img{width:100%;}
-.comparison .compList > li .compWrap.noCont .thum:before {content: ''; display: block; position: absolute; left: 0; top: 0; z-index: -1; width: 220px; height: 152px; background: url(../resources/img/Room/bg_comparison.png) no-repeat 0 0;}
+.comparison .compList > li .compWrap.noCont .thum:before {content: ''; display: block; position: absolute; left: 0; top: 0; z-index: -1; width: 220px; height: 152px; background: url(../../img/Room/bg_comparison.png) no-repeat 0 0;}
 .comparison .btnWrap {display: table-cell; width: 349px; text-align: left; vertical-align: middle;border-right: 1px solid #666654; padding: 0 93px;}
 .comparison .compList > li .btnDel{position: absolute; right: 64px; top: 0; width: 32px; height: 32px; overflow: hidden;}
-.comparison .compList > li .btnDel:before { content: ''; display: block; width: 32px; height: 32px; background: url(../resources/img/btn_icon/btn_del.gif) no-repeat 0 0;}
+.comparison .compList > li .btnDel:before { content: ''; display: block; width: 32px; height: 32px; background: url(../../img/btn_icon/btn_del.gif) no-repeat 0 0;}
 
 .btnM {min-width: 162px; height: 50px; padding: 0 25px; line-height: 48px; font-size: 17px; letter-spacing: -.01em;}
 
@@ -163,5 +163,5 @@ img, fieldset, iframe {    border: 0;    vertical-align: top;}
 .compLayer .compList02 li > dl .thum img {width: 100%;}
 .compLayer .compList02 li > dl .txt {font-size: 16px; display: -webkit-box; overflow: hidden; text-overflow: ellipsis; -webkit-line-clamp: 1; -webkit-box-orient: vertical; font-weight:300;}
 .compLayer .compList02 li > dl .price {font-size: 25px; margin-bottom:20px;}
-.layerPop .btnClose {overflow: hidden; text-indent: -9999px; position: absolute; top: 12px; right: 13px; width: 50px; height: 50px; background: url(../resources/img/btn_icon/btn_close_25x25.png) no-repeat 50% 50%; z-index: 999;}
+.layerPop .btnClose {overflow: hidden; text-indent: -9999px; position: absolute; top: 12px; right: 13px; width: 50px; height: 50px; background: url(../../img/btn_icon/btn_close_25x25.png) no-repeat 50% 50%; z-index: 999;}
 .compLayer .btnRsv {background: #000; color: #fff; padding: 5px 0; width: 100%;}

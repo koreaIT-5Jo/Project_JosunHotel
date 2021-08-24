@@ -1,15 +1,24 @@
 package com.josun.controller;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.josun.dto.ReservationDTO;
+import com.josun.dto.RoomDTO;
+import com.josun.service.RoomService;
 import com.josun.util.TimeUtil;
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	RoomService roomService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -93,9 +102,15 @@ public class HomeController {
 	@RequestMapping(value = "/reservation/step1")
 	public String reservationStep1(ReservationDTO reservationDto, Model model,TimeUtil util) {
 		
-		String ckinDay = util.DaysCheck(reservationDto.getStartDate());
-		String ckoutDay = util.DaysCheck(reservationDto.getEndDate());
-		int dateDays = util.seDay(reservationDto.getStartDate(), reservationDto.getEndDate());
+		String ckinDay = util.DaysCheck(reservationDto.getStartDate()); // 시작 요일
+		String ckoutDay = util.DaysCheck(reservationDto.getEndDate());	// 끝 요일
+		int dateDays = util.seDay(reservationDto.getStartDate(), reservationDto.getEndDate());  // 시작과 끝 요일 차이
+		try {
+			List<RoomDTO> list = roomService.getRoomList(reservationDto.getStartDate(), reservationDto.getEndDate());
+			model.addAttribute("roomList",list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		model.addAttribute("reservationDto",reservationDto);
 		model.addAttribute("ckinDay",ckinDay);
 		model.addAttribute("ckoutDay",ckoutDay);

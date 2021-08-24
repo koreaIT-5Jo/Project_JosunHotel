@@ -17,6 +17,7 @@ public class RoomDAOImpl implements RoomDAO {
 	
 	@Override
 	public List<RoomDTO> getRoomList(String startDate, String endDate) throws Exception {
+//		System.out.println(getDuplicateCheckRoomNumList(startDate, endDate));
 		List<RoomDTO> list = sqlSession.selectList("com.josun.mapper.roomMapper.getRoomNumList",getDuplicateCheckRoomNumList(startDate, endDate));
 		return list;
 	}
@@ -24,6 +25,7 @@ public class RoomDAOImpl implements RoomDAO {
 	@Override
 	public String getDuplicateCheckRoomNumList(String startDate, String endDate) throws Exception {
 		TimeUtil timeUtil = new TimeUtil();
+//		System.out.println(timeUtil.returnReserveDate(startDate, endDate));
 		List<String> list = sqlSession.selectList("com.josun.mapper.roomMapper.getduplicateCheckRoomNumList",timeUtil.returnReserveDate(startDate, endDate));
 		String roomNumList = "";
 		for(String i : list) {
@@ -31,12 +33,4 @@ public class RoomDAOImpl implements RoomDAO {
 		}
 		return roomNumList;
 	}
-
-	@Override
-	public List<String> getDuplicateCheckRoomNumList2(String startDate, String endDate) throws Exception {
-		TimeUtil timeUtil = new TimeUtil();
-		List<String> list = sqlSession.selectList("com.josun.mapper.roomMapper.getduplicateCheckRoomNumList", timeUtil.returnReserveDate(startDate, endDate));
-		return list;
-	}
-
 }

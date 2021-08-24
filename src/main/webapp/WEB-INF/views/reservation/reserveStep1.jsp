@@ -3,7 +3,6 @@
 	pageEncoding="UTF-8"%>
  <%
 	String id = (String) session.getAttribute("idKey");
-	//List<RoomDTO> lists = (List<RoomDTO>)request.getAttribute("list");  */
 %>
 <!DOCTYPE html>
 <html>
@@ -17,15 +16,16 @@
 <script type="text/javascript" src="../resources/js/header.js"></script>
 <script type="text/javascript" src="../resources/js/reservation/reserveStep1.js"></script>
 <script>
-<%-- //list 없을때
+//list 없을때
 $(document).ready(function(){
-   let list = <%=lists.size()%>;
+	
+    let list = '';
       //alert(list.length);
-      if(list == 0) {
+      if(list == null) {
          $(".noData").css("display", "");
       } 
 });
- --%>
+
 function fncOpenRoomInfo(num){
 	var num = num;
 	$.ajax({
@@ -354,30 +354,30 @@ function roomReserveBtn(roomNum){
 								</p>
 								<!-- 객실 내 상품이 없을 경우 -->
 							</li>
-							<%-- <% for(RoomDTO dto : lists){ %>
-							<li id="room_<%=dto.getNum() %>">
+							<c:forEach var="dto" items="${roomList }"  >
+							<li id="room_${dto.getNum() }">
 								<dl class="roomIntro">
-									<dt class="roomName"><%=dto.getName() %></dt>
-									<dd class="roomBenefit"><%=dto.getDetailView() %> | Size : <%=dto.getrSize() %>㎡</dd>
+									<dt class="roomName">${dto.getName()}</dt>
+									<dd class="roomBenefit">${dto.getDetailView()} | Size : ${dto.getrSize()} ㎡</dd>
 									<dd class="btnView">
-										<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo(<%=dto.getNum()%>);">객실 상세보기 </a>
+										<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo(${dto.getNum()});">객실 상세보기 </a>
 									</dd>
 									<dd class="priceWrap">
 										<span class="price">
-											<%=dto.getPrice() %><em>KRW ~</em>
+											${dto.getPrice()}<em>KRW ~</em>
 										</span>
 										<span class="day">1박 / 세금 별도</span>
 									</dd>
 									<dd class="thum">
-										<img src="<%=dto.getImg() %>" alt="<%=dto.getName() %>">
+										<img src="../resources/${dto.getImg()}" alt="${dto.getName()}">
 									</dd>
 									<dd>
-										<button type=button class="btnToggle btnSC btnRsv" onclick="roomReserveBtn(<%=dto.getNum() %>)">RESERVE</button>
-										<button type=button class="btnToggle btnSC btnRsv2" onclick="fncAddCompareProduct(<%=dto.getNum()%>)">COMPARE</button>
+										<button type=button class="btnToggle btnSC btnRsv" onclick="roomReserveBtn(${dto.getNum()})">RESERVE</button>
+										<button type=button class="btnToggle btnSC btnRsv2" onclick="fncAddCompareProduct(${dto.getNum()})">COMPARE</button>
 									</dd>
 								</dl>
 							</li>
-							<% } %> --%>
+							</c:forEach>
 						</ul>
 						<!-- //roomList -->
 					</div>
