@@ -16,15 +16,7 @@
 <script type="text/javascript" src="../resources/js/header.js"></script>
 <script type="text/javascript" src="../resources/js/reservation/reserveStep1.js"></script>
 <script>
-//list 없을때
-$(document).ready(function(){
-	
-    let list = '';
-      //alert(list.length);
-      if(list == null) {
-         $(".noData").css("display", "");
-      } 
-});
+
 
 function fncOpenRoomInfo(num){
 	var num = num;
@@ -657,5 +649,13 @@ function roomReserveBtn(roomNum){
 		</div>
 		<!-- End. footer -->
 </div>
+<script>
+	//list 없을때
+    let list = '<c:out value="${roomLits}"/>';
+      //alert(list.length);
+      if(list == null) {
+         $(".noData").css("display", "");
+      } 
+</script>
 </body>
 </html>
