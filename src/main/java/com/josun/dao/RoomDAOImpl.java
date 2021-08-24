@@ -1,6 +1,8 @@
 package com.josun.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +34,11 @@ public class RoomDAOImpl implements RoomDAO {
 			roomNumList += (roomNumList.equals("") ? "'" : ", '") + i + "'";  
 		}
 		return roomNumList;
+	}
+
+	@Override
+	public  HashMap<String,Object> roomDetailInfo(int num) {
+		HashMap<String, Object> map = sqlSession.selectOne("com.josun.mapper.roomMapper.roomDetailInfo", num);
+		return map;
 	}
 }

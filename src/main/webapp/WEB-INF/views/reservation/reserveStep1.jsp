@@ -52,6 +52,9 @@ function fncOpenRoomInfo(num){
 			}
 			
 			$('#layerPopup').fadeIn("fast");
+		},
+		error : function(){
+			alert("에러발생");
 		}
 	});
 }

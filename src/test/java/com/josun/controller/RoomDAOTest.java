@@ -1,5 +1,6 @@
 package com.josun.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.Test;
@@ -28,6 +29,12 @@ public class RoomDAOTest {
 	public void getduplicateRoomList() throws Exception {
 		String roomNum = dao.getDuplicateCheckRoomNumList("2021.07.19", "2021.07.21");
 		System.out.println(roomNum);
-		
 	}
+	
+	@Test
+	public void roomDetailInfo() {
+		HashMap<String, Object> map = dao.roomDetailInfo(1);
+		System.out.println(map);
+	}
+	
 }

@@ -9,4 +9,7 @@
 	<select id="getduplicateCheckRoomNumList" resultType="String">
 		SELECT num from room where num not in(SELECT DISTINCT num FROM reserved_room WHERE reserved_date in(#{reserveDateList}))	
 	</select>
+	<select id="roomDetailInfo" resultType="HashMap">
+		select r.name, r.img, r.location, r.beds, r.r_size, r.features, r.viewpoint, a.bath, a.bed, a.minibar, a.closet from room r, amenity_package a where r.amenity = a.num and r.num = #{num}
+	</select>
 </mapper>
