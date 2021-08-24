@@ -46,7 +46,7 @@ public class TimeUtil {
 		return startDay;
 	}
 	
-	//시작-끝 날짜 차이 일수 구하기
+		//시작-끝 날짜 차이 일수 구하기
 		public int seDay(String startDate, String endDate) {
 			DateFormat dateFormat = new SimpleDateFormat ("yyyy.MM.dd");
 			int dateDays = 0;

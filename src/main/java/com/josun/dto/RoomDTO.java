@@ -80,4 +80,12 @@ public class RoomDTO {
 	public void setDetailView(String detailView) {
 		this.detailView = detailView;
 	}
+	@Override
+	public String toString() {
+		return "RoomDTO [hotelNumber=" + hotelNumber + ", num=" + num + ", name=" + name + ", price=" + price + ", img="
+				+ img + ", location=" + location + ", beds=" + beds + ", rSize=" + rSize + ", features=" + features
+				+ ", viewPoint=" + viewPoint + ", detailView=" + detailView + "]\n";
+	}
+	
+	
 }

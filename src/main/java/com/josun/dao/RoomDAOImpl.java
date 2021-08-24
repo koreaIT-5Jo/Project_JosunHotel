@@ -17,7 +17,7 @@ public class RoomDAOImpl implements RoomDAO {
 	
 	@Override
 	public List<RoomDTO> getRoomList(String startDate, String endDate) throws Exception {
-		List<RoomDTO> list = sqlSession.selectList("com.josun.dto.RoomDTO.getRoomNumList",getDuplicateCheckRoomNumList(startDate, endDate));
+		List<RoomDTO> list = sqlSession.selectList("com.josun.mapper.roomMapper.getRoomNumList",getDuplicateCheckRoomNumList(startDate, endDate));
 		return list;
 	}
 

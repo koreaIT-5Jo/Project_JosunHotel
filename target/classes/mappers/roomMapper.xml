@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.josun.mapper.roomMapper">
 	<select id="getRoomNumList" resultType="com.josun.dto.RoomDTO">
-		SELECT num,name,price,img,r_size,detail_view FROM room  where num in (#{roomNumList})
+		SELECT num,name,price,img,r_size,detail_view FROM room  where num in (${roomNumList})
 	</select>
 	<select id="getduplicateCheckRoomNumList" resultType="String">
 		SELECT num from room where num not in(SELECT DISTINCT num FROM reserved_room WHERE reserved_date in(#{reserveDateList}))	
