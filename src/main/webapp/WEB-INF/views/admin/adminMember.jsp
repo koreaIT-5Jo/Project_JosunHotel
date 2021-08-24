@@ -1,21 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@page import="java.util.List" %>
-<%@page import="java.sql.*" %>
-<%-- <%@page import="member.MemberDTO" %>
-<%@page import="member.MemberDAO" %>
-<%@page import="conn.DBConn" %> --%>
-<%-- <%
-	request.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; UTF-8");
-	
-	String cp = request.getContextPath();
-	
-	String id = (String) session.getAttribute("idKey");
-	List<MemberDTO> lists = (List<MemberDTO>)request.getAttribute("list");
-	String pageNav = (String)request.getAttribute("page");
-	System.out.println(pageNav);
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +24,7 @@
 					<a href="/www">홈페이지</a> <!-- 클릭하면 홈페이지 메인으로 이동 -->
 				</li>
 				<li>
-					<a href="Logout">로그아웃</a> <!-- 클릭하면 로그아웃되면서, 홈페이지 로그인화면으로 이동 -->
+					<a href="logout">로그아웃</a> <!-- 클릭하면 로그아웃되면서, 홈페이지 로그인화면으로 이동 -->
 				</li>
 			</ul>
 		</div>
@@ -56,7 +40,7 @@
 			</ul>
 		</div>
 		<div class="right">
-			<form name="searchfrm" method="post" action="Controller">
+			<form name="searchfrm" method="post" action="">
 				<input type="hidden" name="command" value="adminMemberList">
 				<div class="search">
 					<div class="selectWrap">
@@ -88,20 +72,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%-- <%for(MemberDTO dto : lists){%>
-						<tr>
-							<td><%=dto.getRnum()%></td>
-							<td><%=dto.getName()%></td>
-							<td><%=dto.getId()%></td>
-							<td><%=dto.getPhone()%></td>
-							<td><%=dto.getEmail()%></td>
-							<td><%=dto.getAddress()%></td>
-						</tr>
-						<%}%> --%>
+						<c:forEach var="member" items="${list}">
+							<tr>
+								<td>${member.rnum}</td>
+								<td>${member.name}</td>
+								<td>${member.id}</td>
+								<td>${member.phone}</td>
+								<td>${member.email}</td>
+								<td>${member.address}</td>
+							</tr>	
+						</c:forEach>
 					</tbody>
 				</table>
 				<div class="page">
-					<%-- <%=pageNav %> --%>
+					${pageNav}
 				</div>
 			</div>
 		</div>

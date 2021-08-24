@@ -22,5 +22,11 @@
 		select pw from member where name = #{name} and id = #{id} and pw_hint_q = #{pwHintQ} and pw_hint_a = #{pwHintA}
 	</select>
 	
+	<select id="adminMemberList" resultType="com.josun.dto.MemberDTO">
+		<![CDATA[select * from (select rownum rnum, m.* from(select name, id, phone, email, address from member where ${searchKey} like #{searchValue})m) where rnum >= ${start} and rnum <= ${end}]]>
+	</select>
+	<select id="getDataCount" resultType="int">
+		select count(*) as totalCount from member where ${searchKey} like #{searchValue}
+	</select>
 </mapper>
 

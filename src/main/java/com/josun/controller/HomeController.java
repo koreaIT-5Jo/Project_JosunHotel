@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,9 +90,9 @@ public class HomeController {
 	}
 	//회원가입 확인
 	@RequestMapping(value = "/registerMember")
-	public String registerMember(HttpServletRequest requeset, String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
+	public String registerMember(HttpServletRequest requeset, MemberDTO dto) {
 		requeset.setAttribute("msg", "회원가입이 완료되었습니다.");
-		memberservice.registerMember(name, id, pw, pwHintQ, pwHintA, address, phone, email);
+		memberservice.registerMember(dto);
 		return "member/login";
 	}
 	
@@ -104,7 +105,7 @@ public class HomeController {
 	@RequestMapping(value = "/loginAction")
 	public String loginAction(HttpServletRequest requeset, HttpSession session, String id, String pw) {
 		List<MemberDTO> list = memberservice.login(id, pw);
-		if(list != null) {
+		if(list.size() > 0) {
 			session.setAttribute("id", id);
 			for(MemberDTO dto : list) {
 				session.setAttribute("name", dto.getName());
@@ -173,9 +174,43 @@ public class HomeController {
 	
 	//관리자페이지 - 회원
 	@RequestMapping(value = "/adminMember")
-	public String adminMember() {
+	public String adminMember(HttpServletRequest request, String page, String searchKey, String searchValue, Model model) {
+		int pageNo = 1;
+		if(page != null) pageNo = Integer.parseInt(page);
+		
+		int pageSize = 5;
+		int start = pageNo * pageSize - (pageSize -1);
+		int end = pageNo * pageSize;
+		
+		if(searchKey == null && searchValue == null) {
+			searchKey = "name";
+			searchValue = "";
+		}
+		
+		List<MemberDTO> list = memberservice.adminMemberList(start, end, searchKey, searchValue);
+		
+		int dataCount = memberservice.getDataCount(searchKey, searchValue);
+		int pageCount = dataCount / pageSize;
+		if(dataCount%pageSize != 0) pageCount++;
+		int totalPage = pageCount;
+		
+		String param = "";
+		if(!searchValue.equals("")){
+			param = "searchKey="+searchKey;
+			param += "&searchValue="+searchValue+"&";
+		}
+		String url = "adminMember?"+param;
+		StringBuffer pageNav = new StringBuffer();
+		for(int i=1; i<=totalPage; i++){
+			if(pageNo == i) pageNav.append("<a class=\"active\" href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+			else pageNav.append("<a href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminMember";
 	}
+	
 	//관리자페이지 - 예약
 	@RequestMapping(value = "/adminReservation")
 	public String adminReservation() {

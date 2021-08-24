@@ -20,8 +20,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void registerMember(String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
-		dao.registerMember(name, id, pw, pwHintQ, pwHintA, address, phone, email);
+	public void registerMember(MemberDTO dto) {
+		dao.registerMember(dto);
 	}
 	
 	//로그인
@@ -40,6 +40,18 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public String findPw(String name, String id, int pwHintQ, String pwHintA) {
 		return dao.findPw(name, id, pwHintQ, pwHintA);
+	}
+	
+	//관리자페이지 - 회원목록
+	@Override
+	public List<MemberDTO> adminMemberList(int start, int end, String searchKey, String searchValue) {
+		List<MemberDTO> list = dao.adminMemberList(start, end, searchKey, searchValue);
+		return list;
+	}
+	//관리자페이지 - 회원목록 - 전체 데이터 개수
+	@Override
+	public int getDataCount(String searchKey, String searchValue) {
+		return dao.getDataCount(searchKey, searchValue);
 	}
 
 

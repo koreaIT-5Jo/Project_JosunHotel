@@ -1,6 +1,7 @@
 package com.josun.dto;
 
 public class MemberDTO {
+	private int rnum;
 	private String name;
 	private String id;
 	private String pw;
@@ -20,6 +21,13 @@ public class MemberDTO {
 		this.address = address;
 		this.phone = phone;
 		this.email = email;
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 	public String getName() {
 		return name;

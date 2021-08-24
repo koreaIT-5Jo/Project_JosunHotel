@@ -19,7 +19,7 @@ public class MemberDAOTest {
 	
 	@Test
 	public void register() throws Exception{
-		dao.registerMember("테스트", "test1111", "test1111", 1, "test1111", "test1111", "test1111", "test1111");
+		dao.registerMember(new MemberDTO("테스트", "test1111", "test1111", 1, "test1111", "test1111", "test1111", "test1111"));
 	}
 	@Test
 	public void idCheck() throws Exception{
@@ -36,5 +36,16 @@ public class MemberDAOTest {
 	@Test
 	public void findPw() throws Exception{
 		System.out.println(dao.findPw("테스트", "test1111", 1, "1"));
+	}
+	@Test
+	public void adminMemberList() throws Exception{
+		List<MemberDTO> list = dao.adminMemberList(1, 10, "name", "테스트");
+		for(MemberDTO dto : list) {
+			System.out.println(dto.getName() + ", " + dto.getId() + ", " + dto.getPhone() + ", " + dto.getEmail() + ", " + dto.getAddress());
+		}
+	}
+	@Test
+	public void getDataCount() throws Exception{
+		System.out.println(dao.getDataCount("name", "테스트"));
 	}
 }

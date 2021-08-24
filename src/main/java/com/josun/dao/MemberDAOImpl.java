@@ -20,17 +20,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public void registerMember(String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("name", name);
-		map.put("id", id);
-		map.put("pw", pw);
-		map.put("pwHintQ", pwHintQ);
-		map.put("pwHintA", pwHintA);
-		map.put("address", address);
-		map.put("phone", phone);
-		map.put("email", email);
-		sqlsession.insert("com.josun.mapper.MemberMapper.registerMember", map);
+	public void registerMember(MemberDTO dto) {
+		sqlsession.insert("com.josun.mapper.MemberMapper.registerMember", dto);
 	}
 
 	//로그인
@@ -63,5 +54,25 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("pwHintA", pwHintA);
 		String result = sqlsession.selectOne("com.josun.mapper.MemberMapper.findPw", map);
 		return result;
+	}
+	
+	//관리자페이지 - 회원목록
+	@Override
+	public List<MemberDTO> adminMemberList(int start, int end, String searchKey, String searchValue) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("searchKey", searchKey);
+		map.put("searchValue", "%"+searchValue+"%");
+		List<MemberDTO> list = sqlsession.selectList("com.josun.mapper.MemberMapper.adminMemberList", map);
+		return list;
+	}
+	//관리자페이지 - 회원목록 - 전체 데이터 개수
+	@Override
+	public int getDataCount(String searchKey, String searchValue) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", "%"+searchValue+"%");
+		return sqlsession.selectOne("com.josun.mapper.MemberMapper.getDataCount", map);
 	}
 }
