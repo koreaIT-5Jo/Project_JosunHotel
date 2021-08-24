@@ -40,8 +40,7 @@
 			</ul>
 		</div>
 		<div class="right">
-			<form name="searchfrm" method="post" action="">
-				<input type="hidden" name="command" value="adminMemberList">
+			<form name="searchfrm" method="post" action="adminMember">
 				<div class="search">
 					<div class="selectWrap">
 						<select name="searchKey" id="searchType" class="form-control">
