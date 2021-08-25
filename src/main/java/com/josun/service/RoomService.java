@@ -8,4 +8,5 @@ import com.josun.dto.RoomDTO;
 public interface RoomService {
 	List<RoomDTO> getRoomList(String startDate, String endDate) throws Exception;
 	HashMap<String,String> roomDetailInfo(int num);
+	RoomDTO roomOptionInfo(int num);
 }

@@ -213,17 +213,16 @@ function popClose(){
 function roomReserveBtn(roomNum){
 	var form = document.step1Form;
 	document.getElementById("roomNum").value = roomNum; 
-	document.getElementById("command").value = "optionSelect";
 	var loginCheck = "<%=session.getAttribute("idKey")%>";
 	console.log(loginCheck);
 	
-	if(loginCheck == "null"){
+	<%-- if(loginCheck == "null"){
 		alert('회원가입 또는 로그인 후 예약 가능합니다.');
-		<%-- location.href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>; --%>
-	}else{
-		form.action= "Controller";
+		location.href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>;
+	}else{ --%>
+		form.action= "step2";
 		form.submit();
-	}
+	//}
 }
 </script>
 </head>
@@ -286,13 +285,12 @@ function roomReserveBtn(roomNum){
 		<form action="" name="step1Form" id="step1Form" method="post">
 			<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
 			<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
-			<input type="hidden" name="adltCnt" id="adlutCnt" value="${reservationDto.adultCnt}">
-			<input type="hidden" name="chldCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
+			<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">
+			<input type="hidden" name="childrenCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
 			<input type="hidden" name="ckinDay" id="ckinDay" value="${ckinDay}">
 			<input type="hidden" name="ckoutDay" id="ckoutDay" value="${ckoutDay }">
 			<input type="hidden" name="dateDays" id="dateDays" value="${dateDays }">
 			<input type="hidden" name="roomNum" id="roomNum" value="">
-			<input type="hidden" name="command" id="command" value=""/>
 			<div id="container" class="container" style="margin-top: 0px;">
 				<!-- 컨텐츠 S -->
 				<div class="topArea">

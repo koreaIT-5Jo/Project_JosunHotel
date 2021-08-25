@@ -8,8 +8,6 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%
-	request.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; UTF-8");
 
 	String id = (String) session.getAttribute("idKey");
 	String startDate = (String)request.getAttribute("startDate");
@@ -73,7 +71,7 @@
 						<%
 						if(id == null || id == ""){
 						%>
-						<li><a href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>">로그인</a></li>
+						<%-- <li><a href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>">로그인</a></li> --%>
 						<li><a href="Join">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
 						<li><a href="Logout">로그아웃</a></li>
@@ -132,7 +130,7 @@
 							</dl>
 							<dl class="dlType02">
 								<dt>DATE</dt>
-								<dd id="dateText"><%=startDate %>&nbsp;<%=ckinDate %>&nbsp;-&nbsp;<%=endDate %>&nbsp;<%=ckoutDate %><span><%=dateDays %>&nbsp;박</span></dd>
+								<dd id="dateText">${reservationDto.startDate}&nbsp;${ckinDay}&nbsp;-&nbsp;${reservationDto.endDate }&nbsp;${ckoutDay }<span>${dateDays } 박</span></dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>ROOMS</dt>
@@ -140,11 +138,11 @@
 							</dl>
 							<dl class="dlType03">
 								<dt>ADULTS</dt>
-								<dd id="adultsNum"><%=adltCntArr %></dd>
+								<dd>${reservationDto.adultCnt }</dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>CHILDREN</dt>
-								<dd id="childrenNum"><%=chldCntArr %></dd>
+								<dd>${reservationDto.childrenCnt }</dd>
 							</dl>
 						</div>
 					</div>
@@ -170,9 +168,9 @@
 										<h3 class="opTit">BREAKFAST</h3>
 										<div class="addOption" data-type="optA">
 											<span class="txt">성인 조식 추가</span>
-											<span class="price">KRW <%=map.get("audlts_price") %></span>
+											<span class="price">KRW 45,000</span>
 											<div class="numPeople type02">
-												<input type="hidden" name="optAAmount" id="optAAmount0" value="<%=map.get("audlts_price") %>">
+												<input type="hidden" name="optAAmount" id="optAAmount0" value="45,000">
 												<input type="hidden" name="adult_breakfast" id="adult_breakfast" value="0"/>
 												<button type="button" class="btnDown blank" data-btntype="down" disabled="disabled">인원 수 감소</button>
 												<span>0</span>
@@ -181,9 +179,9 @@
 										</div>
 										<div class="addOption" data-type="optC">
 											<span class="txt">어린이 조식 추가</span>
-											<span class="price">KRW <%=map.get("children_price") %></span>
+											<span class="price">KRW 27,000</span>
 											<div class="numPeople type02">
-												<input type="hidden" name="optCAmount" id="optCAmount0" value="<%=map.get("children_price") %>">
+												<input type="hidden" name="optCAmount" id="optCAmount0" value="27,000">
 												<input type="hidden" name="children_breakfast" id="children_breakfast" value="0"/>
 												<button type="button" class="btnDown blank" data-btntype="down" disabled="disabled">인원 수 감소</button>
 												<span>0</span>

@@ -2,6 +2,8 @@ package com.josun.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +43,18 @@ public class ReservationController {
 	}
 	// 예약페이지 - 옵션선택
 	@RequestMapping(value = "/step2")
-	public String reservationStep2() {
+	public String reservationStep2(ReservationDTO reservationDto,HttpServletRequest request) {
+		String ckinDay = request.getParameter("ckinDay");
+		String ckoutDay = request.getParameter("ckoutDay");
+		String dateDays = request.getParameter("dateDays");
+		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
+		RoomDTO roomDto = roomService.roomOptionInfo(roomNum); 
+		
+		request.setAttribute("reservationDto", reservationDto);
+		request.setAttribute("ckinDay",ckinDay);
+		request.setAttribute("ckoutDay",ckoutDay);
+		request.setAttribute("dateDays", dateDays);
+		request.setAttribute("roomDto", roomDto);
 		return "reservation/reserveStep2";
 	}
 	// 예약페이지 - 옵션선택

@@ -30,11 +30,10 @@ public class RoomDAOTest {
 		String roomNum = dao.getDuplicateCheckRoomNumList("2021.07.19", "2021.07.21");
 		System.out.println(roomNum);
 	}
-	
 	@Test
-	public void roomDetailInfo() {
-		HashMap<String, Object> map = dao.roomDetailInfo(1);
-		System.out.println(map);
+	public void roomOptionPageInfoTest() {
+		RoomDTO dto = dao.roomOptionInfo(1);
+		System.out.println(dto);
 	}
 	
 }

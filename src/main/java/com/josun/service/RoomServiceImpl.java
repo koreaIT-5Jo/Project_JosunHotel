@@ -27,4 +27,10 @@ public class RoomServiceImpl implements RoomService {
 		return map;
 	}
 
+	@Override
+	public RoomDTO roomOptionInfo(int num) {
+		RoomDTO dto = dao.roomOptionInfo(num);
+		return dto;
+	}
+
 }
