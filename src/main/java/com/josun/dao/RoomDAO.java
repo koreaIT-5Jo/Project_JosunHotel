@@ -8,5 +8,5 @@ import com.josun.dto.RoomDTO;
 public interface RoomDAO {
 	List<RoomDTO> getRoomList(String startDate, String endDate) throws Exception;
 	String getDuplicateCheckRoomNumList(String startDate, String endDate)throws Exception;
-	HashMap<String,Object> roomDetailInfo(int num);
+	HashMap<String,String> roomDetailInfo(int num);
 }

@@ -19,46 +19,50 @@
 
 
 function fncOpenRoomInfo(param){
-	var data1 = {num:param};
+	
+	var num = {num : param};
 	$.ajax({
-		type : 'POST',
 		url : 'http://localhost:8090/www/rest/vo/json',
-		data : JSON.stringify(data1),
-		dataType : 'application/json',
+		type : 'POST',
+		data : JSON.stringify(num),
+		dataType : 'json',
+		contentType: 'application/json',
 		success : function(data){
-			alert("성공");
-			alert(data);
-			/* $('#layerPopup .title').text(data.name);
-			$('.contBox1 img').attr('src',data.img);
-			$('.contBox2 li:nth-child(1) dd').text(data.location);
-			$('.contBox2 li:nth-child(2) dd').text(data.beds);
-			$('.contBox2 li:nth-child(3) dd').text(data.size);
-			$('.contBox2 li:nth-child(4) dd').text(data.features);
-			$('.contBox2 li:nth-child(5) dd').text(data.view);
 			
-			var bath = (data.bath).split('//');
+			console.log(data);
+			console.log(data.LOCATION);
+			
+			$('#layerPopup .title').text(data.NAME);
+			$('.contBox1 img').attr('src',"../resources/"+data.IMG);
+			$('.contBox2 li:nth-child(1) dd').text(data.LOCATION);
+			$('.contBox2 li:nth-child(2) dd').text(data.BEDS);
+			$('.contBox2 li:nth-child(3) dd').text(data.R_SIZE);
+			$('.contBox2 li:nth-child(4) dd').text(data.FEATURES);
+			$('.contBox2 li:nth-child(5) dd').text(data.VIEWPOINT);
+			
+			var bath = (data.BATH).split('//');
 			for(var i=0; i<bath.length; i++){
 				$('#tab01 ul').append("<li>" + bath[i] + "</li>");
 			}
-			var bed = (data.bed).split('//');
+			var bed = (data.BED).split('//');
 			for(var i=0; i<bed.length; i++){
 				$('#tab02 ul').append("<li>" + bed[i] + "</li>");
 			}
-			var minibar = (data.minibar).split('//');
+			var minibar = (data.MINIBAR).split('//');
 			for(var i=0; i<minibar.length; i++){
 				$('#tab03 ul').append("<li>" + minibar[i] + "</li>");
 			}
-			var closet = (data.closet).split('//');
+			var closet = (data.CLOSET).split('//');
 			for(var i=0; i<closet.length; i++){
 				$('#tab04 ul').append("<li>" + closet[i] + "</li>");
 			}
 			
-			$('#layerPopup').fadeIn("fast"); */
+			$('#layerPopup').fadeIn("fast");
 		},
 		error : function(){
 			alert("에러발생");
 		}
-	});
+	}); 
 }
 
 //비교함 빼기
@@ -432,31 +436,31 @@ function roomReserveBtn(roomNum){
 										<li>
 											<dl>
 												<dt>LOCATION</dt>
-												<dd>1층 - 6층</dd>
+												<dd></dd>
 											</dl>
 										</li>
 										<li>
 											<dl>
 												<dt>BEDS</dt>
-												<dd>수퍼킹1, 퀸2 또는 퀸4</dd>
+												<dd></dd>
 											</dl>
 										</li>
 										<li>
 											<dl>
 												<dt>SIZE</dt>
-												<dd>193.1</dd>
+												<dd></dd>
 											</dl>
 										</li>
 										<li>
 											<dl>
 												<dt>ROOM FEATURES</dt>
-												<dd>거실 1, 응접실 1, 침실 2, 화장실 2, 펜트리 1, 발코니 1, 프라이빗 풀</dd>
+												<dd></dd>
 											</dl>
 										</li>
 										<li>
 											<dl>
 												<dt>VIEW</dt>
-												<dd>파노라마뷰, 오션뷰</dd>
+												<dd></dd>
 											</dl>
 										</li>
 										<li>

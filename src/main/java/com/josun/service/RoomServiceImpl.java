@@ -22,8 +22,8 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public HashMap<String, Object> roomDetailInfo(int num) {
-		HashMap<String,Object> map = dao.roomDetailInfo(num);
+	public HashMap<String, String> roomDetailInfo(int num) {
+		HashMap<String,String> map = dao.roomDetailInfo(num);
 		return map;
 	}
 

@@ -37,8 +37,8 @@ public class RoomDAOImpl implements RoomDAO {
 	}
 
 	@Override
-	public  HashMap<String,Object> roomDetailInfo(int num) {
-		HashMap<String, Object> map = sqlSession.selectOne("com.josun.mapper.roomMapper.roomDetailInfo", num);
+	public  HashMap<String,String> roomDetailInfo(int num) {
+		HashMap<String, String> map = sqlSession.selectOne("com.josun.mapper.roomMapper.roomDetailInfo", num);
 		return map;
 	}
 }
