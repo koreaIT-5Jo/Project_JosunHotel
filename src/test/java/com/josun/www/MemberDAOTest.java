@@ -50,12 +50,6 @@ public class MemberDAOTest {
 	}
 	
 	@Test
-	public void testFindMem() throws Exception{
-		MemberDTO dto = dao.findMem("admin");
-		System.out.println(dto.getName() + " " + dto.getEmail() + " " + dto.getAddress() + " " + dto.getPhone());
-	}
-	
-	@Test
 	public void testUpdateMem() throws Exception{
 		System.out.println(dao.updateMem("admin", "관리자", "00000//서울특별시", "010-0000-0000", "admin@naer.com")); //1
 	}

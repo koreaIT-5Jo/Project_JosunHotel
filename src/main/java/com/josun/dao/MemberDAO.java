@@ -22,6 +22,5 @@ public interface MemberDAO {
 	int getDataCount(String searchKey, String searchValue);
 	
 	//회원수정 - 회원정보 불러오기
-	MemberDTO findMem(String id);
 	int updateMem(String id, String name, String address, String phone, String email);
 }

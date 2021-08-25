@@ -49,12 +49,6 @@ public class MemberServiceTest {
 	}
 	
 	@Test
-	public void testFindMem() throws Exception{
-		MemberDTO dto = service.findMem("admin");
-		System.out.println(dto.getName() + " " + dto.getPhone() + " " + dto.getAddress() + " " + dto.getEmail());
-	}
-	
-	@Test
 	public void testUpdateMem() throws Exception{
 		System.out.println(service.updateMem("admin", "관리자", "00000//서울특별시", "010-0000-0000", "admin@naver.com")); //1
 	}

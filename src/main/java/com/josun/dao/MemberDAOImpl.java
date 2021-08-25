@@ -77,11 +77,6 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public MemberDTO findMem(String id) {
-		return sqlsession.selectOne("com.josun.mapper.MemberMapper.findMem", id);
-	}
-
-	@Override
 	public int updateMem(String id, String name, String address, String phone, String email) {
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("id", id);

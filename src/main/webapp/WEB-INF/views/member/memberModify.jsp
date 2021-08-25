@@ -92,13 +92,13 @@ function fncMyInfoUpdApi() {
 		return false;
 	}
 	
-	/* $.ajax({
+	$.ajax({
 		type:'post',
-		url:'http://localhost:9091/www/memberModifyAction',
+		url:'memberModifyAction',
 		data: JSON.stringify(modifyData),
 		contentType: 'application/json; charset=utf-8',
 		success: function(data) {
-			if(data.fileSaveCheck == true) {
+			if(data) {
 				alert('회원 정보가 수정되었습니다.');
 			} else {
 				alert('회원 정보가 수정되지 않았습니다.');
@@ -107,9 +107,7 @@ function fncMyInfoUpdApi() {
 		error:function(request, status, error) { 
 			alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
 		}
-	}); */
-	
-	alert('ajax...여기까지 왔당');
+	});
 }
 </script>
 </head>
@@ -154,11 +152,11 @@ function fncMyInfoUpdApi() {
 					<li><a href="register">회원가입</a></li>
 					<%}else if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
 					<%}else{ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -221,15 +219,15 @@ s	<!-- Start. contents -->
 								</div>
 								<div class="intInner phoneInp">
 									<span class="intArea">
-										<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width: 165px" aria-required="true" value="${phone[0]}">
+										<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width: 165px" aria-required="true" value="${phone1}">
 									</span>
 									<span class="dash"></span>
 									<span class="intArea">
-										<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width: 165px" aria-required="true" value="${phone[1]}">
+										<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width: 165px" aria-required="true" value="${phone2}">
 									</span>
 									<span class="dash"></span>
 									<span class="intArea">
-										<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width: 165px" aria-required="true" value="${phone[2]}">
+										<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width: 165px" aria-required="true" value="${phone3}">
 									</span>
 									<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
 								</div>
@@ -242,15 +240,15 @@ s	<!-- Start. contents -->
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-										<input type="text" id="postcode" name="postcode" style="width: 305px" aria-required="true" readonly value="${addr[0]}">
+										<input type="text" id="postcode" name="postcode" style="width: 305px" aria-required="true" readonly value="${addr1}">
 									</span>
 									<button type="button" class="btnSC btnM" onclick="postcodeT();">우편번호 검색</button>
 								</div>
 								<div class="intInner duobuleInp">
 									<span class="intArea">
-										<input type="text" id="address" name="address" style="width: 490px" title="주소" aria-required="true" readonly value="${addr[1]}"></span>
+										<input type="text" id="address" name="address" style="width: 490px" title="주소" aria-required="true" readonly value="${addr2}"></span>
 									<span class="intArea">
-										<input type="text" id="detailAddress" name="detailAddress" style="width: 490px" title="상세주소" aria-required="true" placeholder="상세주소를 입력해주세요." value="${addr[2]}">
+										<input type="text" id="detailAddress" name="detailAddress" style="width: 490px" title="상세주소" aria-required="true" placeholder="상세주소를 입력해주세요." value="${addr3}">
 									</span>
 									<span class="alertMessage">상세주소를 입력해주세요.</span>
 								</div>
@@ -262,10 +260,10 @@ s	<!-- Start. contents -->
 								</div>
 								<div class="intInner emailInp">
 									<span class="intArea">
-										<input type="text" id="emailId" name="emailId" style="width: 244px" aria-required="true" value="${email[0]}"></span>
+										<input type="text" id="emailId" name="emailId" style="width: 244px" aria-required="true" value="${email1}"></span>
 									<span class="dash">@</span>
 									<span class="intArea">
-										<input type="text" id="eDomain" name="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value="${email[1]}"></span>
+										<input type="text" id="eDomain" name="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value="${email2}"></span>
 									<div class="intArea selectWrap" style="width: 180px" first="true">
 										<select class="my_select" id="emailType" name="emailType">
 											<option value="직접 입력">직접입력</option>

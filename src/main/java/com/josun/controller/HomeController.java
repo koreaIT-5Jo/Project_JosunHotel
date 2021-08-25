@@ -166,37 +166,38 @@ public class HomeController {
 		String[] email = userEmail.split("@");
 		
 		request.setAttribute("name", name);
-		request.setAttribute("addr", addr);
-		request.setAttribute("phone", phone);
-		request.setAttribute("email", email);
+		request.setAttribute("addr1", addr[0]);
+		request.setAttribute("addr2", addr[1]);
+		request.setAttribute("addr3", addr[2]);
+		request.setAttribute("phone1", phone[0]);
+		request.setAttribute("phone2", phone[1]);
+		request.setAttribute("phone3", phone[2]);
+		request.setAttribute("email1", email[0]);
+		request.setAttribute("email2", email[1]);
 		
 		return "member/memberModify";
 	}
 	@RequestMapping(value = "/memberModifyAction")
-	public Map<String,Object> memberModifyAction(HttpServletRequest request, HttpSession session, @RequestBody Map<String,String> param) {
+	public String memberModifyAction(HttpSession session, @RequestBody Map<String,String> param) {
 		String id = (String)session.getAttribute("id");
 		String name = param.get("name");
-		String address = param.get("address");
+		String addre = param.get("address");
 		String phone = param.get("phone");
 		String email = param.get("email");
 		
-		System.out.println("파라미터 확인: " + name + " " + address + " " + phone + " " + email);
-		
-		int result = memberservice.updateMem(id, name, address, phone, email);
-		System.out.println(" 업데이트 결과 : " + result);
-		
-		boolean fileSaveCheck = false;
+		int result = memberservice.updateMem(id, name, addre, phone, email);
+		System.out.println("파라미터 확인: " + id + " " + name + " " + addre + " " + phone + " " + email + "업데이트 결과 : " + result);
 		
 		if(result == 1) {
-			fileSaveCheck = true;
+			session.setAttribute("name", name);
+			session.setAttribute("addr", addre);
+			session.setAttribute("phone", phone);
+			session.setAttribute("email", email);
 		} else {
-			fileSaveCheck = false;
+			System.out.println(id + "회원의 회원정보가 업그레이드 되지 않았습니다.");
 		}
 		
-		Map<String, Object> map1 = new HashMap<String, Object>();
-		map1.put("fileSaveCheck", fileSaveCheck);
-		
-		return map1;
+		return "member/memberModify";
 	}
 	
 	//마이페이지 - 비밀번호 변경
