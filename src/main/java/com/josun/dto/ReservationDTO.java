@@ -17,7 +17,6 @@ public class ReservationDTO {
 	private String card_expiration;
 	private String birth;
 	private int total_pay;
-	private String pay; //결제금액 스트링타입(콤마찍을려고 만들었어요)
 	private int room_number;
 	private String card_pw;
 	private String memeberId;
@@ -88,10 +87,10 @@ public class ReservationDTO {
 	public void setChil_breakfast(int chil_breakfast) {
 		this.chil_breakfast = chil_breakfast;
 	}
-	public String getRequest() {
+	public String getTxtRequest() {
 		return request;
 	}
-	public void setRequest(String request) {
+	public void setTxtRequest(String request) {
 		this.request = request;
 	}
 	public String getPhoneNum() {
@@ -154,12 +153,6 @@ public class ReservationDTO {
 	public void setMemeberId(String memeberId) {
 		this.memeberId = memeberId;
 	}
-	public String getPay() {
-		return pay;
-	}
-	public void setPay(String pay) {
-		this.pay = pay;
-	}
 	public int getNum() {
 		return num;
 	}
@@ -172,7 +165,7 @@ public class ReservationDTO {
 				+ ", adultCnt=" + adultCnt + ", childrenCnt=" + childrenCnt + ", adult_breakfast=" + adult_breakfast
 				+ ", chil_breakfast=" + chil_breakfast + ", request=" + request + ", phoneNum=" + phoneNum + ", email="
 				+ email + ", card_type=" + card_type + ", card_num=" + card_num + ", card_expiration=" + card_expiration
-				+ ", birth=" + birth + ", total_pay=" + total_pay + ", pay=" + pay + ", room_number=" + room_number
+				+ ", birth=" + birth + ", total_pay=" + total_pay + ", room_number=" + room_number
 				+ ", card_pw=" + card_pw + ", memeberId=" + memeberId + "]";
 	}
 	

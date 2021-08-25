@@ -56,10 +56,10 @@ public class RoomDTO {
 		this.beds = beds;
 	}
 	
-	public String getrSize() {
+	public String getr_Size() {
 		return r_Size;
 	}
-	public void setrSize(String rSize) {
+	public void setr_Size(String rSize) {
 		this.r_Size = rSize;
 	}
 	public String getFeatures() {
@@ -83,7 +83,7 @@ public class RoomDTO {
 	@Override
 	public String toString() {
 		return "RoomDTO [hotelNumber=" + hotelNumber + ", num=" + num + ", name=" + name + ", price=" + price + ", img="
-				+ img + ", location=" + location + ", beds=" + beds + ", rSize=" + r_Size + ", features=" + features
+				+ img + ", location=" + location + ", beds=" + beds + ", r_Size=" + r_Size + ", features=" + features
 				+ ", viewPoint=" + viewPoint + ", detailView=" + detail_View + "]\n";
 	}
 	

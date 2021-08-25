@@ -34,7 +34,7 @@ em, address {    font-style: normal;}
 .selResult .infoArea dl.dlType02 dd span:before {    content: '';    display: inline-block;    position: relative;    top: 2px;    width: 1px;    height: 18px;    background: #ccc;    margin: 0 15px;}
 .selResult .infoArea dl.dlType03 {    text-align: center;    padding-right: 100px;}
 .roomContainer .roomList > li {border-bottom: 1px solid #ccc;padding: 71px 0;}
-.stepWrap ol li.prev:before {border: none;text-indent: -9999px;background: url(https://www.josunhotel.com/static/home/images/ko/pc/common/bg_step.png) no-repeat;}
+.stepWrap ol li.prev:before {border: none;text-indent: -9999px;background: url(../../img/btn_icon/bg_step.png) no-repeat;}
 
 .stepWrap ol li:last-child.on:after {    position: absolute;    left: -12px;    top: 18px;}
 .stepWrap ol li.on:after {    content: '';    display: inline-block;    width: 50px;    height: 1px;    background: #aaa;    margin-left: 20px;    vertical-align: middle;}
@@ -59,7 +59,7 @@ label {    cursor: pointer;}
 .intList > li .intInner {    display: inline-block;    position: relative;}
 .intList > li .intInner > span {    position: relative;    display: inline-block;}
 .intList > li .essential {    display: inline-block;    width: 6px;    height: 6px;    text-indent: -9999px;    overflow: hidden;    position: relative;    padding-right: 4px;    vertical-align: 2px;}
-.intList > li .essential:after {    content: '';    display: inline-block;    position: absolute;    right: 0;    top: 50%;    margin-top: -4px;    width: 6px;    height: 6px;    background: url(https://www.josunhotel.com/static/home/images/ko/pc/common/ico_essential.png) no-repeat 0 0;}
+.intList > li .essential:after {    content: '';    display: inline-block;    position: absolute;    right: 0;    top: 50%;    margin-top: -4px;    width: 6px;    height: 6px;    background: url(../../img/btn_icon/ico_essential.png) no-repeat 0 0;}
 .intList > li .phoneInp .selectWrap { margin-right: 20px;    vertical-align: middle;}
 .intList > li .emailInp .selectWrap {    display: inline-block;    margin-left: 18px;    vertical-align: middle;}
 .selectWrap {    display: inline-block;    position: relative;    height: 60px;    background: #fff;}
@@ -89,7 +89,7 @@ p.txtGuide, .txtGuide li {    position: relative;    color: #888;    padding-lef
 .frm label {    display: inline-block;    position: relative;    font-size: 17px;    padding-left: 35px;    font-family: gothamL,notokrL;    text-transform: uppercase;}
 .frm.type02 input[type=checkbox]:checked+label:before {    background-position: -18px 0;}
 .frm.type02 label:before {    left: 0;    top: 9px;    width: 18px;    height: 13px;}
-.frm label:before {    content: '';    display: block;    position: absolute;  background: url(https://www.josunhotel.com/static/home/images/ko/pc/common/spr_form.png) no-repeat;}
+.frm label:before {    content: '';    display: block;    position: absolute;  background: url(../../img/btn_icon/spr_form.png) no-repeat;}
 
 .toggleList > li .toggleCont {    display: none;    position: relative;}
 .toggleList.agreeCont .toggleCont .toggleInner {    padding: 25px;    background: #f9f9f9;}

@@ -1,10 +1,8 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%
-	request.setCharacterEncoding("UTF-8");
-	response.setContentType("text/html; UTF-8");
-	
 	String id = (String) session.getAttribute("idKey");
 	String name = (String) session.getAttribute("nameKey");
 	String email = (String) session.getAttribute("emailKey");
@@ -13,30 +11,17 @@
 	String phone = (String) session.getAttribute("phoneKey");
 	String[] phoneArr = null;
 	if(phone != null){phoneArr = phone.split("-", 3);} 	/* 일단 오류를 위해 막아둔거임  */
-	String startDate = (String)request.getAttribute("startDate");
-	String endDate = (String)request.getAttribute("endDate");
-	String ckinDate = (String)request.getAttribute("ckinDay");
-	String ckoutDate = (String)request.getAttribute("ckoutDay");
-	int dateDays =(Integer)(request.getAttribute("dateDays"));
-	String adltCntArr =(String)request.getAttribute("adltCntArr");
-	String chldCntArr = (String)request.getAttribute("chldCntArr");
-	String adult_breakfast = (String)request.getAttribute("adult_breakfast");
-	String children_breakfast = (String)request.getAttribute("children_breakfast");
-	String roomPrice = (String)request.getAttribute("roomPrice");
-	String totalPay = (String)request.getAttribute("totalpay");
-	String txtRequest = (String)request.getAttribute("txtRequest");
-	HashMap<String, Object> map  = (HashMap)request.getAttribute("roomMap");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>예약자 정보 입력 | 그랜드 조선 호텔</title>
-<link rel="stylesheet" href="css/reservationImformation.css">
-<link rel="stylesheet" href="css/headerfooter.css">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="../resources/css/reservation/reserveStep3.css">
+<link rel="stylesheet" href="../resources/css/headerfooter.css">
+<link rel="stylesheet" href="../resources/css/default.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="../resources/js/header.js"></script>
 <script>
 
 
@@ -68,7 +53,7 @@ function addDate(num) {
 		if($("#adult_breakfast").val() != 0){
 			let sucbacDay =(Number)($("#dateDays").val()); //숙박일
 			let adult_breakfast = (Number)($("#adult_breakfast").val());
-			let adult_price = uncomma('<%=map.get("audlts_price")%>');
+			let adult_price = '45,000';
 			let price = sucbacDay*adult_breakfast*adult_price;
 			
 			$("#roomOptInfo0").css('display','');
@@ -79,7 +64,7 @@ function addDate(num) {
 		if($("#children_breakfast").val() != 0){
 			let sucbacDay =(Number)($("#dateDays").val()); //숙박일
 			let chil_breakfast = (Number)($("#adult_breakfast").val());
-			let chli_price = uncomma('<%=map.get("children_price")%>');
+			let chli_price = '27,000';
 			let price = sucbacDay*chil_breakfast*chli_price;
 			
 			$("#roomOptInfo0").append("<li><span class=\"lfData\">어린이 조식</span><span class=\"rtData\">"+comma(price)+"</span></li>")
@@ -289,8 +274,7 @@ function fncGoResv(){
 	var answer;
 	answer = confirm("예약 하시겠습니까?");
 	if(answer == true){
-	   $("#command").val("reservation");
-	   $("#step3Form").attr("action", "Controller");
+	   $("#step3Form").attr("action", "final");
 	   $("#step3Form").submit();
 	}
 }
@@ -336,7 +320,7 @@ function fncGoResv(){
 						<%
 						if(id == null || id == ""){
 						%>
-						<li><a href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>">로그인</a></li>
+						<%-- <li><a href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>">로그인</a></li> --%>
 						<li><a href="Join">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
 						<li><a href="Logout">로그아웃</a></li>
@@ -353,25 +337,24 @@ function fncGoResv(){
 		</div>
 		<!-- End. header -->		
 		<form action="" name="step3Form" id="step3Form" method="post">
-		<input type="hidden" name="startDate" id="startDate" value="${startDate}">
-		<input type="hidden" name="endDate" id="endDate" value="${endDate }">
-		<input type="hidden" name="adltCntArr" id="adltCntArr" value="${adltCntArr}">
-		<input type="hidden" name="chldCntArr" id="chldCntArr" value="${chldCntArr}">
-		<input type="hidden" name="ckinDay" id="ckinDay" value="${ckinDay}">
-		<input type="hidden" name="ckoutDay" id="ckoutDay" value="${ckoutDay }">
-		<input type="hidden" name="dateDays" id="dateDays" value="${dateDays }">
-		<input type="hidden" name="roomPrice" id="roomPrice" value="${roomPrice}"/>
-		<input type="hidden" name="roomNum" id="roomNum" value="<%=map.get("num")%>">
-		<input type="hidden" name="adult_breakfast" id="adult_breakfast" value="${adult_breakfast}"/>
-		<input type="hidden" name="children_breakfast" id="children_breakfast" value="${children_breakfast }"/>
-		<input type="hidden" name="totalpay" id = "totalpay" value="${totalpay}"/>
-		<input type="hidden" name="txtRequest" id="txtRequest" value="${txtRequest}"/>
-		<input type="hidden" name="id" id="id" value="<%=id %>"/>
+		<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
+		<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
+		<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">
+		<input type="hidden" name="childrenCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
+		<input type="hidden" name="ckinDay" id="ckinDay" value="${stepVo.ckinDay}">
+		<input type="hidden" name="ckoutDay" id="ckoutDay" value="${stepVo.ckoutDay }">
+		<input type="hidden" name="dateDays" id="dateDays" value="${stepVo.dateDays }">
+		<input type="hidden" name="roomPrice" id="roomPrice" value="${roomDto.price}"/>
+		<input type="hidden" name="room_number" id="roomNum" value="${roomDto.num}">
+		<input type="hidden" name="adult_breakfast" id="adult_breakfast" value="${reservationDto.adult_breakfast}"/>
+		<input type="hidden" name="children_breakfast" id="children_breakfast" value="${reservationDto.chil_breakfast }"/>
+		<input type="hidden" name="total_pay" id = "totalpay" value="${reservationDto.total_pay}"/>
+		<input type="hidden" name="request" id="txtRequest" value="${reservationDto.txtRequest}"/>
+		<input type="hidden" name="memberId" id="id" value="<%=id %>"/>
 		<input type="hidden" name="email" id="email" value=""/>
-		<input type="hidden" name="cardNo" id="cardNo" value=""/>
-		<input type="hidden" name="command" id="command" value=""/>
+		<input type="hidden" name="card_num" id="cardNo" value=""/>
 		<input type="hidden" name="birth" id="birth" value=""/>
-		<input type="hidden" name="exepiration" id="exepiration" value=""/>
+		<input type="hidden" name="card_expiration" id="exepiration" value=""/>
 			<div id="container" class="container">
 				<!-- 컨텐츠 S -->
 				<h1 class="hidden">예약</h1>
@@ -405,7 +388,7 @@ function fncGoResv(){
 							</dl>
 							<dl class="dlType02">
 								<dt>DATE</dt>
-								<dd id="dateText"><%=startDate %>&nbsp;<%=ckinDate %>&nbsp;-&nbsp;<%=endDate %>&nbsp;<%=ckoutDate %><span><%=dateDays %>&nbsp;박</span></dd>
+								<dd id="dateText">${reservationDto.startDate}&nbsp;${ckinDay}&nbsp;-&nbsp;${reservationDto.endDate }&nbsp;${ckoutDay }<span>${dateDays } 박</span></dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>ROOMS</dt>
@@ -413,11 +396,11 @@ function fncGoResv(){
 							</dl>
 							<dl class="dlType03">
 								<dt>ADULTS</dt>
-								<dd><%=adltCntArr %></dd>
+								<dd id="adultsNum">${reservationDto.adultCnt }</dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>CHILDREN</dt>
-								<dd><%=chldCntArr %></dd>
+								<dd id="childrenNum">${reservationDto.childrenCnt }</dd>
 							</dl>
 						</div>
 					</div>
@@ -427,9 +410,9 @@ function fncGoResv(){
 					<!-- rsvRoomWrap -->
 					<div class="rsvRoomWrap">
 						<div class="lCont">
-							<h2 class="titDep2"><%=map.get("name") %></h2>
+							<h2 class="titDep2">${roomDto.name }</h2>
 							<p class="categoryTxt">
-								 <%=map.get("view") %> / Size : <%=map.get("size") %> ㎡
+								 ${roomDto.detailView } / Size : ${roomDto.r_Size } ㎡
 							</p>
 							<ul class="intList">
 								<li>
@@ -458,7 +441,7 @@ function fncGoResv(){
 									</span>
 								</div>
 								<div class="intInner phoneInp">
-								<input type="hidden" id="mobPhoneTelNo" name="mobPhoneTelNo" value="">
+								<input type="hidden" id="mobPhoneTelNo" name="phoneNum" value="">
 									<%if(id!=null) { %>
 									<span class="intArea">
 									<input type="text" id="moblphonTelno" name="moblphonTelno" style="width:145px" aria-required="true" onkeyup="this.value=this.value.replace(/[^\d\ ]/g, '');" value="<%=phoneArr[0]%>">
@@ -529,7 +512,7 @@ function fncGoResv(){
 								</div>
 								<div class="intArea intInner">
 									<div class="selectWrap" style="width:900px" first="false">
-										<select name="cardCode" id="cardCode" class="form-control" style="/* display: none; */">
+										<select name="card_type" id="cardCode" class="form-control" style="/* display: none; */">
 											<option value="">카드 선택</option>
 											<option value="01">비씨</option>
 											<option value="02">국민</option>
@@ -629,7 +612,7 @@ function fncGoResv(){
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-									<input type="password" id="cardPw" name="cardPw" placeholder="비밀번호 앞 2자리" style="width:165px" aria-required="true" maxlength="2">
+									<input type="password" id="cardPw" name="card_pw" placeholder="비밀번호 앞 2자리" style="width:165px" aria-required="true" maxlength="2">
 									</span>
 									<span class="alertMessage">카드 비밀번호를 입력해주세요.(비밀번호 앞 2자리)</span>
 									<!-- 20200420 수정 -->
@@ -749,7 +732,7 @@ function fncGoResv(){
 		<!-- //container -->
 		<div style="background:#000;"><!-- Start. footer -->
 			<div id="footer">
-				<div class="foot-logo"><img src="img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
+				<div class="foot-logo"><img src="../resources/img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
 				</div>
 				<div class="foot-txt">
 					서울시 중구 소공로 106 대표이사 한채양 T. 02-771-0500<br>

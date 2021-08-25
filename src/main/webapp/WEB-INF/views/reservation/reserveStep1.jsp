@@ -30,7 +30,6 @@ function fncOpenRoomInfo(param){
 		success : function(data){
 			
 			console.log(data);
-			console.log(data.LOCATION);
 			
 			$('#layerPopup .title').text(data.NAME);
 			$('.contBox1 img').attr('src',"../resources/"+data.IMG);
@@ -357,7 +356,7 @@ function roomReserveBtn(roomNum){
 							<li id="room_${dto.getNum() }">
 								<dl class="roomIntro">
 									<dt class="roomName">${dto.getName()}</dt>
-									<dd class="roomBenefit">${dto.getDetailView()} | Size : ${dto.getrSize()} ㎡</dd>
+									<dd class="roomBenefit">${dto.getDetailView()} | Size : ${dto.getr_Size()} ㎡</dd>
 									<dd class="btnView">
 										<a href="#none" class="btnS icoArr" onclick="fncOpenRoomInfo(${dto.getNum()});">객실 상세보기 </a>
 									</dd>

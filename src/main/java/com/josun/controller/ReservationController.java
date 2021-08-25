@@ -13,6 +13,7 @@ import com.josun.dto.ReservationDTO;
 import com.josun.dto.RoomDTO;
 import com.josun.service.RoomService;
 import com.josun.util.TimeUtil;
+import com.josun.vo.StepVO;
 
 @Controller
 @RequestMapping(value = "/reservation")
@@ -43,11 +44,10 @@ public class ReservationController {
 	}
 	// 예약페이지 - 옵션선택
 	@RequestMapping(value = "/step2")
-	public String reservationStep2(ReservationDTO reservationDto,HttpServletRequest request) {
+	public String reservationStep2(ReservationDTO reservationDto,int roomNum,HttpServletRequest request) {
 		String ckinDay = request.getParameter("ckinDay");
 		String ckoutDay = request.getParameter("ckoutDay");
 		String dateDays = request.getParameter("dateDays");
-		int roomNum = Integer.parseInt(request.getParameter("roomNum"));
 		RoomDTO roomDto = roomService.roomOptionInfo(roomNum); 
 		
 		request.setAttribute("reservationDto", reservationDto);
@@ -59,7 +59,18 @@ public class ReservationController {
 	}
 	// 예약페이지 - 옵션선택
 	@RequestMapping(value = "/step3")
-	public String reservationStep3() {
+	public String reservationStep3(ReservationDTO reservationDto,int roomNum,StepVO stepVo, Model model) {
+		
+		RoomDTO roomDto = roomService.roomOptionInfo(roomNum); 
+		
+		model.addAttribute("roomDto",roomDto);
+		model.addAttribute("reservationDto",reservationDto);
+		model.addAttribute("stepVo",stepVo);
 		return "reservation/reserveStep3";
 	}	
+	
+	@RequestMapping(value = "/final")
+	public String reservationFinal() {
+		return null;
+	}
 }

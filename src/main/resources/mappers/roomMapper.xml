@@ -13,6 +13,6 @@
 		select r.name, r.img, r.location, r.beds, r.r_size, r.features, r.viewpoint, a.bath, a.bed, a.minibar, a.closet from room r, amenity_package a where r.amenity = a.num and r.num = #{num}
 	</select>
 	<select id="roomOptionInfo" resultType="com.josun.dto.RoomDTO">
-		select name,price,r_size,detail_view  from room  WHERE num = #{num}
+		select num,name,price,r_size,detail_view  from room  WHERE num = #{num}
 	</select>
 </mapper>

@@ -1,34 +1,19 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
  pageEncoding="UTF-8"%>
-<%-- <%@page import="room.CheckInOutDay"%>
-<%@page import="conn.DBConn" %>
-<%@page import="room.RoomDAO" %>
-<%@page import="room.RoomDTO" %> --%>
-<%@page import="java.sql.*" %>
-<%@page import="java.util.*" %>
 <%
-
 	String id = (String) session.getAttribute("idKey");
-	String startDate = (String)request.getAttribute("startDate");
-	String endDate = (String)request.getAttribute("endDate");
-	String adltCntArr = (String)request.getAttribute("adltCnt");
-	String chldCntArr = (String)request.getAttribute("chldCnt");
-	String ckinDate = (String)request.getAttribute("ckinDay");
-	String ckoutDate = (String)request.getAttribute("ckoutDay");
-	String dateDays = (String)request.getAttribute("dateDays");
-	HashMap<String, Object> map  = (HashMap)request.getAttribute("room");
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>옵션 선택 | 그랜드 조선 호텔</title>
-<link rel="stylesheet" href="css/selectOption.css">
-<link rel="stylesheet" href="css/headerfooter.css">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="../resources/css/reservation/reserveStep2.css">
+<link rel="stylesheet" href="../resources/css/headerfooter.css">
+<link rel="stylesheet" href="../resources/css/default.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="../resources/js/header.js"></script>
 </head>
 <body>
 <!-- 바디 수정 210622 -->
@@ -89,16 +74,15 @@
 		<!-- End. header -->	
 	
 		<form action="" name="step2Form" id="step2Form" method="post">
-		<input type="hidden" name="startDate" id="startDate" value="${startDate}">
-		<input type="hidden" name="endDate" id="endDate" value="${endDate }">
-		<input type="hidden" name="adltCntArr" id="adltCntArr" value="${adltCnt}">
-		<input type="hidden" name="chldCntArr" id="chldCntArr" value="${chldCnt}">
+		<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
+		<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
+		<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">
+		<input type="hidden" name="childrenCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
 		<input type="hidden" name="ckinDay" id="ckinDay" value="${ckinDay}">
 		<input type="hidden" name="ckoutDay" id="ckoutDay" value="${ckoutDay }">
 		<input type="hidden" name="dateDays" id="dateDays" value="${dateDays }">
-		<input type="hidden" name="roomPrice" id="roomPrice" value="<%=map.get("price")%> "/>
-		<input type="hidden" name="roomNum" id="roomNum" value="${roomNum}">
-		<input type="hidden" name="command" id="command" value=""/>
+		<input type="hidden" name="price" id="roomPrice" value="${roomDto.price } "/>
+		<input type="hidden" name="roomNum" id="roomNum" value="${roomDto.num}">
 			<div id="container" class="container">
 				<h1 class="hidden">예약</h1>
 				<div class="topArea">
@@ -138,11 +122,11 @@
 							</dl>
 							<dl class="dlType03">
 								<dt>ADULTS</dt>
-								<dd>${reservationDto.adultCnt }</dd>
+								<dd id="adultsNum">${reservationDto.adultCnt }</dd>
 							</dl>
 							<dl class="dlType03">
 								<dt>CHILDREN</dt>
-								<dd>${reservationDto.childrenCnt }</dd>
+								<dd id="childrenNum">${reservationDto.childrenCnt }</dd>
 							</dl>
 						</div>
 					</div>
@@ -152,9 +136,9 @@
 					<!-- rsvRoomWrap -->
 					<div class="rsvRoomWrap">
 						<div class="lCont">
-							<h2 class="titDep2"><%=map.get("name") %></h2>
+							<h2 class="titDep2">${roomDto.name }</h2>
 							<p class="categoryTxt">
-								 <%=map.get("view") %> / Size : <%=map.get("size") %> ㎡
+								 ${roomDto.detailView } / Size : ${roomDto.r_Size } ㎡
 							</p>
 							<ul class="toggleList rsvList roomRsv" id="optInfo">
 								<li class="toggleOn" data-roomidx="0">
@@ -182,7 +166,7 @@
 											<span class="price">KRW 27,000</span>
 											<div class="numPeople type02">
 												<input type="hidden" name="optCAmount" id="optCAmount0" value="27,000">
-												<input type="hidden" name="children_breakfast" id="children_breakfast" value="0"/>
+												<input type="hidden" name="chil_breakfast" id="children_breakfast" value="0"/>
 												<button type="button" class="btnDown blank" data-btntype="down" disabled="disabled">인원 수 감소</button>
 												<span>0</span>
 												<button type="button" class="btnUp" data-btntype="up" disabled="disabled">인원 수 증가</button>
@@ -202,7 +186,7 @@
 										<h3 class="opTit">
 										REQUESTS
 										</h3>
-										<textarea name="contArr" placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." maxlength="200"></textarea>
+										<textarea name="TxtRequest" placeholder="호텔 이용 시 문의하실 사항이 있으시면 입력해 주세요." maxlength="200"></textarea>
 										<p class="txtGuide">
 											전달해주신 요청사항을 최대한 반영하도록 최선을 다하겠습니다.<br>
 											다만, 부득이하게 반영되지 않을 수 있는 점, 양해 부탁드립니다.
@@ -251,7 +235,7 @@
 									<span class="txt">총 예약금액</span>
 									<span class="subTxt">+ 세금(10%)</span>
 									<span class="price"><em id="resvTotalAmount"></em>KRW</span>
-									<input type="hidden" name="totalpay" id="totalpay" value="">
+									<input type="hidden" name="total_pay" id="totalpay" value="">
 								</div>
 								<div class="btnArea">
 									<div>
@@ -271,7 +255,7 @@
 		<!-- //container -->
 		<div style="background:#000;"><!-- Start. footer -->
 			<div id="footer">
-				<div class="foot-logo"><img src="img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
+				<div class="foot-logo"><img src="../resources/img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
 				</div>
 				<div class="foot-txt">
 					서울시 중구 소공로 106 대표이사 한채양 T. 02-771-0500<br>
@@ -310,8 +294,7 @@ function addDate(num) {
 
 function writeInfo(){
 	var form = document.step2Form;
-	form.command.value = "goWriteInfo";
-	form.action = "Controller";
+	form.action = "step3";
 	form.submit();
 	
 }
