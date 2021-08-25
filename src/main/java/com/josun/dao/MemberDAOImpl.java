@@ -12,6 +12,9 @@ public class MemberDAOImpl implements MemberDAO {
 	@Autowired
 	private SqlSession sqlsession; 
 	
+	//Membermapper nameSpace
+	private static final String NAMESPACE = "com.josun.mapper.MemberMapper";
+	
 	//회원가입
 	@Override
 	public int idCheck(String id) {
@@ -75,7 +78,8 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("searchValue", "%"+searchValue+"%");
 		return sqlsession.selectOne("com.josun.mapper.MemberMapper.getDataCount", map);
 	}
-
+	
+	//회원정보 수정
 	@Override
 	public int updateMem(String id, String name, String address, String phone, String email) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -84,8 +88,21 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("address", address);
 		map.put("phone", phone);
 		map.put("email", email);
-		return sqlsession.update("com.josun.mapper.MemberMapper.updateMem", map);
+		return sqlsession.update(NAMESPACE + ".updateMem", map);
+	}
+	
+	//회원정보 삭제
+	@Override
+	public String checkPw(String id) {
+		return sqlsession.selectOne(NAMESPACE + ".checkPw", id);
+	}
+	@Override
+	public int deleteMember(String id, String pw) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("pw", pw);
+		return sqlsession.delete(NAMESPACE + ".deleteMem", map);
 	}
 
-
+	
 }

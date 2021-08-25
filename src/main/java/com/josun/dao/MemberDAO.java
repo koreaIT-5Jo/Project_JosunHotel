@@ -23,4 +23,8 @@ public interface MemberDAO {
 	
 	//회원수정 - 회원정보 불러오기
 	int updateMem(String id, String name, String address, String phone, String email);
+	
+	//회원삭제
+	String checkPw(String id);
+	int deleteMember(String id, String pw);
 }

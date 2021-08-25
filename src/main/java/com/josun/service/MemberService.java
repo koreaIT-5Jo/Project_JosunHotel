@@ -21,6 +21,10 @@ public interface MemberService {
 	//관리자페이지 - 회원목록 - 전체 데이터 개수
 	int getDataCount(String searchKey, String searchValue);
 	
-	//회원정보 수정 - 정보 불러오기
+	//회원정보 수정
 	int updateMem(String id, String name, String address, String phone, String email);
+	
+	//회원정보 삭제
+	String checkPw(String id);
+	int deleteMem(String id, String pw);
 }

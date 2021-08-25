@@ -151,7 +151,8 @@ public class HomeController {
 
 	//마이페이지 - 예약확인
 	@RequestMapping(value = "/reserveConfirm")
-	public String reserveConfirm() {
+	public String reserveConfirm(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/reserveConfirm";
 	}
 	//마이페이지 - 회원정보 수정
@@ -177,29 +178,6 @@ public class HomeController {
 		
 		return "member/memberModify";
 	}
-	@RequestMapping(value = "/memberModifyAction")
-	public String memberModifyAction(HttpSession session, @RequestBody Map<String,String> param) {
-		String id = (String)session.getAttribute("id");
-		String name = param.get("name");
-		String addre = param.get("address");
-		String phone = param.get("phone");
-		String email = param.get("email");
-		
-		int result = memberservice.updateMem(id, name, addre, phone, email);
-		System.out.println("파라미터 확인: " + id + " " + name + " " + addre + " " + phone + " " + email + "업데이트 결과 : " + result);
-		
-		if(result == 1) {
-			session.setAttribute("name", name);
-			session.setAttribute("addr", addre);
-			session.setAttribute("phone", phone);
-			session.setAttribute("email", email);
-		} else {
-			System.out.println(id + "회원의 회원정보가 업그레이드 되지 않았습니다.");
-		}
-		
-		return "member/memberModify";
-	}
-	
 	//마이페이지 - 비밀번호 변경
 	@RequestMapping(value = "/memberPwChange")
 	public String memberPwChange() {
@@ -207,8 +185,10 @@ public class HomeController {
 	}
 	//마이페이지 - 회원 탈퇴
 	@RequestMapping(value = "/memberDelete")
-	public String memberDelete() {
+	public String memberDelete(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete1";
+		
 	}
 	//마이페이지 - 회원 탈퇴2
 	@RequestMapping(value = "/memberDelete/next")

@@ -50,7 +50,18 @@ public class MemberDAOTest {
 	}
 	
 	@Test
-	public void testUpdateMem() throws Exception{
+	public void testUpdateMem() throws Exception {
 		System.out.println(dao.updateMem("admin", "관리자", "00000//서울특별시", "010-0000-0000", "admin@naer.com")); //1
 	}
+	
+	@Test
+	public void testCheckPw() throws Exception {
+		System.out.println(dao.checkPw("minmi1234"));
+	}
+	
+	@Test
+	public void testDeleteMem() throws Exception {
+		System.out.println(dao.deleteMember("test0000", "test0000")); //0
+	}
+	
 }
