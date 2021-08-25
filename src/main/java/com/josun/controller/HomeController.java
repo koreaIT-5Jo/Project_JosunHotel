@@ -2,7 +2,9 @@ package com.josun.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -153,9 +156,49 @@ public class HomeController {
 	}
 	//마이페이지 - 회원정보 수정
 	@RequestMapping(value = "/memberModify")
-	public String memberModify() {
+	public String memberModify(HttpSession session, HttpServletRequest request) {
+		String name = (String)session.getAttribute("name");
+		String userAddr = (String)session.getAttribute("addr");
+		String userPhone = (String)session.getAttribute("phone");
+		String userEmail = (String)session.getAttribute("email");
+		String[] addr = userAddr.split("//");
+		String[] phone = userPhone.split("-");
+		String[] email = userEmail.split("@");
+		
+		request.setAttribute("name", name);
+		request.setAttribute("addr", addr);
+		request.setAttribute("phone", phone);
+		request.setAttribute("email", email);
+		
 		return "member/memberModify";
 	}
+	@RequestMapping(value = "/memberModifyAction")
+	public Map<String,Object> memberModifyAction(HttpServletRequest request, HttpSession session, @RequestBody Map<String,String> param) {
+		String id = (String)session.getAttribute("id");
+		String name = param.get("name");
+		String address = param.get("address");
+		String phone = param.get("phone");
+		String email = param.get("email");
+		
+		System.out.println("파라미터 확인: " + name + " " + address + " " + phone + " " + email);
+		
+		int result = memberservice.updateMem(id, name, address, phone, email);
+		System.out.println(" 업데이트 결과 : " + result);
+		
+		boolean fileSaveCheck = false;
+		
+		if(result == 1) {
+			fileSaveCheck = true;
+		} else {
+			fileSaveCheck = false;
+		}
+		
+		Map<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("fileSaveCheck", fileSaveCheck);
+		
+		return map1;
+	}
+	
 	//마이페이지 - 비밀번호 변경
 	@RequestMapping(value = "/memberPwChange")
 	public String memberPwChange() {

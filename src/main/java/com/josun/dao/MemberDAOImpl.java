@@ -75,4 +75,22 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("searchValue", "%"+searchValue+"%");
 		return sqlsession.selectOne("com.josun.mapper.MemberMapper.getDataCount", map);
 	}
+
+	@Override
+	public MemberDTO findMem(String id) {
+		return sqlsession.selectOne("com.josun.mapper.MemberMapper.findMem", id);
+	}
+
+	@Override
+	public int updateMem(String id, String name, String address, String phone, String email) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("name", name);
+		map.put("address", address);
+		map.put("phone", phone);
+		map.put("email", email);
+		return sqlsession.update("com.josun.mapper.MemberMapper.updateMem", map);
+	}
+
+
 }

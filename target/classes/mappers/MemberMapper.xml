@@ -22,6 +22,14 @@
 		select pw from member where name = #{name} and id = #{id} and pw_hint_q = #{pwHintQ} and pw_hint_a = #{pwHintA}
 	</select>
 	
+	<select id="findMem" resultType="com.josun.dto.MemberDTO">
+		select name, phone, address, email from member where id = #{id}
+	</select>
+	
+	<update id="updateMem">
+		update member set name = #{name}, address = #{address}, phone = #{phone}, email = #{email} where id = #{id}
+	</update>
+	
 	<select id="adminMemberList" resultType="com.josun.dto.MemberDTO">
 		<![CDATA[select * from (select rownum rnum, m.* from(select name, id, phone, email, address from member where ${searchKey} like #{searchValue})m) where rnum >= ${start} and rnum <= ${end}]]>
 	</select>

@@ -54,5 +54,15 @@ public class MemberServiceImpl implements MemberService {
 		return dao.getDataCount(searchKey, searchValue);
 	}
 
+	@Override
+	public MemberDTO findMem(String id) {
+		return dao.findMem(id);
+	}
+
+	@Override
+	public int updateMem(String id, String name, String address, String phone, String email) {
+		return dao.updateMem(id, name, address, phone, email);
+	}
+
 
 }
