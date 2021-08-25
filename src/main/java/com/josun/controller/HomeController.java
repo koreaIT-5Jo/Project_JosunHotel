@@ -217,11 +217,11 @@ public class HomeController {
 	
 	//관리자페이지 - 회원
 	@RequestMapping(value = "/adminMember")
-	public String adminMember(HttpServletRequest request, String page, String searchKey, String searchValue, Model model) {
+	public String adminMember(String page, String searchKey, String searchValue, Model model) {
 		int pageNo = 1;
 		if(page != null) pageNo = Integer.parseInt(page);
 		
-		int pageSize = 5;
+		int pageSize = 20;
 		int start = pageNo * pageSize - (pageSize -1);
 		int end = pageNo * pageSize;
 		
@@ -261,10 +261,47 @@ public class HomeController {
 	}
 	//관리자페이지 - Q&A목록
 	@RequestMapping(value = "/adminQnaList")
-	public String adminQnaList() {
+	public String adminQnaList(String page, String searchKey, String searchValue, Model model) {
+		int pageNo = 1;
+		if(page != null) pageNo = Integer.parseInt(page);
+		int pageSize = 20;
+		int start = pageNo * pageSize - (pageSize-1);
+		int end = pageNo * pageSize;
+		
+		if(searchKey == null && searchValue == null) {
+			searchKey = "name";
+			searchValue = "";
+		}
+		
+		List<BoardQnaDTO> list = qnaservice.adminBoardList(start, end, searchKey, searchValue);
+		int dataCount = qnaservice.getDataCount(searchKey, searchValue);
+		int pageCount = dataCount / pageSize;
+		if(dataCount%pageSize != 0) pageCount++;
+		int totalPage = pageCount;
+		
+		String param = "";
+		if(!searchValue.equals("")){
+			param = "searchKey="+searchKey;
+			param += "&searchValue="+searchValue+"&";
+		}
+		String url = "adminQnaList?"+param;
+		StringBuffer pageNav = new StringBuffer();
+		for(int i=1; i<=totalPage; i++){
+			if(pageNo == i) pageNav.append("<a class=\"active\" href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+			else pageNav.append("<a href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminQnaList";
 	}
-	
+	//관리자페이지 - Q&A글상세보기
+	@RequestMapping(value = "/adminQnaRead")
+	public String adminQnaRead(int idx, Model model) {
+		BoardQnaDTO dto = qnaservice.adminBoardRead(idx);
+		model.addAttribute("dto", dto);
+		return "admin/adminQnaRead";
+	}
 	
 	
 }

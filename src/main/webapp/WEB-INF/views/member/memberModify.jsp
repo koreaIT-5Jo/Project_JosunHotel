@@ -109,7 +109,7 @@ function fncMyInfoUpdApi() {
 		}
 	}); */
 	
-	alert('여기까지왔당');
+	alert('ajax...여기까지 왔당');
 }
 </script>
 </head>

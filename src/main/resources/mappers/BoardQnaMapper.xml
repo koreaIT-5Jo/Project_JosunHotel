@@ -6,6 +6,19 @@
 	<insert id="insertBoard">
 		insert into board_qna(idx, category, content, name, phone, email, reply_by, write_date, file_name) values(QNA_SEQ.nextval,#{category},#{content},#{name},#{phone},#{email},#{reply},sysdate,#{fileName})
 	</insert>
+	<select id="adminBoardList" resultType="com.josun.dto.BoardQnaDTO">
+		<![CDATA[
+		select * from (select rownum rnum, b2.* from 
+		(select b.idx, q.name as categoryName, b.content, b.name, b.reply_by, b.write_date from board_qna b, qna_category q 
+		where b.category = q.num and b.${searchKey} like #{searchValue} order by write_date desc) b2) where rnum >= #{start} and rnum <= #{end}
+		]]>
+	</select>
+	<select id="getDataCount" resultType="int">
+		select count(*) as totalCount from board_qna where ${searchKey} like #{searchValue}
+	</select>
 	
+	<select id="adminBoardRead" resultType="com.josun.dto.BoardQnaDTO">
+		select b.idx, c.name as categoryName, b.name, b.phone, b.email, b.reply_by, b.write_date, b.content, b.file_name as fileName from board_qna b, qna_category c where b.category = c.num and idx = ${idx}
+	</select>
 </mapper>
 
