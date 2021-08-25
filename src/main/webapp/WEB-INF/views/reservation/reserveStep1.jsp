@@ -18,15 +18,17 @@
 <script>
 
 
-function fncOpenRoomInfo(num){
-	var num = num;
+function fncOpenRoomInfo(param){
+	var data1 = {num:param};
 	$.ajax({
 		type : 'POST',
-		url : './RoomInfoServlet',
-		data : {num : num},
-		dataType : "json",
+		url : 'http://localhost:8090/www/rest/vo/json',
+		data : JSON.stringify(data1),
+		dataType : 'application/json',
 		success : function(data){
-			$('#layerPopup .title').text(data.name);
+			alert("성공");
+			alert(data);
+			/* $('#layerPopup .title').text(data.name);
 			$('.contBox1 img').attr('src',data.img);
 			$('.contBox2 li:nth-child(1) dd').text(data.location);
 			$('.contBox2 li:nth-child(2) dd').text(data.beds);
@@ -51,7 +53,7 @@ function fncOpenRoomInfo(num){
 				$('#tab04 ul').append("<li>" + closet[i] + "</li>");
 			}
 			
-			$('#layerPopup').fadeIn("fast");
+			$('#layerPopup').fadeIn("fast"); */
 		},
 		error : function(){
 			alert("에러발생");
