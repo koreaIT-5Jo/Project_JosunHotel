@@ -176,15 +176,15 @@
 </script>
 </head>
 <body>
-<%-- <%
-	if(session.getAttribute("idKey")==null){
+<%
+	if(session.getAttribute("id")==null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('회원가입 또는 로그인 후 확인 가능합니다.')");
 		script.println("location.href = 'login.jsp?url="+request.getServletPath()+"'");
 		script.println("</script>");
 	}
-%> --%>
+%>
 <div class="wrapper">
 	<div class="header">
 		<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
@@ -244,7 +244,6 @@
 				<p class="pageGuide">멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
 			</div>
 		</div>
-	
 		<div class="inner">
 			<div class="lnbArea">
 				<div class="myInfo">

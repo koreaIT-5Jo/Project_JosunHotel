@@ -189,7 +189,6 @@ public class HomeController {
 	public String memberDelete(HttpServletRequest request, HttpSession session) {
 		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete1";
-		
 	}
 	//마이페이지 - 회원 탈퇴2
 	@RequestMapping(value = "/memberDeleteNext")
