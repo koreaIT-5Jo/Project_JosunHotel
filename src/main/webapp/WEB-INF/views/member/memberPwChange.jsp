@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<% String id = (String) session.getAttribute("idKey"); %>
+<% String id = (String) session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +16,9 @@
 </head>
 <body>
 	<div class="header">
-		<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
 		<div class="headArea">
 			<strong class="logo"><a href="/www">JOSUN HOTELS &amp; RESORTS</a></strong>
 			<button type="button" class="btnMenu">메뉴 열기</button>
-			<!-- 클릭하면 menuOn 클래스 추가, 메뉴 닫기 텍스트 변경 -->
-			<!-- //20200709 수정 -->
 			<div class="allMenu">
 				<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 				<div class="inner">
@@ -33,12 +30,12 @@
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+								<li><a href="enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+								<li><a href="reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
@@ -58,11 +55,11 @@
 					<li><a href="register">회원가입</a></li>
 					<%}else if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-					<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="adminMember">관리자페이지</a></li>
 					<%}else{ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -70,6 +67,7 @@
 		</div>
 	</div>
 	<!-- End. header -->
+	<!-- Start. container -->
 	<div id="container" class="container join">
 		<div class="topArea">
 			<div class="topInner">
@@ -83,7 +81,7 @@
 			<div class="lnbArea">
 				<div class="myInfo">
 					<p class="name">
-						<a href="#"><em id="nm1"> <%= session.getAttribute("nameKey") %> </em>님</a>
+						<a href="#"><em id="nm1">${name}</em>님</a>
 					</p>
 				</div>
 				<ul class="lnb">
@@ -96,7 +94,7 @@
 						<ul>
 							<li><a href="memberModify">회원 정보 수정</a></li>
 							<li><a href="memberPwChange"> <!-- 비밀번호 변경 -->비밀번호 변경</a></li>
-							<li><a href="/ProjectWepJosun/memberDelete1.jsp"> <!-- 회원 탈퇴 -->회원 탈퇴</a></li>
+							<li><a href="memberDelete"> <!-- 회원 탈퇴 -->회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -158,7 +156,7 @@
 				</div>
 			</div>
 		</div>
-		<!-- my contents -->
+		<!-- End. container -->
 		<!-- Start. footer -->
 		<div style="background: #000;">
 			<div id="footer">

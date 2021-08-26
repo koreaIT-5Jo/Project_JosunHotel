@@ -23,29 +23,32 @@
 			return;
 		}
 		
+		var pw = {password : password};
+		
 		$.ajax({
+			url:'http://localhost:9091/www/myPage/memberDelete1Action/json',
 			type:'post',
-			url:'http://localhost:9091/www/memberDeleteAction',
-			data: JSON.stringify(password),
+			data: JSON.stringify(pw),
+			dataType: 'json',
 			contentType: 'application/json; charset=utf-8',
-			success: function(data) {
-				if(data) {
-					alert('비밀번호가 일치합니다. 다음 페이지로 이동합니다.');
+			success: function(response) {
+				if(response.result) {
+					alert('비밀번호가 일치합니다. 회원탈퇴는 신중히 해주시기 바랍니다.');
+					location.href = 'http://localhost:9091/www/memberDelete/next';
 				} else {
 					alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+					location.href = 'http://localhost:9091/www/memberDelete';
 				}
 			},
 			error:function(request, status, error) { 
 				alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
 			}
 		});
-		
-		alert(JSON.stringify(password));
 	}
 </script>
 </head>
 <body>
-<div class="header">
+	<div class="header">
 		<div class="headArea">
 			<strong class="logo"><a href="/www">JOSUN HOTELS &amp; RESORTS</a></strong>
 			<button type="button" class="btnMenu">메뉴 열기</button>

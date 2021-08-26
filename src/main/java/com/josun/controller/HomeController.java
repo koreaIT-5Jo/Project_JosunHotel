@@ -180,7 +180,8 @@ public class HomeController {
 	}
 	//마이페이지 - 비밀번호 변경
 	@RequestMapping(value = "/memberPwChange")
-	public String memberPwChange() {
+	public String memberPwChange(HttpSession session, HttpServletRequest request) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberPwChange";
 	}
 	//마이페이지 - 회원 탈퇴

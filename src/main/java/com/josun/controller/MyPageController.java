@@ -21,9 +21,8 @@ public class MyPageController {
 	MemberService service;
 	
 	@RequestMapping("/memberModifyAction/json")
-	public Map<String,String> memberModifyAction(HttpSession session, @RequestBody Map<String,String> param, HttpServletResponse response) {
+	public Map<String,String> memberModifyAction(HttpSession session, @RequestBody Map<String,String> param) {
 		
-		System.out.println(param);
 		String id = (String)session.getAttribute("id");
 		String name = param.get("name");
 		String phone = param.get("phone");
@@ -47,6 +46,29 @@ public class MyPageController {
 		}
 		
 		map.put("msg", msg);
+		
+		return map;
+		
+	}
+	
+	@RequestMapping("/memberDelete1Action/json")
+	public Map<String,Object> memberDelete1Action(HttpSession session, @RequestBody Map<String,String> param) {
+		String loginId = (String)session.getAttribute("id");
+		String loginPw = service.checkPw(loginId);
+		String inputPw = param.get("password");
+		
+		System.out.println("값 확인 : " + loginId +" "+ loginPw +" "+ inputPw);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean check = false;
+		if(inputPw.equals(loginPw)) {
+			check = true;
+			
+		} else {
+			check = false;
+		}
+		//String result = String.valueOf(check);
+		map.put("result", check);
 		
 		return map;
 		
