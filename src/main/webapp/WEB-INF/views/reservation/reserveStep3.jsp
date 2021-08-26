@@ -53,7 +53,7 @@ function addDate(num) {
 		if($("#adult_breakfast").val() != 0){
 			let sucbacDay =(Number)($("#dateDays").val()); //숙박일
 			let adult_breakfast = (Number)($("#adult_breakfast").val());
-			let adult_price = '45,000';
+			let adult_price = 45000;
 			let price = sucbacDay*adult_breakfast*adult_price;
 			
 			$("#roomOptInfo0").css('display','');
@@ -64,7 +64,7 @@ function addDate(num) {
 		if($("#children_breakfast").val() != 0){
 			let sucbacDay =(Number)($("#dateDays").val()); //숙박일
 			let chil_breakfast = (Number)($("#adult_breakfast").val());
-			let chli_price = '27,000';
+			let chli_price = 27000;
 			let price = sucbacDay*chil_breakfast*chli_price;
 			
 			$("#roomOptInfo0").append("<li><span class=\"lfData\">어린이 조식</span><span class=\"rtData\">"+comma(price)+"</span></li>")
@@ -185,7 +185,7 @@ function addDate(num) {
 				scroll_top=0;
 			}else{
 				scroll_top -=550;
-				console.log(scroll_top);
+				//console.log(scroll_top);
 				if(scroll_top>=971) {
 					scroll_top = 971;
 				}
@@ -347,9 +347,9 @@ function fncGoResv(){
 		<input type="hidden" name="roomPrice" id="roomPrice" value="${roomDto.price}"/>
 		<input type="hidden" name="room_number" id="roomNum" value="${roomDto.num}">
 		<input type="hidden" name="adult_breakfast" id="adult_breakfast" value="${reservationDto.adult_breakfast}"/>
-		<input type="hidden" name="children_breakfast" id="children_breakfast" value="${reservationDto.chil_breakfast }"/>
+		<input type="hidden" name="chil_breakfast" id="children_breakfast" value="${reservationDto.chil_breakfast }"/>
 		<input type="hidden" name="total_pay" id = "totalpay" value="${reservationDto.total_pay}"/>
-		<input type="hidden" name="request" id="txtRequest" value="${reservationDto.txtRequest}"/>
+		<input type="hidden" name="txtRequest" id="txtRequest" value="${reservationDto.txtRequest}"/>
 		<input type="hidden" name="memberId" id="id" value="<%=id %>"/>
 		<input type="hidden" name="email" id="email" value=""/>
 		<input type="hidden" name="card_num" id="cardNo" value=""/>
@@ -426,9 +426,9 @@ function fncGoResv(){
 								<div class="intInner">
 									<span class="intArea">
 									<%if(id!=null) { %>
-									<input type="text" class="readOn" style="width:440px" name="reservationName" value="<%=name %>" readonly="">
+									<input type="text" class="readOn" style="width:440px" name="name" value="<%=name %>" readonly="">
 									<%} else { %>
-									<input type="text" class="readOn" name="reservationName" style="width:440px" value="">
+									<input type="text" class="readOn" name="name" style="width:440px" value="">
 										<%} %>
 									</span>
 								</div>

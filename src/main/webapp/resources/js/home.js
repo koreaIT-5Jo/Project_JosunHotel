@@ -73,13 +73,13 @@ $(document).ready(function () {
 	//-를 클릭할때 1씩 감소, 성인은 무조건 1명이상
 	$('.numPeople button.btnDown').click(function(){
 		var target = jQuery(this).closest(".numPeople").data("target"); //성인, 어린이 여부
-		var adltNum = $(".numPeople input[name='adltCnt']").val(); //현재 성인 인원수 값
-		var chldNum = $(".numPeople input[name='chldCnt']").val(); //현재 어린이 인원수 값
+		var adltNum = $(".numPeople input[name='adultCnt']").val(); //현재 성인 인원수 값
+		var chldNum = $(".numPeople input[name='childrenCnt']").val(); //현재 어린이 인원수 값
 		
 		//성인 1이 될때까지만 1씩 감소
 		if(target == "adult" && adltNum != 1){ //성인 영역 && 1이 아니라면
 			adltNum--;
-			$(".numPeople input[name='adltCnt']").val(adltNum);
+			$(".numPeople input[name='adultCnt']").val(adltNum);
 			$(this).next().children().text(adltNum);
 			$('#adultCntText').text(adltNum);
 		}
@@ -87,7 +87,7 @@ $(document).ready(function () {
 		//어린이 0이 될때까지만 1씩 감소
 		if(target == "child" && chldNum != 0){ //어린이 영역 && 0이 아니라면
 			chldNum--;
-			$(".numPeople input[name='chldCnt']").val(chldNum);
+			$(".numPeople input[name='childrenCnt']").val(chldNum);
 			$(this).next().children().text(chldNum);
 			$('#childCntText').text(chldNum);
 		}
@@ -96,13 +96,13 @@ $(document).ready(function () {
 	//+를 클랙할때 1씩 증가, 성인과 어린이가 총 4명일때 까지만
 	$('.numPeople button.btnUp').click(function(){
 		var target = jQuery(this).closest(".numPeople").data("target"); //성인, 어린이 여부
-		var adltNum = $(".numPeople input[name='adltCnt']").val(); //현재 성인 인원수 값
-		var chldNum = $(".numPeople input[name='chldCnt']").val(); //현재 어린이 인원수 값
+		var adltNum = $(".numPeople input[name='adultCnt']").val(); //현재 성인 인원수 값
+		var chldNum = $(".numPeople input[name='childrenCnt']").val(); //현재 어린이 인원수 값
 		
 		//성인 3 될때까지만 1씩 증가
 		if(target == "adult" && adltNum != 3){ //성인 영역 && 3 아니고
 			adltNum++;
-			$(".numPeople input[name='adltCnt']").val(adltNum);
+			$(".numPeople input[name='adultCnt']").val(adltNum);
 			$(this).prev().children().text(adltNum);
 			$('#adultCntText').text(adltNum);
 		}
@@ -110,7 +110,7 @@ $(document).ready(function () {
 		//어린이 2 될때까지만 1씩 증가
 		if(target == "child" && chldNum != 2){ //어린이 영역 && 2가 아니라면
 			chldNum++;
-			$(".numPeople input[name='chldCnt']").val(chldNum);
+			$(".numPeople input[name='childrenCnt']").val(chldNum);
 			$(this).prev().children().text(chldNum);
 			$('#childCntText').text(chldNum);
 		}

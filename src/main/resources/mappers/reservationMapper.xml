@@ -3,5 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.josun.mapper.reservationMapper">
-	
+	<insert id="reservation">
+		INSERT INTO reservation(num,name,startdate,enddate,adultcnt,childrencnt,adult_breakfast,chil_breakfast,request,phone_number,email,card_type,card_number,card_expiration_date,birthdate,total_pay,room_number,card_password,member_id)
+		VALUES(CHECKING.nextval,#{name},#{startDate},#{endDate},#{adultCnt},#{childrenCnt},#{adult_breakfast},#{chil_breakfast},#{request},#{phone_Number},#{email},#{card_type},#{card_Number},#{card_Expiration_Date},#{birthDate},#{total_pay},#{room_number},#{card_password},#{member_Id})
+	</insert>
 </mapper>

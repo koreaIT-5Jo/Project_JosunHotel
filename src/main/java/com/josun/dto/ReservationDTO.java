@@ -10,20 +10,20 @@ public class ReservationDTO {
 	private int adult_breakfast; 
 	private int chil_breakfast;
 	private String request;
-	private String phoneNum;
+	private String phone_Number;
 	private String email;
 	private String card_type;
-	private String card_num;
-	private String card_expiration;
-	private String birth;
+	private String card_Number;
+	private String card_Expiration_Date;
+	private String birthDate;
 	private int total_pay;
 	private int room_number;
-	private String card_pw;
-	private String memeberId;
+	private String card_Password;
+	private String memeber_Id;
 	
 	public ReservationDTO(){ }
 	public ReservationDTO(String name, String startDate, String endDate, int adultCnt, int childrenCnt,
-			int adult_breakfast, int chil_breakfast, String request, String phoneNum, String email, String card_type,
+			int adult_breakfast, int chil_breakfast, String txtRequest, String phoneNum, String email, String card_type,
 			String card_num, String card_expiration, String birth, int total_pay, int room_number, String card_pw,
 			String memeberId) {
 		this.name = name;
@@ -33,17 +33,17 @@ public class ReservationDTO {
 		this.childrenCnt = childrenCnt;
 		this.adult_breakfast = adult_breakfast;
 		this.chil_breakfast = chil_breakfast;
-		this.request = request;
-		this.phoneNum = phoneNum;
+		this.request = txtRequest;
+		this.phone_Number = phoneNum;
 		this.email = email;
 		this.card_type = card_type;
-		this.card_num = card_num;
-		this.card_expiration = card_expiration;
-		this.birth = birth;
+		this.card_Number = card_num;
+		this.card_Expiration_Date = card_expiration;
+		this.birthDate = birth;
 		this.total_pay = total_pay;
 		this.room_number = room_number;
-		this.card_pw = card_pw;
-		this.memeberId = memeberId;
+		this.card_Password = card_pw;
+		this.memeber_Id = memeberId;
 	}
 	public String getName() {
 		return name;
@@ -90,14 +90,14 @@ public class ReservationDTO {
 	public String getTxtRequest() {
 		return request;
 	}
-	public void setTxtRequest(String request) {
-		this.request = request;
+	public void setTxtRequest(String txtRequest) {
+		this.request = txtRequest;
 	}
 	public String getPhoneNum() {
-		return phoneNum;
+		return phone_Number;
 	}
 	public void setPhoneNum(String phoneNum) {
-		this.phoneNum = phoneNum;
+		this.phone_Number = phoneNum;
 	}
 	public String getEmail() {
 		return email;
@@ -112,22 +112,22 @@ public class ReservationDTO {
 		this.card_type = card_type;
 	}
 	public String getCard_num() {
-		return card_num;
+		return card_Number;
 	}
 	public void setCard_num(String card_num) {
-		this.card_num = card_num;
+		this.card_Number = card_num;
 	}
 	public String getCard_expiration() {
-		return card_expiration;
+		return card_Expiration_Date;
 	}
 	public void setCard_expiration(String card_expiration) {
-		this.card_expiration = card_expiration;
+		this.card_Expiration_Date = card_expiration;
 	}
 	public String getBirth() {
-		return birth;
+		return birthDate;
 	}
 	public void setBirth(String birth) {
-		this.birth = birth;
+		this.birthDate = birth;
 	}
 	public int getTotal_pay() {
 		return total_pay;
@@ -142,16 +142,16 @@ public class ReservationDTO {
 		this.room_number = room_number;
 	}
 	public String getCard_pw() {
-		return card_pw;
+		return card_Password;
 	}
 	public void setCard_pw(String card_pw) {
-		this.card_pw = card_pw;
+		this.card_Password = card_pw;
 	}
 	public String getMemeberId() {
-		return memeberId;
+		return memeber_Id;
 	}
 	public void setMemeberId(String memeberId) {
-		this.memeberId = memeberId;
+		this.memeber_Id = memeberId;
 	}
 	public int getNum() {
 		return num;
@@ -163,10 +163,10 @@ public class ReservationDTO {
 	public String toString() {
 		return "ReservationDTO [num=" + num + ", name=" + name + ", startDate=" + startDate + ", endDate=" + endDate
 				+ ", adultCnt=" + adultCnt + ", childrenCnt=" + childrenCnt + ", adult_breakfast=" + adult_breakfast
-				+ ", chil_breakfast=" + chil_breakfast + ", request=" + request + ", phoneNum=" + phoneNum + ", email="
-				+ email + ", card_type=" + card_type + ", card_num=" + card_num + ", card_expiration=" + card_expiration
-				+ ", birth=" + birth + ", total_pay=" + total_pay + ", room_number=" + room_number
-				+ ", card_pw=" + card_pw + ", memeberId=" + memeberId + "]";
+				+ ", chil_breakfast=" + chil_breakfast + ", request=" + request + ", phoneNum=" + phone_Number + ", email="
+				+ email + ", card_type=" + card_type + ", card_num=" + card_Number + ", card_expiration=" + card_Expiration_Date
+				+ ", birth=" + birthDate + ", total_pay=" + total_pay + ", room_number=" + room_number
+				+ ", card_pw=" + card_Password + ", memeberId=" + memeber_Id + "]";
 	}
 	
 	

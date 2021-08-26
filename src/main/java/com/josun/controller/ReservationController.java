@@ -70,7 +70,9 @@ public class ReservationController {
 	}	
 	
 	@RequestMapping(value = "/final")
-	public String reservationFinal() {
-		return null;
+	public String reservationFinal(ReservationDTO reservationDto) {
+		System.out.println(reservationDto);
+		
+		return "homeGo";
 	}
 }

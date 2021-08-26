@@ -1,5 +1,7 @@
 package com.josun.dao;
 
-public interface ReservationDAO {
+import com.josun.dto.ReservationDTO;
 
+public interface ReservationDAO {
+	int reservation(ReservationDTO dto);
 }
