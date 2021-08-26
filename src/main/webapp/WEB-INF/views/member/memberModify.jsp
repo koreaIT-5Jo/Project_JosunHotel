@@ -93,12 +93,14 @@ function fncMyInfoUpdApi() {
 	}
 	
 	$.ajax({
+		url:'http://localhost:9091/www/myPage/memberModifyAction/json',
 		type:'post',
-		url:'http://localhost:9091/www/myPage//memberModifyAction/json',
 		data: JSON.stringify(modifyData),
+		dataType: 'json',
 		contentType: 'application/json; charset=utf-8',
 		success: function(response) {
 			alert(response.msg);
+			location.href = 'http://localhost:9091/www/memberModify';
 		},
 		error:function(request, status, error) { 
 			alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 

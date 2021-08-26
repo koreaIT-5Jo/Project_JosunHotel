@@ -1,8 +1,10 @@
 package com.josun.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ public class MyPageController {
 	MemberService service;
 	
 	@RequestMapping("/memberModifyAction/json")
-	public String memberModifyAction(HttpSession session, @RequestBody Map<String,String> param) {
+	public Map<String,String> memberModifyAction(HttpSession session, @RequestBody Map<String,String> param, HttpServletResponse response) {
+		
 		System.out.println(param);
 		String id = (String)session.getAttribute("id");
 		String name = param.get("name");
@@ -31,17 +34,21 @@ public class MyPageController {
 		
 		System.out.println("파라미터 확인: " + id + " " + name + " " + addre + " " + phone + " " + email + "업데이트 결과 : " + result);
 		
+		Map<String, String> map = new HashMap<String, String>();
 		String msg = "회원정보가 ";
 		if(result == 1) {
 			session.setAttribute("name", name);
 			session.setAttribute("addr", addre);
 			session.setAttribute("phone", phone);
 			session.setAttribute("email", email);
-			msg += "수정되었습니다";
+			msg += "수정되었습니다.";
 		} else {
 			msg += "수정되지 않았습니다.";
 		}
 		
-		return msg;
+		map.put("msg", msg);
+		
+		return map;
+		
 	}
 }
