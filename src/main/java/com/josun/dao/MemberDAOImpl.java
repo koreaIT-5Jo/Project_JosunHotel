@@ -91,6 +91,15 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlsession.update(NAMESPACE + ".updateMem", map);
 	}
 	
+	//비밀번호 변경
+	@Override
+	public int updatePw(String pw, String id) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pw", pw);
+		map.put("id", id);
+		return sqlsession.update(NAMESPACE + ".updatePw", map);
+	}
+	
 	//회원정보 삭제
 	@Override
 	public String checkPw(String id) {
@@ -103,6 +112,5 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("pw", pw);
 		return sqlsession.delete(NAMESPACE + ".deleteMem", map);
 	}
-
 	
 }

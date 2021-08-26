@@ -59,7 +59,13 @@ public class MemberServiceImpl implements MemberService {
 	public int updateMem(String id, String name, String address, String phone, String email) {
 		return dao.updateMem(id, name, address, phone, email);
 	}
-
+	
+	//비밀번호 변경
+	@Override
+	public int updatePw(String id, String pw) {
+		return dao.updatePw(pw, id);
+	}
+	
 	//회원정보 삭제
 	@Override
 	public String checkPw(String id) {
@@ -79,6 +85,5 @@ public class MemberServiceImpl implements MemberService {
 	public int deleteMem(String id, String pw) {
 		return dao.deleteMember(id, pw);
 	}
-
 
 }

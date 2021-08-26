@@ -24,6 +24,9 @@ public interface MemberService {
 	//회원정보 수정
 	int updateMem(String id, String name, String address, String phone, String email);
 	
+	//비밀번호 변경
+	int updatePw(String id, String pw);
+	
 	//회원정보 삭제
 	String checkPw(String id);
 	int deleteMem(String id, String pw);

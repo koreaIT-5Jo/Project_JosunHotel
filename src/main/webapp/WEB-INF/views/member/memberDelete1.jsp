@@ -7,12 +7,11 @@
 <head>
 <meta charset="utf-8">
 <title>회원탈퇴 | 그랜드 조선 호텔</title>
-<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/header.js"></script>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
 <link rel="stylesheet" href="resources/css/member/memberDelete1.css">
-<script type="text/javascript" src="resources/js/header.js"></script>
 <script>
 	function fncWithDraPwCfmApi() {
 		var password = $("#password").val();
@@ -83,10 +82,7 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id == null || id == ""){%>
-					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href="register">회원가입</a></li>
-					<%}else if(id.equals("admin")){ %>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
@@ -157,7 +153,7 @@
 		</div>
 		<!-- my Contents -->
 	</div>
-	<!-- container -->
+	<!-- End.container -->
 	
 	<!-- Start. footer -->
 	<div style="background: #000;">

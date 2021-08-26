@@ -7,10 +7,10 @@
 <meta charset="utf-8">
 <title>회원탈퇴 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/header.js"></script>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
 <link rel="stylesheet" href="resources/css/member/memberDelete2.css">
-<script type="text/javascript" src="resources/js/header.js"></script>
 <script>
 	function withdrawalApi() {
 		var notichk = document.getElementById('notice').checked;
@@ -80,10 +80,7 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id == null || id == ""){%>
-					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href=register>회원가입</a></li>
-					<%}else if(id.equals("admin")){ %>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>

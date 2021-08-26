@@ -60,6 +60,12 @@ public class MemberServiceTest {
 	}
 	
 	@Test
+	public void testUpdatePw() throws Exception {
+		System.out.println(service.updatePw("a", "1234")); //예상 : 0 없는 아이디
+		System.out.println(service.updatePw("minmi1234", "minmi1234!")); //1
+	}
+	
+	@Test
 	public void testDeleteMem() throws Exception {
 		System.out.println(service.deleteMem("test0000", "test0000")); //예상 : 0
 	}

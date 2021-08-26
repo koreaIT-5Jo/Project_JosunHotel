@@ -30,6 +30,10 @@
 		update member set name = #{name}, address = #{address}, phone = #{phone}, email = #{email} where id = #{id}
 	</update>
 	
+	<update id="updatePw">
+		update member set pw = #{pw} where id = #{id}
+	</update>
+	
 	<delete id="deleteMem">
 		delete from member where id = #{id} and pw = #{pw}
 	</delete>

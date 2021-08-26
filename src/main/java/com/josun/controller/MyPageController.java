@@ -20,6 +20,7 @@ public class MyPageController {
 	@Autowired
 	MemberService service;
 	
+	//회원정보수정Action
 	@RequestMapping("/memberModifyAction/json")
 	public Map<String,String> memberModifyAction(HttpSession session, @RequestBody Map<String,String> param) {
 		
@@ -50,7 +51,34 @@ public class MyPageController {
 		return map;
 		
 	}
+	//비밀번호 변경 Action
+	@RequestMapping("memberUpdatePwAction/json")
+	public Map<String, Object> memberUpdatePwAction(HttpSession session, @RequestBody Map<String, String> param) {
+		String loginId = (String)session.getAttribute("id");
+		String loginPw = service.checkPw(loginId);
+		String curPw = param.get("curPw");
+		String newPw = param.get("newPw");
+		
+		System.out.println("contorller로 전송 된 값 확인 " + loginPw + curPw + newPw);
+		
+		int check = 0;
+		Map<String, Object>map = new HashMap<String, Object>();
+		
+		if(loginPw.equals(curPw)) {
+			check = service.updatePw(loginId, newPw); //제대로 업데이트 되면 1
+			System.out.println("check 값 : " + check);
+			session.invalidate();
+		} else {
+			check = 0;
+		}
+		
+		map.put("result", check);
+		
+		return map;
+				
+	}
 	
+	//회원탈퇴1 Action
 	@RequestMapping("/memberDelete1Action/json")
 	public Map<String,Object> memberDelete1Action(HttpSession session, @RequestBody Map<String,String> param) {
 		String loginId = (String)session.getAttribute("id");
@@ -74,6 +102,7 @@ public class MyPageController {
 		
 	}
 	
+	//회원탈퇴2 Action
 	@RequestMapping("/memberDelete2Action/json")
 	public Map<String,Object> memberDelete2Action(HttpSession session, @RequestBody Map<String,String> param) {
 		String id = (String)session.getAttribute("id");
@@ -94,4 +123,5 @@ public class MyPageController {
 		
 		return map;
 	}
+
 }

@@ -60,8 +60,15 @@ public class MemberDAOTest {
 	}
 	
 	@Test
+	public void testUpdatePw() throws Exception {//pw, id순
+		System.out.println(dao.updatePw("admin", "admin1234!")); //0
+		System.out.println(dao.updatePw("admin1234!!", "admin"));//1
+	}
+	
+	@Test
 	public void testDeleteMem() throws Exception {
 		System.out.println(dao.deleteMember("test0000", "test0000")); //0
 	}
+	
 	
 }
