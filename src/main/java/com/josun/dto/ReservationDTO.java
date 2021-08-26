@@ -141,13 +141,13 @@ public class ReservationDTO {
 	public void setRoom_number(int room_number) {
 		this.room_number = room_number;
 	}
-	public String getCard_pw() {
+	public String getCard_Password() {
 		return card_Password;
 	}
 	public void setCard_pw(String card_pw) {
 		this.card_Password = card_pw;
 	}
-	public String getMemeberId() {
+	public String getMember_Id() {
 		return memeber_Id;
 	}
 	public void setMemeberId(String memeberId) {
