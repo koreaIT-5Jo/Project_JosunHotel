@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class TimeUtil {
+public class DateUtil {
 	// 날짜 요일 구하기
 	public String DaysCheck(String startDate) {
 		DateFormat dateFormat = new SimpleDateFormat ("yyyy.MM.dd");

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.josun.dto.ReservationDTO;
 import com.josun.dto.RoomDTO;
 import com.josun.service.RoomService;
-import com.josun.util.TimeUtil;
+import com.josun.util.DateUtil;
 import com.josun.vo.StepVO;
 
 @Controller
@@ -24,7 +24,7 @@ public class ReservationController {
 	
 	// 예약페이지 - 방선택
 	@RequestMapping(value = "/step1")
-	public String reservationStep1(ReservationDTO reservationDto, Model model,TimeUtil util) {
+	public String reservationStep1(ReservationDTO reservationDto, Model model,DateUtil util) {
 		
 		String ckinDay = util.DaysCheck(reservationDto.getStartDate()); // 시작 요일
 		String ckoutDay = util.DaysCheck(reservationDto.getEndDate());	// 끝 요일

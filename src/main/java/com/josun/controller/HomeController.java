@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.josun.dto.ReservationDTO;
 import com.josun.dto.RoomDTO;
 import com.josun.service.RoomService;
-import com.josun.util.TimeUtil;
+import com.josun.util.DateUtil;
 
 @Controller
 public class HomeController {

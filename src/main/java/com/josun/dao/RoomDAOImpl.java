@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.josun.dto.RoomDTO;
-import com.josun.util.TimeUtil;
+import com.josun.util.DateUtil;
 
 @Repository
 public class RoomDAOImpl implements RoomDAO {
@@ -26,7 +26,7 @@ public class RoomDAOImpl implements RoomDAO {
 
 	@Override
 	public String getDuplicateCheckRoomNumList(String startDate, String endDate) throws Exception {
-		TimeUtil timeUtil = new TimeUtil();
+		DateUtil timeUtil = new DateUtil();
 //		System.out.println(timeUtil.returnReserveDate(startDate, endDate));
 		List<String> list = sqlSession.selectList("com.josun.mapper.roomMapper.getduplicateCheckRoomNumList",timeUtil.returnReserveDate(startDate, endDate));
 		String roomNumList = "";
