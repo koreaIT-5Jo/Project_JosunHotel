@@ -34,10 +34,10 @@
 			success: function(response) {
 				if(response.result) {
 					alert('비밀번호가 일치합니다. 회원탈퇴는 신중히 해주시기 바랍니다.');
-					location.href = 'http://localhost:9091/www/memberDelete/next';
+					location.href = 'http://localhost:9091/www/memberDeleteNext';
 				} else {
 					alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
-					location.href = 'http://localhost:9091/www/memberDelete';
+					$('#password').focus();
 				}
 			},
 			error:function(request, status, error) { 

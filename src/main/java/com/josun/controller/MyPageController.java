@@ -73,4 +73,25 @@ public class MyPageController {
 		return map;
 		
 	}
+	
+	@RequestMapping("/memberDelete2Action/json")
+	public Map<String,Object> memberDelete2Action(HttpSession session, @RequestBody Map<String,String> param) {
+		String id = (String)session.getAttribute("id");
+		String pw = service.checkPw(id);
+		String ok = param.get("notichk");
+		boolean result = false;
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(ok.equals("true")) {
+			result = true;
+			service.deleteMem(id, pw);
+			session.invalidate();
+		} else {
+			result = false;
+		}
+		
+		map.put("result", result);
+		
+		return map;
+	}
 }

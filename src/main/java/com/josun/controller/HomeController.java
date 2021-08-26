@@ -192,8 +192,9 @@ public class HomeController {
 		
 	}
 	//마이페이지 - 회원 탈퇴2
-	@RequestMapping(value = "/memberDelete/next")
-	public String memberDeleteNext() {
+	@RequestMapping(value = "/memberDeleteNext")
+	public String memberDeleteNext(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete2";
 	}
 	
