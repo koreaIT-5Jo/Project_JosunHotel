@@ -156,7 +156,7 @@ public class ReservationDTO {
 	public int getNum() {
 		return num;
 	}
-	public void setNum(int rnum) {
+	public void setNum(int num) {
 		this.num = num;
 	}
 	@Override

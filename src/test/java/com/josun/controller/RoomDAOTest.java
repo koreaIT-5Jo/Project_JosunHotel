@@ -27,7 +27,7 @@ public class RoomDAOTest {
 	
 	@Test
 	public void getduplicateRoomList() throws Exception {
-		String roomNum = dao.getDuplicateCheckRoomNumList("2021.07.19", "2021.07.21");
+		String roomNum = dao.getDuplicateCheckRoomNumList("2021.08.19", "2021.08.21");
 		System.out.println(roomNum);
 	}
 	@Test
