@@ -54,4 +54,9 @@ public class BoardDAOTest {
 			System.out.println(dto.getRnum() + ", " + dto.getContent());
 		}
 	}
+	
+	@Test
+	public void insertComment() throws Exception{
+		cdao.insertComment(new BoardQnaCommentDTO(221, "꾸악"));
+	}
 }

@@ -6,5 +6,8 @@
 	<select id="getCommentData" resultType="com.josun.dto.BoardQnaCommentDTO">
 		select rownum as rnum, c.* from (select idx, content from qna_comment where num_qna=${qnaNum} order by idx)c
 	</select>
+	<insert id="insertComment">
+		insert into qna_comment(idx, num_qna, content) values(COMMENT_SEQ.nextval, ${qnaNum}, #{content})
+	</insert>
 </mapper>
 

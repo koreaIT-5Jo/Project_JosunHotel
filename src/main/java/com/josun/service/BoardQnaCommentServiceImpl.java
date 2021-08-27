@@ -19,5 +19,11 @@ public class BoardQnaCommentServiceImpl implements BoardQnaCommentService {
 		List<BoardQnaCommentDTO> list = dao.getCommentData(qnaNum);
 		return list;
 	}
+	
+	//댓글 쓰기
+	@Override
+	public void insertComment(BoardQnaCommentDTO dto) {
+		dao.insertComment(dto);
+	}
 
 }

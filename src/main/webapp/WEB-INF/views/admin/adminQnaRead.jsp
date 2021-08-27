@@ -67,6 +67,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/admin/adminQnaRead.js"></script>
+<%
+if(request.getAttribute("msg") != null){
+	String msg = (String)request.getAttribute("msg");
+%>
+<script>
+	alert('<%=msg%>');
+</script>
+<%}%>
 </head>
 <body>
 <div class="wrapper">
@@ -111,7 +119,7 @@
 							<th>핸드폰번호</th>
 							<td>${dto.phone}</td>
 							<th>이메일주소</th>
-							<td>${dto.email}</td>
+							<td class="userEmail">${dto.email}</td>
 						</tr>
 						<tr>
 							<th>답변방식</th>
@@ -143,12 +151,15 @@
 			<script>
 				function commentOk(){
 					var numQna = $(".listIdx span").text();
+					var userEmail = $(".qnaListRead table tr td.userEmail").text();
 					$("#qnaNum").val(numQna);
+					$("#email").val(userEmail);
 					jQuery("#commentForm").submit();
 				}
 			</script>
-				<form id="commentForm" name="commentForm" method="post" action="commentOk.jsp">
+				<form id="commentForm" name="commentForm" method="post" action="sendComment">
 					<input type="hidden" id="qnaNum" name="qnaNum" value="">
+					<input type="hidden" id="email" name="email" value="">
 					<div class="comCnt">
 		                <strong>댓글</strong>
 		            </div>
@@ -160,6 +171,7 @@
 			</div>
 			<div class="commentList">
 				<c:forEach var="comment" items="${list}">
+					<c:set target="${comment}" property="content" value="${fn:replace(comment.content, enter, '<br>')}" />
 					<p><span>${comment.rnum}</span>${comment.content}</p>
 				</c:forEach>
 			</div>

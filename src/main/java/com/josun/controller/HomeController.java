@@ -5,10 +5,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +34,9 @@ public class HomeController {
 	BoardQnaService qnaservice;
 	@Autowired
 	BoardQnaCommentService comservice;
+	@Autowired
+	private JavaMailSender mailSender;
+
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -291,5 +297,37 @@ public class HomeController {
 		return "admin/adminQnaRead";
 	}
 	
+	@RequestMapping(value = "/sendComment")
+	public String sendComment(int qnaNum, String email, String content, Model model, BoardQnaCommentDTO cdto, HttpServletRequest request) {
+		System.out.println(qnaNum + ", " + content + ", " + email);
+		String subject = "[조선호텔제주] 문의주신 내용에 대한 답변입니다.";
+		String from = "조선호텔 담당자 <himedia.sora@gmail.com>";
+		String to = email;
+		String msg = "";
+		
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "utf-8");
+			
+			mailHelper.setFrom(from);
+			mailHelper.setTo(to);
+			mailHelper.setSubject(subject);
+			mailHelper.setText(content);
+			
+			mailSender.send(mail);
+			comservice.insertComment(cdto);
+			msg = "메일 전송이 완료되었습니다.";
+		}catch(Exception e) {
+			e.printStackTrace();
+			msg = "메일 전송 실패";
+		}
+		
+		BoardQnaDTO dto = qnaservice.adminBoardRead(qnaNum);
+		List<BoardQnaCommentDTO> list = comservice.getCommentData(qnaNum);
+		model.addAttribute("dto", dto);
+		model.addAttribute("list",list);
+		request.setAttribute("msg", msg);
+		return "admin/adminQnaRead";
+	}
 	
 }

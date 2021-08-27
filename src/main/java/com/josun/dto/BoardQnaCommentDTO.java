@@ -6,8 +6,7 @@ public class BoardQnaCommentDTO {
 	private String content;
 	
 	public BoardQnaCommentDTO() {}
-	public BoardQnaCommentDTO(int rnum, int qnaNum, String content) {
-		this.rnum = rnum;
+	public BoardQnaCommentDTO(int qnaNum, String content) {
 		this.qnaNum = qnaNum;
 		this.content = content;
 	}
