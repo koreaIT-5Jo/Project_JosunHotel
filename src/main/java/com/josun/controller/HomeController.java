@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
+import com.josun.service.BoardEventNoticeService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 
@@ -30,6 +31,8 @@ public class HomeController {
 	MemberService memberservice;
 	@Autowired
 	BoardQnaService qnaservice;
+	@Autowired
+	BoardEventNoticeService enService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -76,7 +79,24 @@ public class HomeController {
 	
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
-	public String enList() {
+	@ResponseBody
+	public String enList(HttpServletRequest request, String pageNum) {
+		String content = "%"+"%";
+		String category = "%"+"%";
+		
+		int page = 0;
+		if(pageNum != null) page = Integer.parseInt(pageNum);
+		
+		int prev = page - 1;
+		int next = page + 1;
+		
+		request.setAttribute("boardList", enService.enList(content, category, page));
+		request.setAttribute("startPage", enService.startPage(content, category));
+		request.setAttribute("endPage", enService.endPage(content, category));
+		request.setAttribute("prev", prev);
+		request.setAttribute("page", page);
+		request.setAttribute("next", next);
+		
 		return "board/board_EventNoticeList";
 	}
 	//게시판 - 이벤트, 공지사항 수정

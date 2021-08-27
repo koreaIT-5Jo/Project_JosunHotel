@@ -8,16 +8,14 @@
 		SELECT t2.* FROM
 		(SELECT ROWNUM rnum, t.* FROM 
 		(SELECT c.catename , e.* FROM event_notice e, en_cate c 
-		WHERE e.category = c.num AND e.${serchKey} LIKE #{searchValue} ORDER BY e.write_date DESC)
+		WHERE e.category = c.num AND e.content LIKE #{content} AND e.category LIKE #{category} ORDER BY e.write_date DESC)
 		t) t2 WHERE #{startNum} <= rnum AND rnum <= #{endNum}
 		]]>
 	</select>
-	<select id="getDataCount" resultType="int">
-		select count(*) as totalCount from board_qna where ${searchKey} like #{searchValue}
-	</select>
-	
-	<select id="adminBoardRead" resultType="com.josun.dto.BoardQnaDTO">
-		select b.idx, c.name as categoryName, b.name, b.phone, b.email, b.reply_by, b.write_date, b.content, b.file_name as fileName from board_qna b, qna_category c where b.category = c.num and idx = ${idx}
+	<select id="totalCount" resultType="int">
+		<![CDATA[
+		SELECT count(*) FROM event_notice WHERE content LIKE #{content} AND category LIKE #{category}
+		]]>
 	</select>
 </mapper>
 

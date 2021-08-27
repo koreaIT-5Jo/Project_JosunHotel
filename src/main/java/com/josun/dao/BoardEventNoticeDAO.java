@@ -6,5 +6,8 @@ import com.josun.dto.BoardEventNoticeDTO;
 
 public interface BoardEventNoticeDAO {
 	//글목록
-	List <BoardEventNoticeDTO> enList(String searchKey, String searchValue, int startNum, int endNum);
+	List <BoardEventNoticeDTO> enList(String content, String category, int startNum, int endNum);
+	
+	//총 게시글 수
+	int totalCount(String content, String category);
 }

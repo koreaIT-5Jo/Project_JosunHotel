@@ -16,13 +16,21 @@ public class BoardEventNoticeDAOImpl implements BoardEventNoticeDAO {
 	private static final String NAMESPACE = "com.josun.mapper.BoardEventNoticeMapper";
 		
 	@Override
-	public List<BoardEventNoticeDTO> enList(String searchKey, String searchValue, int startNum, int endNum) {
+	public List<BoardEventNoticeDTO> enList(String content, String category, int startNum, int endNum) {
 		HashMap <String, Object> map = new HashMap <String, Object>();
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
+		map.put("content", content);
+		map.put("category", category);
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
-		return sqlSession.selectList(NAMESPACE+".enbList", map);
+		return sqlSession.selectList(NAMESPACE + ".enbList", map);
+	}
+
+	@Override
+	public int totalCount(String content, String category) {
+		HashMap <String, String> map = new HashMap <String, String>();
+		map.put("content", content);
+		map.put("category", category);
+		return sqlSession.selectOne(NAMESPACE + ".totalCount", map);
 	}
 
 }

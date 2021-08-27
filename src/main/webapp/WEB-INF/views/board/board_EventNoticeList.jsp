@@ -1,55 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
-<%-- <%	
-	String id = (String)session.getAttribute("idKey"); 
-	
-	request.setCharacterEncoding("UTF-8");
-	Connection conn = DBConn.getConnection();	
-	EventNoticeDAO edao = new EventNoticeDAO();
-	
-	 
-	//페이지네이션
-	int pageNum = 1;																				//현재 페이지	
-	final int pageSize = 5; 																		//한 페이징에 표시될 페이지 수
-	int totalPost = edao.getCount(conn);															//DB안에 있는 총 게시물 수
-	int totalSize = (totalPost % pageSize) > 0 ? (totalPost/pageSize) + 1 : (totalPost/pageSize);	//총 페이징 수
-	
-	if(request.getParameter("page") != null) {
-		pageNum = Integer.parseInt(request.getParameter("page"));
-		if(pageNum < 1) {
-			pageNum = 1;
-		} else if(pageNum > totalSize) {
-			pageNum = totalSize;
-		}
-	}
-	
-	
-	//검색
-	ArrayList <EventNoticeDTO> listDTO = new ArrayList <EventNoticeDTO>();
-	
-	int startRow = pageNum * pageSize - (pageSize-1);		//게시물 rownum 시작
-	int endRow = pageNum * pageSize;						//게시물 rownum 끝			
-	
-	int selectCate = 0;										//검색 - 카테고리 입력
-	String keyword = "";									//검색 - 키워드 입력
-	
-	if((request.getParameter("selectCate") != null) || (request.getParameter("keyword") != null)) {
-		selectCate = Integer.parseInt(request.getParameter("selectCate"));
-		keyword = URLDecoder.decode((request.getParameter("keyword")), "UTF-8");
-		
-		if(selectCate == 0) {
-			if(keyword == " ") {
-				listDTO = edao.getList(selectCate, keyword, startRow, endRow);
-			} else {
-				listDTO = edao.keywordList(keyword, startRow, endRow);
-			}
-		} else {
-			listDTO = edao.findList(selectCate, keyword, startRow, endRow);
-		}
-	} else {
-		listDTO = edao.getList(selectCate, keyword, startRow, endRow);
-	}
-%> --%>
+<% String id = (String)session.getAttribute("id");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -63,7 +14,9 @@
 <script type="text/javascript" src="resources/js/board/board_event_noticeList.js"></script>
 <script>
 	function enWrite() {		//글쓰기
-		location.href='event_noticeWrite.jsp';
+		var thisLocation = window.location.hostname;
+		alert(thisLocation);
+		//location.href='enWrite';
 	}
 	
 	function fncPage() {		//검색버튼
@@ -72,7 +25,7 @@
 		
 		//alert(keyword + '  ' + selectCate);
 		
-		location.href='event_noticeList.jsp?keyword='+ encodeURI(keyword) +'&selectCate=' + selectCate;
+		//location.href='event_noticeList.jsp?keyword='+ encodeURI(keyword) +'&selectCate=' + selectCate;
 		
 	}
 </script>
@@ -114,17 +67,17 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%-- <%if(id == null || id == ""){%> --%>
+					<%if(id == null || id == ""){%>
 					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
 					<li><a href="register">회원가입</a></li>
-					<%-- <%}else if(id.equals("admin")){ %> --%>
+					<%} else if (id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
-					<%-- <%}else{ %> --%>
+					<%} else { %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<%-- <%} %> --%>
+					<%} %>
 				</ul>
 			</div>
 			<!-- //gnbUtil -->
@@ -176,49 +129,41 @@
 					</tr>
 				</thead>
 				<tbody>
-					<%-- <%if(totalPost==0) {%>
-					<tr>
+<!-- 					<tr>
 						<td>-</td>
 						<td>등록된 글이 없습니다.</td>
 						<td>-</td>
 						<td>-</td>
-					</tr>
-					<%} else {
-						  for(int i = 0; i <= listDTO.size()-1; i++) {%>
-							<tr>
-						<%		for(int j=1; j<=1; j++) {%>
-									<td><%= listDTO.get(i).getCateName() %></td>
-									<td id = "td" class="tleft"><a href="event_noticeView.jsp?idx=<%=listDTO.get(i).getIdx()%>"><%= listDTO.get(i).getTitle() %></a></td>
-									<%if(listDTO.get(i).getFileName() != null) { %>
-										<!-- <td>&#x2714;</td> -->
-										<td>&#x2714;</td>
-									<%} else { %>
-										<td>-</td>
-									<%} %>
-									<td class="date"><%=listDTO.get(i).getWriteDate()%></td>
-							  <%}%>
-							</tr>					
-						<%}
-					   }%> --%>
+					</tr> -->
+					<tr>
+						<td></td>
+						<td id = "td" class="tleft"><a href="">글제목</a></td>
+						<!-- 파일명이 != null이 아니면 -->
+							<!-- <td>&#x2714;</td> -->
+							<td>&#x2714;</td>
+							<!-- 파일명이 null이면 -->
+							<td>-</td>
+						<td class="date">작성일</td>
+					</tr>					
 				</tbody>
 			</table>
 			<div class="pagination">
-			<%-- <%	int startP = totalSize - (totalSize-1);
-				int endP = totalSize;					%>
-				<a class="first" href="event_noticeList.jsp?page=<%=startP%>"><span class="hidden">first</span></a> 
-				<% for(int i = pageNum; i<=pageNum; i++)  { %>
-					<a class="prev" href="event_noticeList.jsp?page=<%=i-1%>"><span class="hidden">prev</span></a>
-					<a class="current" href="event_noticeList.jsp?page=<%=i%>"><%=i%><span class="hidden">현재페이지</span></a>
-					<a class="next" href="event_noticeList.jsp?page=<%=i+1%>"><span class="hidden">next</span></a> 
-				<% }%>
-				<a class="last" href="event_noticeList.jsp?page=<%=endP%>"><span class="hidden">last</span></a> --%>
+				<a class="first" href="/enList?page=${startPage}"><span class="hidden">first</span></a> 
+				<!-- forStart.페이지네이션 -->
+				<c:forEach begin="${startPage}" end="${endPage}" var="p">
+				<a class="prev" href="/enList?page=${prev}"><span class="hidden">prev</span></a>
+				<a class="current" href="">${page}<span class="hidden">현재페이지</span></a>
+				<a class="next" href="/enList?page=${next}"><span class="hidden">next</span></a> 
+				</c:forEach>
+				<!-- forEnd.페이지네이션 -->
+				<a class="last" href="/enList?page=${endPage}"><span class="hidden">last</span></a>
 			</div> 
 			<div class="btnArea">
-				<%-- <%if(id == null) {%>
-					<div></div>
-				<%} else if(id.equals("admin")) {%>
+				<%if(id.equals("admin")) {%>
 					<a class="btnSC writeL" onclick="enWrite();">글쓰기</a>
-				<%} %> --%>
+				<%} else {%>
+					<div></div>
+				<%} %>
 			</div>
 		</div>
 		<!-- Start. footer -->
