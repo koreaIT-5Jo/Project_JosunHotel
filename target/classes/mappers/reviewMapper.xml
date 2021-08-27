@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.reviewMapper">
+	<select id="reviewMainList" resultType="com.josun.dto.ReivewDTO">
+		select b3.*	from 
+		(select rownum rnum, b2.* from 
+		(select br.* from board_review br order by write_date desc)
+		 b2) 
+		 b3 
+		<![CDATA[where rnum>= #{rNumStart} and rnum<=#{rNumEnd}]]> 
+	</select>
+</mapper>

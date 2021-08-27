@@ -1,5 +1,6 @@
 package com.josun.controller;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -12,6 +13,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+=======
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> origin/Kim_Gyeom
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +32,14 @@ import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 
+import com.josun.dto.ReservationDTO;
+import com.josun.dto.RoomDTO;
+import com.josun.service.RoomService;
+import com.josun.util.DateUtil;
+
 @Controller
 public class HomeController {
+<<<<<<< HEAD
 	@Autowired
 	MemberService memberservice;
 	@Autowired
@@ -38,6 +50,9 @@ public class HomeController {
 	private JavaMailSender mailSender;
 
 	//메인
+=======
+	
+>>>>>>> origin/Kim_Gyeom
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -287,6 +302,7 @@ public class HomeController {
 		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminQnaList";
 	}
+<<<<<<< HEAD
 	//관리자페이지 - Q&A글상세보기
 	@RequestMapping(value = "/adminQnaRead")
 	public String adminQnaRead(int idx, Model model) {
@@ -329,5 +345,7 @@ public class HomeController {
 		request.setAttribute("msg", msg);
 		return "admin/adminQnaRead";
 	}
+=======
+>>>>>>> origin/Kim_Gyeom
 	
 }

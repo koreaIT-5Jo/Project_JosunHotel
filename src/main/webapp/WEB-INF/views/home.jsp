@@ -227,17 +227,17 @@
 				alert("날짜를 선택해주세요.");
 			}else{
 				var date = $('#datetxt').text();
-				var adltCntArr = $('#adltCntArr').val();
-				var chldCntArr = $('#chldCntArr').val();
-				if(chldCntArr == 0){
-					if(confirm("예약일 : " + date + "\n객실수 : 1개\n인원수 : 성인 " + adltCntArr + "명\n해당 날짜로 예약하시겠습니까?")){
+				var adltCnt = $('#adltCnt').val();
+				var chldCnt = $('#chldCnt').val();
+				if(chldCnt == 0){
+					if(confirm("예약일 : " + date + "\n객실수 : 1개\n인원수 : 성인 " + adltCnt + "명\n해당 날짜로 예약하시겠습니까?")){
 						//alert("확인");
 						$('#mainResveForm').submit();
 					}else{
 						return false;
 					}
 				}else{
-					if(confirm("예약일 : " + date + "\n객실수 : 1개\n인원수 : 성인 " + adltCntArr + "명, 어린이 "+ chldCntArr +"명\n해당 날짜로 예약하시겠습니까?")){
+					if(confirm("예약일 : " + date + "\n객실수 : 1개\n인원수 : 성인 " + adltCnt + "명, 어린이 "+ chldCnt +"명\n해당 날짜로 예약하시겠습니까?")){
 						//alert("확인");
 						$('#mainResveForm').submit();
 					}else{
@@ -248,10 +248,10 @@
 		}
 		</script>
 		<div id="reservation" class="revArea">
-			<form id="mainResveForm" name="mainResveForm" method="post" action="Controller">
+			<form id="mainResveForm" name="mainResveForm" method="post" action="reservation/step1">
 				<input type="hidden" name="command" value="searchRoom">
-				<input type="hidden" name="ckinDate" id="date1" value="">
-				<input type="hidden" name="ckoutDate" id="date2" value="">
+				<input type="hidden" name="startDate" id="date1" value="">
+				<input type="hidden" name="endDate" id="date2" value="">
 				<div class="selectRoom" role="area">
 					<div class="selectHotel">
 						<strong class="tit">HOTEL</strong>
@@ -383,13 +383,13 @@
 											<strong class="roomTit">객실1</strong>
 											<div class="numWrap" data-roomnum="1">
 												<div class="numPeople" data-target="adult">
-													<input type="hidden" id="adltCntArr" name="adltCntArr" value="2">
+													<input type="hidden" id="adltCnt" name="adultCnt" value="2">
 													<button type="button" class="btnDown">인원 수 감소</button>
 													<span>성인 <em>2</em></span>
 													<button type="button" class="btnUp">인원 수 증가</button>
 												</div>
 												<div class="numPeople" data-target="child">
-													<input type="hidden" id="chldCntArr" name="chldCntArr" value="0">
+													<input type="hidden" id="chldCnt" name="childrenCnt" value="0">
 													<button type="button" class="btnDown">인원 수 감소</button>
 													<span>어린이 <em>0</em></span>
 													<button type="button" class="btnUp">인원 수 증가</button>
