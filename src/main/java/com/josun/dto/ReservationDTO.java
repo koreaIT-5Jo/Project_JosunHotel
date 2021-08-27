@@ -19,13 +19,13 @@ public class ReservationDTO {
 	private int total_pay;
 	private int room_number;
 	private String card_Password;
-	private String memeber_Id;
+	private String member_Id;
 	
 	public ReservationDTO(){ }
 	public ReservationDTO(String name, String startDate, String endDate, int adultCnt, int childrenCnt,
 			int adult_breakfast, int chil_breakfast, String txtRequest, String phoneNum, String email, String card_type,
 			String card_num, String card_expiration, String birth, int total_pay, int room_number, String card_pw,
-			String memeberId) {
+			String member_Id) {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -43,7 +43,7 @@ public class ReservationDTO {
 		this.total_pay = total_pay;
 		this.room_number = room_number;
 		this.card_Password = card_pw;
-		this.memeber_Id = memeberId;
+		this.member_Id = member_Id;
 	}
 	public String getName() {
 		return name;
@@ -148,10 +148,10 @@ public class ReservationDTO {
 		this.card_Password = card_pw;
 	}
 	public String getMember_Id() {
-		return memeber_Id;
+		return member_Id;
 	}
-	public void setMemeberId(String memeberId) {
-		this.memeber_Id = memeberId;
+	public void setMember_Id(String member_Id) {
+		this.member_Id = member_Id;
 	}
 	public int getNum() {
 		return num;
@@ -166,7 +166,7 @@ public class ReservationDTO {
 				+ ", chil_breakfast=" + chil_breakfast + ", request=" + request + ", phoneNum=" + phone_Number + ", email="
 				+ email + ", card_type=" + card_type + ", card_num=" + card_Number + ", card_expiration=" + card_Expiration_Date
 				+ ", birth=" + birthDate + ", total_pay=" + total_pay + ", room_number=" + room_number
-				+ ", card_pw=" + card_Password + ", memeberId=" + memeber_Id + "]";
+				+ ", card_pw=" + card_Password + ", memeberId=" + member_Id + "]";
 	}
 	
 	

@@ -22,6 +22,7 @@ public class ReservationController {
 	
 	@Autowired
 	RoomService roomService;
+	@Autowired
 	ReservationService reservationService;
 	
 	// 예약페이지 - 방선택

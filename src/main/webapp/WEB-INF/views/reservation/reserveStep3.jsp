@@ -3,12 +3,12 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.*" %>
 <%
-	String id = (String) session.getAttribute("idKey");
-	String name = (String) session.getAttribute("nameKey");
-	String email = (String) session.getAttribute("emailKey");
+	String id = (String) session.getAttribute("id");
+	String name = (String) session.getAttribute("name");
+	String email = (String) session.getAttribute("email");
 	String[] emailArr = null;
 	if(email != null){emailArr = email.split("@",2);}		/* 일단 오류를 위해 막아둔거임  */
-	String phone = (String) session.getAttribute("phoneKey");
+	String phone = (String) session.getAttribute("phone");
 	String[] phoneArr = null;
 	if(phone != null){phoneArr = phone.split("-", 3);} 	/* 일단 오류를 위해 막아둔거임  */
 %>
@@ -350,7 +350,7 @@ function fncGoResv(){
 		<input type="hidden" name="chil_breakfast" id="children_breakfast" value="${reservationDto.chil_breakfast }"/>
 		<input type="hidden" name="total_pay" id = "totalpay" value="${reservationDto.total_pay}"/>
 		<input type="hidden" name="txtRequest" id="txtRequest" value="${reservationDto.txtRequest}"/>
-		<input type="hidden" name="memberId" id="id" value="<%=id %>"/>
+		<input type="hidden" name="member_Id" id="member_Id" value="<%=id %>"/>
 		<input type="hidden" name="email" id="email" value=""/>
 		<input type="hidden" name="card_num" id="cardNo" value=""/>
 		<input type="hidden" name="birth" id="birth" value=""/>
