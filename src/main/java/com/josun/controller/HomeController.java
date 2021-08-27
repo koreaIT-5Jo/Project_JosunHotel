@@ -249,12 +249,16 @@ public class HomeController {
 		}
 		
 		model.addAttribute("list", list);
+//		model.addAttribute("searchKey", searchKey);
+//		model.addAttribute("searchValue", searchValue);
+//		model.addAttribute("page", page);
 		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminQnaList";
 	}
 	//관리자페이지 - Q&A글상세보기
 	@RequestMapping(value = "/adminQnaRead")
-	public String adminQnaRead(int idx, Model model) {
+	public String adminQnaRead(int idx, String searchKey, String searchValue, Model model) {
+		System.out.println(idx + ", " + searchKey + ", " + searchValue);
 		BoardQnaDTO dto = qnaservice.adminBoardRead(idx);
 		model.addAttribute("dto", dto);
 		return "admin/adminQnaRead";
