@@ -77,7 +77,22 @@ public class HomeController {
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
 	public String enList() {
-		return "board/board_event_noticeList";
+		return "board/board_EventNoticeList";
+	}
+	//게시판 - 이벤트, 공지사항 수정
+	@RequestMapping(value = "/enModify")
+	public String enModify() {
+		return "board/board_EventNoticeModify";
+	}
+	//게시판 - 이벤트, 공지사항 상세보기
+	@RequestMapping(value = "/enDetailView")
+	public String enDetailView() {
+		return "board/board_EventNoticeDetailView";
+	}
+	//게시판 - 이벤트, 공지사항 글쓰기
+	@RequestMapping(value = "/enWrite")
+	public String enWrite() {
+		return "board/board_EventNoticeWrite";
 	}
 	
 	//회원가입

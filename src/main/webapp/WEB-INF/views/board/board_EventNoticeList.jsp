@@ -1,11 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="UTF-8"%>
-<%-- <%@ page import="board.EventNotice.*" %> --%>
-<%@ page import = "java.util.*" %>
-<%@ page import = "java.sql.*" %>
-<%@ page import = "java.net.*" %>
-<%@ page import = "java.io.*" %>
-<%-- <%@ page import = "conn.*" %> --%>
 <%-- <%	
 	String id = (String)session.getAttribute("idKey"); 
 	

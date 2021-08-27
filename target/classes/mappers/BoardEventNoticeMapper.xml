@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.BoardEventNoticeMapper">
+	<select id="enbList" resultType="com.josun.dto.BoardEventNoticeDTO">
+		<![CDATA[
+		SELECT t2.* FROM
+		(SELECT ROWNUM rnum, t.* FROM 
+		(SELECT c.catename , e.* FROM event_notice e, en_cate c 
+		WHERE e.category = c.num AND e.${serchKey} LIKE #{searchValue} ORDER BY e.write_date DESC) t) t2 WHERE #{start} <= rnum AND rnum <= #{end}
+		]]>
+	</select>
+	<select id="getDataCount" resultType="int">
+		select count(*) as totalCount from board_qna where ${searchKey} like #{searchValue}
+	</select>
+	
+	<select id="adminBoardRead" resultType="com.josun.dto.BoardQnaDTO">
+		select b.idx, c.name as categoryName, b.name, b.phone, b.email, b.reply_by, b.write_date, b.content, b.file_name as fileName from board_qna b, qna_category c where b.category = c.num and idx = ${idx}
+	</select>
+</mapper>
+
