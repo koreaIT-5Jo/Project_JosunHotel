@@ -44,5 +44,9 @@
 	<select id="getDataCount" resultType="int">
 		select count(*) as totalCount from member where ${searchKey} like #{searchValue}
 	</select>
+	
+	<select id="reserveConfirm" resultType="map">
+		
+	</select>
 </mapper>
 

@@ -270,6 +270,11 @@
 				function fncSearch(){
 					var searchStartDate = $('#searchStartDate').val();
 					var searchEndDate = $('#searchEndDate').val();
+					var searchDate = {
+						searchStartDate:searchStartDate,
+						searchEndDate:searchEndDate
+					}
+					
 					if(searchStartDate == "" || searchEndDate == ""){
 						alert('날짜를 선택해주세요.');
 					}else{
@@ -277,11 +282,14 @@
 						$("#searchCtgry option:eq(0)").prop("selected", true);
 						var html = "";
 						$.ajax({
+							url : '/www/myPage/reserveConfirm/json',
 							type :'POST',
-							url : 'SearchReserveServlet',
-							data : {'searchStartDate':searchStartDate, 'searchEndDate':searchEndDate},
+							data : JSON.stringify(searchDate),
 							datatype:'JSON',
+							contentType: 'application/json; charset=utf-8',
 							success : function(data){
+								console.log(data);
+								
 								var listtest = data.list;
 								if(listtest.length == 0){
 									html += "<li class=\'noData'\>";
@@ -340,6 +348,9 @@
 									$('.cardList').append(html);
 									$('.listBox .countList .count em').text(listtest.length);
 								}
+							},
+							error:function(){
+								console.log('오류');
 							}
 						});
 					}

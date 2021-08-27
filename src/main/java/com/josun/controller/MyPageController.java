@@ -1,6 +1,7 @@
 package com.josun.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -123,5 +124,17 @@ public class MyPageController {
 		
 		return map;
 	}
-
+	
+	
+	//마이페이지 - 예약확인
+	@RequestMapping("/reserveConfirm/json")
+	public List<Map<String, Object>> reserveConfirm(HttpSession session, @RequestBody Map<String, String> param){
+		String id = (String)session.getAttribute("id");
+		String searchStartDate = param.get("searchStartDate");
+		String searchEndDate = param.get("searchEndDate");
+		
+		System.out.println("파라미터 확인 : " + id + ", " + searchStartDate + ", " + searchEndDate);
+		
+		return null;
+	}
 }

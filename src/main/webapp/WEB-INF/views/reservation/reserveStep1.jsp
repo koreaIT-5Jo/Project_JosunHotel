@@ -251,7 +251,7 @@ function roomReserveBtn(roomNum){
 							</li>
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
-									<li><a href="qna">Q&amp;A</a></li>
+									<li><a href="/www/qna">Q&amp;A</a></li>
 									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
 								</ul>
 							</li>
