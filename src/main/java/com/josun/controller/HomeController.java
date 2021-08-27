@@ -37,7 +37,7 @@ public class HomeController {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	
+	//메인
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -296,7 +296,7 @@ public class HomeController {
 		model.addAttribute("list",list);
 		return "admin/adminQnaRead";
 	}
-	
+	//관리자페이지 - Q&A 댓글쓰기, 메일발송
 	@RequestMapping(value = "/sendComment")
 	public String sendComment(int qnaNum, String email, String content, Model model, BoardQnaCommentDTO cdto, HttpServletRequest request) {
 		System.out.println(qnaNum + ", " + content + ", " + email);
