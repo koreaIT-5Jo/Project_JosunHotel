@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
 	pageEncoding="UTF-8"%>
  <%
-	String id = (String) session.getAttribute("idKey");
+	String id = (String) session.getAttribute("id");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,12 +17,11 @@
 <script type="text/javascript" src="../resources/js/reservation/reserveStep1.js"></script>
 <script>
 
-
 function fncOpenRoomInfo(param){
 	
 	var num = {num : param};
 	$.ajax({
-		url : 'http://localhost:8090/www/rest/vo/json',
+		url : '/www/rest/vo/json',
 		type : 'POST',
 		data : JSON.stringify(num),
 		dataType : 'json',
@@ -212,7 +211,7 @@ function popClose(){
 function roomReserveBtn(roomNum){
 	var form = document.step1Form;
 	document.getElementById("roomNum").value = roomNum; 
-	var loginCheck = "<%=session.getAttribute("idKey")%>";
+	var loginCheck = "<%=session.getAttribute("id")%>";
 	console.log(loginCheck);
 	
 	<%-- if(loginCheck == "null"){
@@ -229,7 +228,7 @@ function roomReserveBtn(roomNum){
 <div class="wrapper ">
 		<div class="header">
 			<div class="headArea">
-				<strong class="logo"><a href="/ProjectWepJosun/main.jsp">JOSUN HOTELS &amp; RESORTS</a></strong>
+				<strong class="logo"><a href="/www">JOSUN HOTELS &amp; RESORTS</a></strong>
 				<button type="button" class="btnMenu">메뉴 열기</button>
 				<div class="allMenu">
 					<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
@@ -237,22 +236,22 @@ function roomReserveBtn(roomNum){
 						<ul class="menuDepth01">
 							<li>BRAND STORY
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/brandStory.jsp">그랜드 조선 제주</a></li>
+									<li><a href="brand">그랜드 조선 제주</a></li>
 								</ul>
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+									<li><a href="enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
+									<li><a href="reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
+									<li><a href="qna">Q&amp;A</a></li>
 									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
 								</ul>
 							</li>
@@ -262,19 +261,19 @@ function roomReserveBtn(roomNum){
 				<!-- //allMenu -->
 				<div class="gnbUtil">
 					<ul>
-						<%
-						if(id == null || id == ""){
-						%>
-						<li><a href="<%-- /ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%> --%>">로그인</a></li>
-						<li><a href="Join">회원가입</a></li>
+						<%-- /ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%> --%>
+						<%if(id == null || id == ""){%>
+						<li><a href="login">로그인</a></li>
+						<li><a href="register">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-						<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
+						<li><a href="logout">로그아웃</a></li>
+						<li><a href="reserveConfirm">마이페이지</a></li>
+						<li><a href="adminMember">관리자페이지</a></li>
 						<%}else{ %>
-						<li><a href="Logout">로그아웃</a></li>
-						<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+						<li><a href="logout">로그아웃</a></li>
+						<li><a href="reserveConfirm">마이페이지</a></li>
 						<%} %>
+					</ul>
 					</ul>
 				</div>
 				<!-- //gnbUtil -->
