@@ -1,26 +1,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ page import="java.io.PrintWriter" %>
-<% String id = (String) session.getAttribute("idKey"); %>
+<% String id = (String) session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>회원탈퇴 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/header.js"></script>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
 <link rel="stylesheet" href="resources/css/member/memberDelete1.css">
-<script type="text/javascript" src="resources/js/header.js"></script>
 <script>
 	function fncWithDraPwCfmApi() {
-		var password = jQuery("#password").val();
+		var password = $("#password").val();
+		
 		if (password.length == 0) {
 			$('.intInner > span').addClass("error");
 			$('.intInner > span').find(".alertMessage").show();
 			return;
 		}
-		jQuery("#delInfoForm1").submit();
+		
+		var pw = {password : password};
+		
+		$.ajax({
+			url:'http://localhost:9091/www/myPage/memberDelete1Action/json',
+			type:'post',
+			data: JSON.stringify(pw),
+			dataType: 'json',
+			contentType: 'application/json; charset=utf-8',
+			success: function(response) {
+				if(response.result) {
+					alert('비밀번호가 일치합니다. 회원탈퇴는 신중히 해주시기 바랍니다.');
+					location.href = 'http://localhost:9091/www/memberDeleteNext';
+				} else {
+					alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
+					$('#password').focus();
+				}
+			},
+			error:function(request, status, error) { 
+				alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
+			}
+		});
 	}
 </script>
 </head>
@@ -33,37 +55,34 @@
 				<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 				<div class="inner">
 					<ul class="menuDepth01">
-							<li>BRAND STORY
-								<ul class="menuDepth02">
-									<li><a href="brand">그랜드 조선 제주</a></li>
-								</ul>
-							</li>
-							<li>EVENT & NOTICE
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
-								</ul>
-							</li>
-							<li>RESERVATION
-								<ul class="menuDepth02">
-									<li><a href="reserveConfirm">예약확인</a></li>
-								</ul>
-							</li>
-							<li>CUSTOMER SERVICE
-								<ul class="menuDepth02">
-									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
-								</ul>
-							</li>
-						</ul>
+						<li>BRAND STORY
+							<ul class="menuDepth02">
+								<li><a href="brand">그랜드 조선 제주</a></li>
+							</ul>
+						</li>
+						<li>EVENT & NOTICE
+							<ul class="menuDepth02">
+								<li><a href="enList">EVENT & NOTICE</a></li>
+							</ul>
+						</li>
+						<li>RESERVATION
+							<ul class="menuDepth02">
+								<li><a href="reserveConfirm">예약확인</a></li>
+							</ul>
+						</li>
+						<li>CUSTOMER SERVICE
+							<ul class="menuDepth02">
+								<li><a href="qna">Q&amp;A</a></li>
+								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id == null || id == ""){%>
-					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href="register">회원가입</a></li>
-					<%}else if(id.equals("admin")){ %>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
@@ -90,7 +109,7 @@
 			<div class="lnbArea">
 				<div class="myInfo">
 					<p class="name">
-						<a href="#"><em id="nm1"><%= session.getAttribute("nameKey") %> </em>님</a>
+						<a href="#"><em id="nm1">${name}</em>님</a>
 					</p>
 				</div>
 				<ul class="lnb">
@@ -103,45 +122,38 @@
 						<ul>
 							<li><a href="memberModify">회원 정보 수정</a></li>
 							<li><a href="memberPwChange">비밀번호 변경</a></li>
-							<li><a href="memberDelete">회원 탈퇴
-							</a></li>
+							<li><a href="memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-
 			<div class="myContents">
 				<h3 class="titDep2">회원 탈퇴</h3>
 				<p class="pageGuide tleft">정보를 안전하게 보호하기 위해 비밀번호를 다시 한 번 확인합니다.</p>
-				<form action="Controller" id="delInfoForm1" name="delInfoForm1" method="post">
-					<input type="hidden" name="command" value="delInfo1Action"/>
-					<div class="frmInfo">
-						<ul class="intList">
-							<li>
-								<!-- 필수입력서식에 미입력 발생 시, error 클래스 추가 alertMessage 노출, 포커스가 가면 error 클래스 제거 -->
-								<div class="intWrap">
-									<span class="tit">
-										<label for="userpw">PASSWORD</label>
-									<span class="essential">필수</span></span>
-								</div>
-								<div class="intInner">
-									<span class="intArea">
-										<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width: 1000px" aria-required="true">
-									<span class="alertMessage">비밀번호를 입력해주세요.</span></span>
-								</div>
-							</li>
-						</ul>
-					</div>
-					<div class="btnArea">
-						<button type="button" class="btnSC btnL" onclick="fncWithDraPwCfmApi();">다음</button>
-					</div>
-				</form>
+				<div class="frmInfo">
+					<ul class="intList">
+						<li>
+							<div class="intWrap">
+								<span class="tit">
+									<label for="userpw">PASSWORD</label>
+								<span class="essential">필수</span></span>
+							</div>
+							<div class="intInner">
+								<span class="intArea">
+									<input type="password" id="password" name="password" placeholder="비밀번호를 입력해주세요." style="width: 1000px" aria-required="true">
+								<span class="alertMessage">비밀번호를 입력해주세요.</span></span>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="btnArea">
+					<button type="button" class="btnSC btnL" onclick="fncWithDraPwCfmApi();">다음</button>
+				</div>
 			</div>
-
 		</div>
 		<!-- my Contents -->
 	</div>
-	<!-- container -->
+	<!-- End.container -->
 	
 	<!-- Start. footer -->
 	<div style="background: #000;">

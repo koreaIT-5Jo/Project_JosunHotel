@@ -1,13 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.io.PrintWriter" %>
-<%-- <%@ page import="member.*" %> --%>
-<%String id = (String) session.getAttribute("idKey");%>
+<% String id = (String)session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>회원정보수정 | 그랜드 조선 호텔</title>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="resources/js/member/memberModify.js"></script>
@@ -30,26 +29,40 @@ function postcodeT(){
 }
 
 function fncMyInfoUpdApi() {
-	var name = $("#korNm").val();							//이름
 	var phone1 = $("#telFrstNo").val();
 	var phone2 = $("#telMidNo").val();
 	var phone3 = $("#telIndNo").val();
-	var phone = phone1 + "-" + phone2 + "-" + phone3;		//폰번호
-	var postcode = $("#postcode").val(); 					//우편번호
+	
+	var postcode = $("#postcode").val();
 	var addr = $("#address").val();
 	var detailAdd = $("#detailAddress").val();
-	var address = postcode + "//" + addr + "//" + detailAdd;//전체 주소
+	
 	var emailId = $("#emailId").val();
 	var eDomain = $("#eDomain").val();
-	var email = emailId + "@" + eDomain;					//전체 이메일
 	
-	//alert(name + ' ' + phone + ' ' + address + ' ' + email);
+	var name = $("#korNm").val();							//이름
+	var phone = phone1 + "-" + phone2 + "-" + phone3;		//폰번호
+	var address = postcode + "//" + addr + "//" + detailAdd;//전체 주소
+	var email = emailId + "@" + eDomain;					//전체 이메일	
+
+	//alert(name + phone + address + email);
+	
+	var modifyData = {
+		name : name,
+		phone : phone,
+		address : address,
+		email : email
+	}
+	//alert(JSON.stringify(modifyData));
+	
 	/*
 	사용자 입력정보 VALIDATION 체크
 	해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
 	최초 미입력 된 element로 focus 이동됨
 	 */
-	var frstIdx = "";
+	 
+ 	var frstIdx = "";
+	
 	jQuery(".intList li").each(function(){
 		var $this = jQuery(this);
 		var validYn = true;
@@ -80,18 +93,14 @@ function fncMyInfoUpdApi() {
 	}
 	
 	$.ajax({
-		type:"post",
-		url:"Controller",
-		data:{"name": name, "phone": phone, "address": address, "email": email, "command":"ModifyInfoAction"},
-		datatype: "json",
-		success: function(data) {
-			if(data.fileSaveCheck == true) {
-				alert('회원 정보가 수정되었습니다.');
-				location.href='memberModify.jsp';
-			} else {
-				alert('회원 정보가 수정되지 않았습니다.');
-				location.href='memberModify.jsp';
-			}
+		url:'http://localhost:9091/www/myPage/memberModifyAction/json',
+		type:'post',
+		data: JSON.stringify(modifyData),
+		dataType: 'json',
+		contentType: 'application/json; charset=utf-8',
+		success: function(response) {
+			alert(response.msg);
+			location.href = 'http://localhost:9091/www/memberModify';
 		},
 		error:function(request, status, error) { 
 			alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
@@ -109,43 +118,40 @@ function fncMyInfoUpdApi() {
 				<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 				<div class="inner">
 					<ul class="menuDepth01">
-							<li>BRAND STORY
-								<ul class="menuDepth02">
-									<li><a href="brand">그랜드 조선 제주</a></li>
-								</ul>
-							</li>
-							<li>EVENT & NOTICE
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
-								</ul>
-							</li>
-							<li>RESERVATION
-								<ul class="menuDepth02">
-									<li><a href="reserveConfirm">예약확인</a></li>
-								</ul>
-							</li>
-							<li>CUSTOMER SERVICE
-								<ul class="menuDepth02">
-									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
-								</ul>
-							</li>
-						</ul>
+						<li>BRAND STORY
+							<ul class="menuDepth02">
+								<li><a href="brand">그랜드 조선 제주</a></li>
+							</ul>
+						</li>
+						<li>EVENT & NOTICE
+							<ul class="menuDepth02">
+								<li><a href="enList">EVENT & NOTICE</a></li>
+							</ul>
+						</li>
+						<li>RESERVATION
+							<ul class="menuDepth02">
+								<li><a href="reserveConfirm">예약확인</a></li>
+							</ul>
+						</li>
+						<li>CUSTOMER SERVICE
+							<ul class="menuDepth02">
+								<li><a href="qna">Q&amp;A</a></li>
+								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id == null || id == ""){%>
-					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href="register">회원가입</a></li>
-					<%}else if(id.equals("admin")){ %>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
 					<%}else{ %>
 					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -154,7 +160,7 @@ function fncMyInfoUpdApi() {
 	</div>
 	<!-- End. header -->
 	
-	<!-- Start. contents -->
+s	<!-- Start. contents -->
 	<div id="container" class="container mypage">
 		<div class="topArea">
 			<div class="topInner">
@@ -166,7 +172,7 @@ function fncMyInfoUpdApi() {
 			<div class="lnbArea">
 				<div class="myInfo">
 					<p class="name">
-						<a href="#"><em id="nm1"><%= session.getAttribute("nameKey") %> </em> <!-- 님 -->님</a>
+						<a href="#"><em id="nm1">${name}</em> <!-- 님 -->님</a>
 					</p>
 				</div>
 				<ul class="lnb">
@@ -178,23 +184,12 @@ function fncMyInfoUpdApi() {
 					<li>개인정보관리
 						<ul>
 							<li><a href="memberModify">회원 정보 수정</a></li>
-							<li><a href="/ProjectWepJosun/memberPwChange.jsp">비밀번호 변경</a></li>
-							<li><a href="/ProjectWepJosun/memberDelete1.jsp">회원 탈퇴</a></li>
+							<li><a href="memberPwChange">비밀번호 변경</a></li>
+							<li><a href="memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>
 			</div>
-			<%-- <%
-				String name = (String)session.getAttribute("nameKey");
-				String userPhone = (String)session.getAttribute("phoneKey");
-				String userAddr = (String)session.getAttribute("addrKey");
-				String userEmail = (String)session.getAttribute("emailKey");
-				String[] phone = userPhone.split("-");	
-				String[] addr = userAddr.split("//");
-				String[] email = userEmail.split("@");
-			%> --%>
-			<form id="memberModifyForm" action="Controller">
-				<input type="hidden" name="command" value="memberModifyAction">
 				<div class="myContents">
 					<h3 class="titDep2">회원 정보 수정</h3>
 					<div class="frmInfo">
@@ -206,7 +201,7 @@ function fncMyInfoUpdApi() {
 								</div>
 								<div class="intInner">
 									<span class="intArea"> 
-										<input type="text" id="korNm" name="korNm" placeholder="국문 이름을 입력하세요." style="width: 550px" aria-required="true" value="">
+										<input type="text" id="korNm" name="korNm" placeholder="국문 이름을 입력하세요." style="width: 550px" aria-required="true" value="${name}">
 										<span class="alertMessage">이름을 입력해주세요.</span>
 									</span>
 								</div>
@@ -219,15 +214,15 @@ function fncMyInfoUpdApi() {
 								</div>
 								<div class="intInner phoneInp">
 									<span class="intArea">
-										<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width: 165px" aria-required="true" value="">
+										<input type="text" id="telFrstNo" name="telFrstNo" title="first phone number" style="width: 165px" aria-required="true" value="${phone1}">
 									</span>
 									<span class="dash"></span>
 									<span class="intArea">
-										<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width: 165px" aria-required="true" value="">
+										<input type="text" id="telMidNo" name="telMidNo" title="second phone number" style="width: 165px" aria-required="true" value="${phone2}">
 									</span>
 									<span class="dash"></span>
 									<span class="intArea">
-										<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width: 165px" aria-required="true" value="">
+										<input type="text" id="telIndNo" name="telIndNo" title="last phone number" style="width: 165px" aria-required="true" value="${phone3}">
 									</span>
 									<span class="alertMessage">휴대폰 번호를 입력해주세요.</span>
 								</div>
@@ -240,15 +235,15 @@ function fncMyInfoUpdApi() {
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-										<input type="text" id="postcode" name="postcode" style="width: 305px" aria-required="true" readonly value="">
+										<input type="text" id="postcode" name="postcode" style="width: 305px" aria-required="true" readonly value="${addr1}">
 									</span>
 									<button type="button" class="btnSC btnM" onclick="postcodeT();">우편번호 검색</button>
 								</div>
 								<div class="intInner duobuleInp">
 									<span class="intArea">
-										<input type="text" id="address" name="address" style="width: 490px" title="주소" aria-required="true" readonly value=""></span>
+										<input type="text" id="address" name="address" style="width: 490px" title="주소" aria-required="true" readonly value="${addr2}"></span>
 									<span class="intArea">
-										<input type="text" id="detailAddress" name="detailAddress" style="width: 490px" title="상세주소" aria-required="true" placeholder="상세주소를 입력해주세요." value="">
+										<input type="text" id="detailAddress" name="detailAddress" style="width: 490px" title="상세주소" aria-required="true" placeholder="상세주소를 입력해주세요." value="${addr3}">
 									</span>
 									<span class="alertMessage">상세주소를 입력해주세요.</span>
 								</div>
@@ -260,10 +255,10 @@ function fncMyInfoUpdApi() {
 								</div>
 								<div class="intInner emailInp">
 									<span class="intArea">
-										<input type="text" id="emailId" name="emailId" style="width: 244px" aria-required="true" value=""></span>
+										<input type="text" id="emailId" name="emailId" style="width: 244px" aria-required="true" value="${email1}"></span>
 									<span class="dash">@</span>
 									<span class="intArea">
-										<input type="text" id="eDomain" name="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value=""></span>
+										<input type="text" id="eDomain" name="eDomain" style="width: 244px" aria-required="true" title="이메일주소직접입력" value="${email2}"></span>
 									<div class="intArea selectWrap" style="width: 180px" first="true">
 										<select class="my_select" id="emailType" name="emailType">
 											<option value="직접 입력">직접입력</option>
@@ -283,7 +278,6 @@ function fncMyInfoUpdApi() {
 						<button type="button" id="btnActive" class="btnSC btnL active" onclick="fncMyInfoUpdApi();">저장</button>
 					</div>
 				</div>
-			</form>
 			<!-- End. my contents -->
 		</div>
 		<!-- End. inner -->

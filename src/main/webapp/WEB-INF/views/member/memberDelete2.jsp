@@ -1,27 +1,46 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="java.io.PrintWriter" %>
-<% String id = (String) session.getAttribute("idKey"); %>
+<% String id = (String) session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <title>회원탈퇴 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<link rel="stylesheet" href="../resources/css/default.css">
-<link rel="stylesheet" href="../resources/css/headerfooter.css">
-<link rel="stylesheet" href="../resources/css/member/memberDelete2.css">
-<script type="text/javascript" src="../resources/js/header.js"></script>
+<script type="text/javascript" src="resources/js/header.js"></script>
+<link rel="stylesheet" href="resources/css/default.css">
+<link rel="stylesheet" href="resources/css/headerfooter.css">
+<link rel="stylesheet" href="resources/css/member/memberDelete2.css">
 <script>
 	function withdrawalApi() {
 		var notichk = document.getElementById('notice').checked;
 		
 		if(!notichk) {
 			alert('유의사항 숙지에 동의해주시기 바랍니다.');
-			//$("#notice").focus();
 		} else {
-			jQuery("#delInfoForm2").submit();
+			var chk = {notichk : notichk};
+			
+			$.ajax({
+				url:'http://localhost:9091/www/myPage/memberDelete2Action/json',
+				type:'post',
+				data: JSON.stringify(chk),
+				dataType: 'json',
+				contentType: 'application/json; charset=utf-8',
+				success: function(response) {
+					if(response.result) {
+						alert('회원탈퇴가 완료되었습니다.');
+						location.href='http://localhost:9091/www/';
+					} else {
+						alert('회원탈퇴에 실패하였습니다.');
+						location.href='http://localhost:9091/www/memberDelete';
+					}
+				},
+				error:function(request, status, error) { 
+					alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
+				}
+			});
 		}
+		
 	}
 </script>
 </head>
@@ -34,37 +53,34 @@
 				<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 				<div class="inner">
 					<ul class="menuDepth01">
-							<li>BRAND STORY
-								<ul class="menuDepth02">
-									<li><a href="brand">그랜드 조선 제주</a></li>
-								</ul>
-							</li>
-							<li>EVENT & NOTICE
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
-								</ul>
-							</li>
-							<li>RESERVATION
-								<ul class="menuDepth02">
-									<li><a href="reserveConfirm">예약확인</a></li>
-								</ul>
-							</li>
-							<li>CUSTOMER SERVICE
-								<ul class="menuDepth02">
-									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
-								</ul>
-							</li>
-						</ul>
+						<li>BRAND STORY
+							<ul class="menuDepth02">
+								<li><a href="brand">그랜드 조선 제주</a></li>
+							</ul>
+						</li>
+						<li>EVENT & NOTICE
+							<ul class="menuDepth02">
+								<li><a href="enList">EVENT & NOTICE</a></li>
+							</ul>
+						</li>
+						<li>RESERVATION
+							<ul class="menuDepth02">
+								<li><a href="reserveConfirm">예약확인</a></li>
+							</ul>
+						</li>
+						<li>CUSTOMER SERVICE
+							<ul class="menuDepth02">
+								<li><a href="qna">Q&amp;A</a></li>
+								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id == null || id == ""){%>
-					<li><a href="login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href=register>회원가입</a></li>
-					<%}else if(id.equals("admin")){ %>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
@@ -79,7 +95,7 @@
 	</div>
 	<!-- End. header -->
 	
-	<!-- Start. contents -->
+	<!-- Start. container -->
 	<div id="container" class="container mypage">
 		<div class="topArea">
 			<div class="topInner">
@@ -91,7 +107,7 @@
 			<div class="lnbArea">
 				<div class="myInfo">
 					<p class="name">
-						<a href="#"><em id="nm1"><%= session.getAttribute("nameKey") %> </em>님</a>
+						<a href="#"><em id="nm1">${name}</em>님</a>
 					</p>
 				</div>
 				<ul class="lnb">
@@ -111,34 +127,30 @@
 					</li>
 				</ul>
 			</div>
-
 			<!-- myContents -->
 			<div class="myContents">
-				<form action="Controller" id="delInfoForm2" name="delInfoForm2" method="post">
-					<input type="hidden" name="command" value="delInfo2Action"/>
-					<h3 class="titDep2">회원 탈퇴</h3>
-					<p class="pageGuide tleft">탈퇴를 신청하시기 전에 아래의 유의사항을 한 번 더 확인해 주시기 바랍나다.</p>
-	
-					<div class="cautionBox">
-						<span class="tit">유의 사항</span>
-						<ul class="listDep1">
-							<li>탈퇴를 신청하시면 번복이 불가능하며 보유하신 모든 포인트는 소멸됩니다.</li>
-							<li>개인정보보호법에 따라 고객님의 호텔 이용기록, 개인정보 및 문의내역 기록도 모두 삭제됩니다.</li>
-							<li>탈회 신청이 완료되면 즉시 홈페이지 로그인이 제한됩니다.</li>
-						</ul>
-					</div>
-					<div class="chkNotice" style="float: right;">
-						<input type="checkbox" name="notice" id="notice" />
-						<label for="notice">유의사항에 동의합니다.</label>
-					</div>
-					<div class="btnArea">
-						<button type="button" class="btnSC btnL active" onclick="withdrawalApi();">신청</button>
-					</div>
-				</form>
+				<h3 class="titDep2">회원 탈퇴</h3>
+				<p class="pageGuide tleft">탈퇴를 신청하시기 전에 아래의 유의사항을 한 번 더 확인해 주시기 바랍나다.</p>
+
+				<div class="cautionBox">
+					<span class="tit">유의 사항</span>
+					<ul class="listDep1">
+						<li>탈퇴를 신청하시면 번복이 불가능하며 보유하신 모든 포인트는 소멸됩니다.</li>
+						<li>개인정보보호법에 따라 고객님의 호텔 이용기록, 개인정보 및 문의내역 기록도 모두 삭제됩니다.</li>
+						<li>탈회 신청이 완료되면 즉시 홈페이지 로그인이 제한됩니다.</li>
+					</ul>
+				</div>
+				<div class="chkNotice" style="float: right;">
+					<input type="checkbox" name="notice" id="notice"/>
+					<label for="notice">유의사항에 동의합니다.</label>
+				</div>
+				<div class="btnArea">
+					<button type="button" class="btnSC btnL active" onclick="withdrawalApi();">신청</button>
+				</div>
 			</div>
 		</div>
-		<!-- End. my contents -->
 	</div>	
+	<!-- End. container -->
 	<!-- Start. footer -->
 	<div style="background: #000;">
 		<div id="footer">

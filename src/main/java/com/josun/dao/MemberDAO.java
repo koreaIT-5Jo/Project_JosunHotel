@@ -20,4 +20,14 @@ public interface MemberDAO {
 	List<MemberDTO> adminMemberList(int start, int end, String searchKey, String searchValue);
 	//관리자페이지 - 회원목록 - 전체 데이타 갯수
 	int getDataCount(String searchKey, String searchValue);
+	
+	//회원수정
+	int updateMem(String id, String name, String address, String phone, String email);
+	
+	//비밀번호 변경
+	int updatePw(String pw, String id);
+	
+	//회원삭제
+	String checkPw(String id);
+	int deleteMember(String id, String pw);
 }

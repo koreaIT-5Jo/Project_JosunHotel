@@ -48,4 +48,27 @@ public class MemberDAOTest {
 	public void getDataCount() throws Exception{
 		System.out.println(dao.getDataCount("name", "테스트"));
 	}
+	
+	@Test
+	public void testUpdateMem() throws Exception {
+		System.out.println(dao.updateMem("admin", "관리자", "00000//서울특별시", "010-0000-0000", "admin@naer.com")); //1
+	}
+	
+	@Test
+	public void testCheckPw() throws Exception {
+		System.out.println(dao.checkPw("minmi1234"));
+	}
+	
+	@Test
+	public void testUpdatePw() throws Exception {//pw, id순
+		System.out.println(dao.updatePw("admin", "admin1234!")); //0
+		System.out.println(dao.updatePw("admin1234!!", "admin"));//1
+	}
+	
+	@Test
+	public void testDeleteMem() throws Exception {
+		System.out.println(dao.deleteMember("test0000", "test0000")); //0
+	}
+	
+	
 }

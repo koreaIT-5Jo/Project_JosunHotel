@@ -12,6 +12,15 @@ public class MemberDTO {
 	private String email;
 	
 	public MemberDTO() {}
+	
+	public MemberDTO(String id, String name, String address, String phone, String email) {
+		this.id = id;
+		this.name = name;
+		this.address = address;
+		this.phone = phone;
+		this.email = email;
+	}
+	
 	public MemberDTO(String name, String id, String pw, int pwHintQ, String pwHintA, String address, String phone, String email) {
 		this.name = name;
 		this.id = id;

@@ -53,6 +53,37 @@ public class MemberServiceImpl implements MemberService {
 	public int getDataCount(String searchKey, String searchValue) {
 		return dao.getDataCount(searchKey, searchValue);
 	}
-
+	
+	//회원정보 수정
+	@Override
+	public int updateMem(String id, String name, String address, String phone, String email) {
+		return dao.updateMem(id, name, address, phone, email);
+	}
+	
+	//비밀번호 변경
+	@Override
+	public int updatePw(String id, String pw) {
+		return dao.updatePw(pw, id);
+	}
+	
+	//회원정보 삭제
+	@Override
+	public String checkPw(String id) {
+		String pw = dao.checkPw(id);
+		String result = "";
+		
+		if(pw != null) {
+			result = "아이디 찾기 완료";
+			System.out.println(result);
+		} else {
+			result = "가입된 아이디를 찾을 수 없음";
+			System.out.println(result);
+		}
+		return pw;
+	}
+	@Override
+	public int deleteMem(String id, String pw) {
+		return dao.deleteMember(id, pw);
+	}
 
 }

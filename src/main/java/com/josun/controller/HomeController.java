@@ -2,7 +2,9 @@ package com.josun.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -148,27 +151,49 @@ public class HomeController {
 
 	//마이페이지 - 예약확인
 	@RequestMapping(value = "/reserveConfirm")
-	public String reserveConfirm() {
+	public String reserveConfirm(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/reserveConfirm";
 	}
 	//마이페이지 - 회원정보 수정
 	@RequestMapping(value = "/memberModify")
-	public String memberModify() {
+	public String memberModify(HttpSession session, HttpServletRequest request) {
+		String name = (String)session.getAttribute("name");
+		String userAddr = (String)session.getAttribute("addr");
+		String userPhone = (String)session.getAttribute("phone");
+		String userEmail = (String)session.getAttribute("email");
+		String[] addr = userAddr.split("//");
+		String[] phone = userPhone.split("-");
+		String[] email = userEmail.split("@");
+		
+		request.setAttribute("name", name);
+		request.setAttribute("addr1", addr[0]);
+		request.setAttribute("addr2", addr[1]);
+		request.setAttribute("addr3", addr[2]);
+		request.setAttribute("phone1", phone[0]);
+		request.setAttribute("phone2", phone[1]);
+		request.setAttribute("phone3", phone[2]);
+		request.setAttribute("email1", email[0]);
+		request.setAttribute("email2", email[1]);
+		
 		return "member/memberModify";
 	}
 	//마이페이지 - 비밀번호 변경
 	@RequestMapping(value = "/memberPwChange")
-	public String memberPwChange() {
+	public String memberPwChange(HttpSession session, HttpServletRequest request) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberPwChange";
 	}
 	//마이페이지 - 회원 탈퇴
 	@RequestMapping(value = "/memberDelete")
-	public String memberDelete() {
+	public String memberDelete(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete1";
 	}
 	//마이페이지 - 회원 탈퇴2
-	@RequestMapping(value = "/memberDelete/next")
-	public String memberDeleteNext() {
+	@RequestMapping(value = "/memberDeleteNext")
+	public String memberDeleteNext(HttpServletRequest request, HttpSession session) {
+		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete2";
 	}
 	

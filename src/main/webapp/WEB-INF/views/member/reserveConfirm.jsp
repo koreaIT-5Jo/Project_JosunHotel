@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.io.PrintWriter" %> <!-- 자바 클래스 사용 --> 
-<%String id = (String) session.getAttribute("idKey");%>
+<%String id = (String) session.getAttribute("id");%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -177,15 +176,15 @@
 </script>
 </head>
 <body>
-<%-- <%
-	if(session.getAttribute("idKey")==null){
+<%
+	if(session.getAttribute("id")==null){
 		PrintWriter script = response.getWriter();
 		script.println("<script>");
 		script.println("alert('회원가입 또는 로그인 후 확인 가능합니다.')");
 		script.println("location.href = 'login.jsp?url="+request.getServletPath()+"'");
 		script.println("</script>");
 	}
-%> --%>
+%>
 <div class="wrapper">
 	<div class="header">
 		<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
@@ -204,7 +203,7 @@
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+								<li><a href="enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
@@ -224,14 +223,14 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%-- <%if(id.equals("admin")){%> --%>
+					<%if(id.equals("admin")){ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
-					<%-- <%}else{%> --%>
+					<li><a href="adminMember">관리자페이지</a></li>
+					<%}else{ %>
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<%-- <%}%> --%>
+					<%} %>
 				</ul>
 			</div>
 			<!-- //gnbUtil -->
@@ -245,12 +244,11 @@
 				<p class="pageGuide">멤버십 회원을 위한 다양한 혜택이 준비되어 있습니다.</p>
 			</div>
 		</div>
-	
 		<div class="inner">
 			<div class="lnbArea">
 				<div class="myInfo">
 					<p class="name">
-						<a href="#"><em id="nm1"><%= session.getAttribute("nameKey") %>  </em>님</a>
+						<a href="#"><em id="nm1">${name}</em>님</a>
 					</p>
 				</div>
 				<ul class="lnb">
@@ -261,9 +259,9 @@
 					</li>
 					<li>개인정보관리
 						<ul>
-							<li><a href="memberModify">회원 정보 수정 </a></li>
-							<li><a href="/ProjectWepJosun/memberPwChange.jsp">비밀번호 변경</a></li>
-							<li><a href="/ProjectWepJosun/memberDelete1.jsp">회원 탈퇴</a></li>
+							<li><a href="memberModify">회원 정보 수정</a></li>
+							<li><a href="memberPwChange">비밀번호 변경</a></li>
+							<li><a href="memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>
