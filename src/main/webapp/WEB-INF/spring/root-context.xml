@@ -32,6 +32,7 @@
 	
 	<bean id="MemberDAOImpl" class="com.josun.dao.MemberDAOImpl"/>
 	<bean id="BoardQnaDAOImpl" class="com.josun.dao.BoardQnaDAOImpl"/>
+	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
 	<context:component-scan base-package="com.josun.service"/>
 	
 </beans>

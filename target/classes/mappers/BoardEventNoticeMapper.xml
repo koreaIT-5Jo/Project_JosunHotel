@@ -8,7 +8,8 @@
 		SELECT t2.* FROM
 		(SELECT ROWNUM rnum, t.* FROM 
 		(SELECT c.catename , e.* FROM event_notice e, en_cate c 
-		WHERE e.category = c.num AND e.${serchKey} LIKE #{searchValue} ORDER BY e.write_date DESC) t) t2 WHERE #{start} <= rnum AND rnum <= #{end}
+		WHERE e.category = c.num AND e.${serchKey} LIKE #{searchValue} ORDER BY e.write_date DESC)
+		t) t2 WHERE #{startNum} <= rnum AND rnum <= #{endNum}
 		]]>
 	</select>
 	<select id="getDataCount" resultType="int">
