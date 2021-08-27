@@ -43,11 +43,11 @@
 <head>
 <meta charset="UTF-8">
 <title>CUSTOMER SERVICE - 리뷰 | 그랜드 조선 호텔</title>
-<link rel="stylesheet" href="css/reviewMain.css">
-<link rel="stylesheet" href="css/headerfooter.css">
-<link rel="stylesheet" href="css/default.css">
+<link rel="stylesheet" href="../resources/board/css/reviewMain.css">
+<link rel="stylesheet" href="../resources/css/headerfooter.css">
+<link rel="stylesheet" href="../resources/css/default.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
+<script type="text/javascript" src="../resources/js/header.js"></script>
 </head>
 <body>
 <script>
