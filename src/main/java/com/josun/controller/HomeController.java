@@ -2,9 +2,7 @@ package com.josun.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +11,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
+import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 
@@ -30,6 +29,8 @@ public class HomeController {
 	MemberService memberservice;
 	@Autowired
 	BoardQnaService qnaservice;
+	@Autowired
+	BoardQnaCommentService comservice;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -282,10 +283,11 @@ public class HomeController {
 	}
 	//관리자페이지 - Q&A글상세보기
 	@RequestMapping(value = "/adminQnaRead")
-	public String adminQnaRead(int idx, String searchKey, String searchValue, Model model) {
-		System.out.println(idx + ", " + searchKey + ", " + searchValue);
+	public String adminQnaRead(int idx, Model model) {
 		BoardQnaDTO dto = qnaservice.adminBoardRead(idx);
+		List<BoardQnaCommentDTO> list = comservice.getCommentData(idx);
 		model.addAttribute("dto", dto);
+		model.addAttribute("list",list);
 		return "admin/adminQnaRead";
 	}
 	

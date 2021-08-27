@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
+import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -16,6 +18,8 @@ import com.josun.service.BoardQnaService;
 public class BoardServiceTest {
 	@Autowired
 	private BoardQnaService service;
+	@Autowired
+	private BoardQnaCommentService cservice;
 	
 	@Test
 	public void insert() throws Exception{
@@ -39,5 +43,13 @@ public class BoardServiceTest {
 	public void adminRead() throws Exception{
 		BoardQnaDTO dto = service.adminBoardRead(188);
 		System.out.println(dto.getIdx() + ", " + dto.getCategoryName() + ", " + dto.getName() + ", " + dto.getPhone() + ", " + dto.getEmail() + ", " + dto.getReply() + ", " + dto.getWriteDate() + ", " + dto.getContent() + ", " + dto.getFileName());
+	}
+	
+	@Test
+	public void getCommentData() throws Exception{
+		List<BoardQnaCommentDTO> list = cservice.getCommentData(221);
+		for(BoardQnaCommentDTO dto : list) {
+			System.out.println(dto.getRnum() + ", " + dto.getContent());
+		}
 	}
 }

@@ -143,14 +143,12 @@
 			<script>
 				function commentOk(){
 					var numQna = $(".listIdx span").text();
-					$("#numQna").val(numQna);
+					$("#qnaNum").val(numQna);
 					jQuery("#commentForm").submit();
 				}
 			</script>
 				<form id="commentForm" name="commentForm" method="post" action="commentOk.jsp">
-					<input type="hidden" id="numQna" name="numQna" value="">
-	                <input type="hidden" name="pageNum" value='<%=request.getParameter("pageNum") %>'/>
-	                <input type="hidden" name="num" value='<%=request.getParameter("num") %>'/>
+					<input type="hidden" id="qnaNum" name="qnaNum" value="">
 					<div class="comCnt">
 		                <strong>댓글</strong>
 		            </div>
@@ -161,12 +159,12 @@
                 </form>
 			</div>
 			<div class="commentList">
-				<%-- <%for(BoardCommentDTO dtoC : lists) { %>
-					<p><span><%=dtoC.getRnum() %></span> <%=dtoC.getContent() %></p>
-				<%} %> --%>
+				<c:forEach var="comment" items="${list}">
+					<p><span>${comment.rnum}</span>${comment.content}</p>
+				</c:forEach>
 			</div>
 			<div class="btnPrev">
-				<%-- <a href="#none" class="btnSC btnL" onclick="javascript:location.href='<%=cp%>/adminQnaList.jsp?pageNum=<%=pageNum %><%=param %>';">목록</a> --%>
+				<a href="#none" class="btnSC btnL" onclick="javascript:location.href='adminQnaList';">목록</a>
 			</div>
 		</div>
 	</div>
