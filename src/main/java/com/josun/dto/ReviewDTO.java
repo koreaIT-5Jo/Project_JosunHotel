@@ -6,11 +6,11 @@ public class ReviewDTO {
 	private int idx;
 	private String title;
 	private String content;
-	private String writeDate;
+	private String write_Date;
 	private int hitCount;
-	private String memberID;
-	private int roomNumber;
-	private String fileName;
+	private String member_ID;
+	private int room_Number;
+	private String file_Name;
 	
 	public ReviewDTO( String title, String content,String memberID,int roomNumber, String fileName) {
 		SimpleDateFormat format = new SimpleDateFormat ( "yyyy.MM.dd HH:mm:ss");
@@ -18,11 +18,11 @@ public class ReviewDTO {
 		
 		this.title = title;
 		this.content = content;
-		this.writeDate = crrentTime;
+		this.write_Date = crrentTime;
 		this.hitCount = 0;
-		this.memberID = memberID;
-		this.roomNumber = roomNumber;
-		this.fileName = fileName;
+		this.member_ID = memberID;
+		this.room_Number = roomNumber;
+		this.file_Name = fileName;
 	}
 	
 	public ReviewDTO(int idx, String title, String content, String writeDate, int hitCount, String memberID,
@@ -30,11 +30,11 @@ public class ReviewDTO {
 		this.idx = idx;
 		this.title = title;
 		this.content = content;
-		this.writeDate = writeDate;
+		this.write_Date = writeDate;
 		this.hitCount = hitCount;
-		this.memberID = memberID;
-		this.roomNumber = roomNumber;
-		this.fileName = fileName;
+		this.member_ID = memberID;
+		this.room_Number = roomNumber;
+		this.file_Name = fileName;
 	}
 	
 	public int getIdx() {
@@ -56,10 +56,10 @@ public class ReviewDTO {
 		this.content = content;
 	}
 	public String getWriteDate() {
-		return writeDate;
+		return write_Date;
 	}
-	public void setWriteDate(String writeDate) {
-		this.writeDate = writeDate;
+	public void setWrite_Date(String writeDate) {
+		this.write_Date = writeDate;
 	}
 	public int getHitCount() {
 		return hitCount;
@@ -68,21 +68,28 @@ public class ReviewDTO {
 		this.hitCount = hitCount;
 	}
 	public String getMemberID() {
-		return memberID;
+		return member_ID;
 	}
-	public void setMemberID(String memberID) {
-		this.memberID = memberID;
+	public void setMember_ID(String memberID) {
+		this.member_ID = memberID;
 	}
 	public int getRoomNumber() {
-		return roomNumber;
+		return room_Number;
 	}
-	public void setRoomNumber(int roomNumber) {
-		this.roomNumber = roomNumber;
+	public void setRoom_Number(int roomNumber) {
+		this.room_Number = roomNumber;
 	}
-	public String getFileName() {
-		return fileName;
+	public String getFile_Name() {
+		return file_Name;
 	}
 	public void setFileName(String fileName) {
-		this.fileName = fileName;
+		this.file_Name = fileName;
+	}
+
+	@Override
+	public String toString() {
+		return "ReviewDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writeDate=" + write_Date
+				+ ", hitCount=" + hitCount + ", memberID=" + member_ID + ", roomNumber=" + room_Number + ", fileName="
+				+ file_Name + "]";
 	}
 }

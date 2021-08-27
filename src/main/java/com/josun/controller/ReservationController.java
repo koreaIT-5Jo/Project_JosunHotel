@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.josun.dto.ReservationDTO;
 import com.josun.dto.RoomDTO;
+import com.josun.service.ReservationService;
 import com.josun.service.RoomService;
 import com.josun.util.DateUtil;
 import com.josun.vo.StepVO;
@@ -21,6 +22,7 @@ public class ReservationController {
 	
 	@Autowired
 	RoomService roomService;
+	ReservationService reservationService;
 	
 	// 예약페이지 - 방선택
 	@RequestMapping(value = "/step1")
@@ -72,7 +74,8 @@ public class ReservationController {
 	@RequestMapping(value = "/final")
 	public String reservationFinal(ReservationDTO reservationDto) {
 		System.out.println(reservationDto);
-		
+		int result = reservationService.doReserve(reservationDto);
+		System.out.println(result); 								//추후 업그레이드~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*************************************************
 		return "homeGo";
 	}
 }

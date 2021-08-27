@@ -27,6 +27,7 @@
 	<bean id="roomServiceImpl" class="com.josun.service.RoomServiceImpl"/>
 	<bean id="reservationDAOImpl" class="com.josun.dao.ReservationDAOImpl"/>
 	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
+	<bean id="reviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"/>
 	
 	<context:component-scan base-package="com.josun.service" />
 	
