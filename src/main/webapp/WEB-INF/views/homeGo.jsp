@@ -9,7 +9,7 @@
 </head>
 <body>
 <script>
-	location.href = "http://localhost:8090/www/";
+	location.href = "/www";
 </script>
 </body>
 </html>

@@ -23,7 +23,6 @@
 		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
 	</bean>
 	
-<<<<<<< HEAD
 	<!-- 파일 업로드 설정 -->
 	<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 파일 사이즈 설정 가능 byte 단위 -->
@@ -53,15 +52,11 @@
 	<bean id="MemberDAOImpl" class="com.josun.dao.MemberDAOImpl"/>
 	<bean id="BoardQnaDAOImpl" class="com.josun.dao.BoardQnaDAOImpl"/>
 	<bean id="BoardQnaCommentDAOImpl" class="com.josun.dao.BoardQnaCommentDAOImpl"/>
-	<context:component-scan base-package="com.josun.service"/>
-=======
+	
 	<bean id="roomDAOImpl" class="com.josun.dao.RoomDAOImpl"/>
 	<bean id="roomServiceImpl" class="com.josun.service.RoomServiceImpl"/>
 	<bean id="reservationDAOImpl" class="com.josun.dao.ReservationDAOImpl"/>
 	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
-	<bean id="reviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"/>
 	
 	<context:component-scan base-package="com.josun.service" />
->>>>>>> origin/Kim_Gyeom
-	
 </beans>
