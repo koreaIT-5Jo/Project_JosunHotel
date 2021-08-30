@@ -40,5 +40,9 @@ public class RoomDAOTest {
 		RoomDTO dto = dao.detailReviewRoomInfo(1);
 		System.out.println(dto);
 	}
-	
+	@Test
+	public void writeReviewRoomInfo() {
+		List<RoomDTO> list = dao.writeReviewRoomInfo("kigo0307");
+		System.out.println(list);
+	}
 }

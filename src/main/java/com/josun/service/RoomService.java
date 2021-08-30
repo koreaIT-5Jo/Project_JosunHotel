@@ -10,4 +10,5 @@ public interface RoomService {
 	HashMap<String,String> roomDetailInfo(int num);
 	RoomDTO roomOptionInfo(int num);
 	RoomDTO detailReviewRoomInfo(int num);
+	List<RoomDTO> writeReviewRoomInfo(String id);
 }

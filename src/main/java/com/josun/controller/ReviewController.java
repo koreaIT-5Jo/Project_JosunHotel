@@ -1,16 +1,22 @@
 package com.josun.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.josun.dto.ReviewDTO;
 import com.josun.dto.RoomDTO;
 import com.josun.service.ReviewService;
 import com.josun.service.RoomService;
+import com.josun.vo.FileVO;
 import com.josun.vo.PageVO;
 
 @Controller
@@ -48,6 +54,33 @@ public class ReviewController {
 		model.addAttribute("roomDto",roomDto);
 		
 		return"review/detailView";
+	}
+	@RequestMapping(value = "writeReview")
+	public String writeReview(HttpSession session,Model model) {
+		String id = session.getId();
+		List<RoomDTO> list = roomService.writeReviewRoomInfo(id);
+		model.addAttribute("list", list);
+		
+		return "review/writeReview";
+	}
+	@RequestMapping(value = "reviewWriteAction")
+	public String ReviewWriteAction(ReviewDTO reviewDto,Model model, HttpSession session) throws IllegalStateException, IOException{
+		String filePath = session.getServletContext().getRealPath("/resources/img/review");
+		System.out.println("경로 : " + filePath);
+		MultipartFile multipart = reviewDto.getUploadFile();
+		String fileName = "";
+		if(!multipart.isEmpty()) {
+			fileName = multipart.getOriginalFilename();
+			File file = new File(filePath,fileName);
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			multipart.transferTo(file);
+		}
+		reviewDto.setFileName(multipart.getName());
+		reviewDto.setMember_ID(session.getId());
+		System.out.println(reviewDto);
+		return "mainGo";
 	}
 	
 }

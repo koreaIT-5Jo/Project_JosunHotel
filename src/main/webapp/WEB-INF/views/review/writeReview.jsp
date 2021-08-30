@@ -4,33 +4,53 @@
 <%
 	String id = (String) session.getAttribute("id"); 
 %>
-   
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>CUSTOMER SERVICE - 리뷰 | 그랜드 조선 호텔</title>
-<link rel="stylesheet" href="../resources/css/review/detailViewReview.css">
-<link rel="stylesheet" href="../resources/css/headerfooter.css">
+<link rel="stylesheet" href="../resources/css/review/writeReview.css">
 <link rel="stylesheet" href="../resources/css/default.css">
+<link rel="stylesheet" href="../resources/css/headerfooter.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../resources/js/header.js"></script>
 <script>
-	function boardMain(){
-		let form = document.getElementById("detailReviewForm");
-		form.action = "main";
+	
+	function cancle(){
+		location.href="main";
+	}
+
+	function registReview(){
+		let form = document.getElementById("review_WriteForm");
+		
+		if($("#reservedRoom").val().length==0 || $("#reservedRoom").val()==null ){
+			alert("예약했던 객실을 선택해주시기 바랍니다.");
+			return false;
+		}
+		if($("#title").val().length==0 || $("#title").val() == null	){
+			alert("제목을 필수 항목입니다.");
+			$("#title").focus();
+			return false;
+		}
+		if($("#dsCont").val().length==0 || $("#dsCont").val() == null	){
+			alert("내용을 작성 해주시기 바랍니다.");
+			$("#dsCont").focus();
+			return false;
+		}
+		form.action = "reviewWriteAction";
 		form.submit();
 	}
-	function reviewDelete(){
-		let form = document.getElementById("detailReviewForm");
-		form.action = "delete";
-		form.submit();
-	}
-	function reviewModify(){
-		let form = document.getElementById("detailReviewForm");
-		form.action = "modify";
-		form.submit();
-	}
+	
+	$(document).ready(function(){
+		$(".roomlist li").click(function(){
+			//alert("!");
+			$(".roomlist li").children().css({"border" : ""})
+			$(this).children().css({"border" : "5px solid black"})
+			let a = $(this).attr("id");
+			a = a.substr(4)
+			$("#reservedRoom").val(a);
+		});
+	});
 </script>
 </head>
 <body>
@@ -88,8 +108,8 @@
 				</div>
 			</div>
 			<!-- End. header -->
-		<form action="" id = "detailReviewForm" name="detailReviewForm">
-		<input type="hidden" id="idx" name="idx" value="${dto.idx }"/>
+		<form id="review_WriteForm" name="review_WriteForm" method="post" action="" enctype="multipart/form-data">
+		<input type="hidden" id="reservedRoom" name="room_Number" value="" />
 		<div id="container" class="container mypage ctmService">
 				<!-- 컨텐츠 S -->
 				<h1 class="hidden">고객센터</h1>
@@ -111,47 +131,75 @@
 						</ul>
 					</div>
 					<!-- //LNB -->
-					<!-- detailView -->
+					<!-- writeReview -->
 					<h3 class="titDep2" style="margin-left: 400px;">REVIEW</h3>
-					<div class="detailView">
+					<div class="writeReView">
 						<ul class="roomlist">
-							<li id="room">
-								<dl class="roomIntro">
-									<dt class="roomName">
-										${roomDto.name } 
-									</dt>
-									<dd class="roomBenefit">NUMBER |  ${roomDto.num } 호</dd>
-									<dd class="roomBenefit">BEDS |  ${roomDto.beds }</dd>
-									<dd class="roomBenefit">${roomDto.getDetailView() } |  Size: ${roomDto.r_Size}㎡</dd>
-									<dd class="roomBenefit">ROOM FEATURES |  ${roomDto.features}</dd>
-									<dd class="thum">
-										<img src="../resources/${roomDto.img}" alt="${roomDto.name}">										
-									</dd>
-								</dl>
+							<!-- 반복문 -->
+							<c:forEach var="dto" items="${list }">
+								<li id="room${dto.num}" >
+									<dl class="roomIntro">
+										<dt class="roomName">
+											${dto.name}
+										</dt>
+										<dd class="roomBenefit">NUMBER |  ${dto.num}호</dd>
+										<dd class="roomBenefit">BEDS |  ${dto.beds}</dd>
+										<dd class="roomBenefit">${dto.getDetailView()} |  Size: ${dto.r_Size}㎡</dd>
+										<dd class="roomBenefit">ROOM FEATURES |  ${dto.features}</dd>
+										<dd class="thum">
+											<img src="../resourcese/${dto.img}">										
+										</dd>
+									</dl>
+								</li>
+							</c:forEach>
+						</ul>
+						<ul class="intList">
+							<li>
+								<div class="intWrap">
+									<span class="tit"> 
+										<label for="title">TITLE</label> <span class="essential">*</span>
+									</span>
+								</div>
+								<div class="intInner">
+									<span class="intArea"> 
+										<input type="text" id="title" name="title" style="width: 100%" aria-required="true" placeholder="제목을 입력해주세요." > 
+									</span>
+								</div>
+							</li>
+							<li>
+								<div class="intWrap">
+									<span class="tit"><label for="content">CONTENT</label><span class="essential">*</span></span>
+								</div>
+								<div class="intInner">
+									<span class="intArea">
+										<textarea id="dsCont" name="content" class="noLine" style="min-height:300px; width:100%;" placeholder="내용을 입력해주세요."></textarea></span>
+								</div>
+							</li>
+							<li>
+								<div class="intWrap">
+									<span class="tit"><label for="uploadBtn">ATTACHED FILE</label></span>
+								</div>
+								<div class="intInner">
+									<!-- 스크립트 위임 적용 commonJs.setFileUpload('.fileUpload'); -->
+									<div class="fileUpload">
+										<div class="intDel">
+											<input type="text" id="nmFile1" class="fileName" name="file_Name" style="width: 554px" readonly="">
+											<!-- btnDel -->
+											<button type="button" class="btnDel">삭제</button>
+											<!-- //btnDel -->
+										</div>
+										<label for="uploadFile" class="btnSC btnM">파일선택</label> 
+										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png" >
+									</div>
+								</div>
+								<p class="txtGuide">* 첨부가능 파일종류 : jpg, png, jpeg (용량 5MB)</p>
 							</li>
 						</ul>
-						<h2 class="tit">${reviewDto.title }</h2> 
-						<ul class="infoData">
-						<li>그랜드 조선 제주</li>
-						<li>${reviewDto.write_Date}</li>
-						<li> 조회수 : ${reviewDto.hitCount}</li>
-						<li>${reviewDto.member_ID }</li>
-					</ul>
-					<p class="txtBox">
-						${reviewDto.content}
-					</p>
-					<c:if test="${reviewDto.file_Name != null}">
-						<div class="imgBox" style="background-image: url(../resources/img/review/${reviewDto.file_Name});">
-						</div>
-					</c:if>	
 					<div class="btnArea">
-						<a href="#none" onclick="boardMain()" class="btnSC btnL">목록</a>
-						
-						<c:if test="${id == reivewDto.member_id || id == 'admin' }">
-							<a class="btnEdit" onclick="reviewDelete()">삭제</a>
-							<a class="btnEdit" onclick="reviewModify()">수정</a>
-						</c:if>
-					</div>
+								<a href="#none" onclick="cancle()" class="btnSC btnL cancel">취소</a> 
+								<a href="#none" onclick="registReview()" class="btnSC btnL active">저장</a>
+								<div style="clear:both;"></div> 
+							</div>
 					</div>
 					<!-- //myContents -->
 				</div>

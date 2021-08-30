@@ -18,5 +18,8 @@
 	<select id="detailReviewRoom" resultType="com.josun.dto.RoomDTO">
 		select name,img,beds,r_size,detail_view,features from  room  where num = #{num}
 	</select>
+	<select id="writeReviewRoomInfo" resultType="com.josun.dto.RoomDTO">
+		select DISTINCT ro.num,ro.name,ro.img,ro.beds,ro.r_size,ro.detail_view,ro.features from reservation re, room ro where re.room_number = ro.num and re.member_id = #{id}
+	</select>
 	
 </mapper>

@@ -1,5 +1,7 @@
 package com.josun.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReviewDTO {
 	private int rnum;
 	private int idx;
@@ -10,9 +12,17 @@ public class ReviewDTO {
 	private String member_ID;
 	private int room_Number;
 	private String file_Name;
+	private MultipartFile uploadFile;
 	
 	
 	public ReviewDTO() {}
+	public ReviewDTO(String title, String content, String member_ID, int room_Number, String file_Name) {
+		this.title = title;
+		this.content = content;
+		this.member_ID = member_ID;
+		this.room_Number = room_Number;
+		this.file_Name = file_Name;
+	}
 	public ReviewDTO(int idx, String title, String content, String writeDate, int hitCount, String memberID,
 			int roomNumber, String fileName) {
 		this.idx = idx;
@@ -92,7 +102,13 @@ public class ReviewDTO {
 	public void setFileName(String fileName) {
 		this.file_Name = fileName;
 	}
-
+	public MultipartFile getUploadFile() {
+		return uploadFile;
+	}
+	public void setUploadFile(MultipartFile uploadFile) {
+		this.uploadFile = uploadFile;
+	}
+	
 	@Override
 	public String toString() {
 		return "ReviewDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writeDate=" + write_Date
