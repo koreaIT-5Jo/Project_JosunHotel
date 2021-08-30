@@ -1,7 +1,9 @@
 package com.josun.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,5 +114,15 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("pw", pw);
 		return sqlsession.delete(NAMESPACE + ".deleteMem", map);
 	}
+
+	@Override
+	public List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("searchStartDate", searchStartDate);
+		map.put("searchEndDate", searchEndDate);
+		return sqlsession.selectList(NAMESPACE + ".reserveConfirm", map);
+	}
+
 	
 }

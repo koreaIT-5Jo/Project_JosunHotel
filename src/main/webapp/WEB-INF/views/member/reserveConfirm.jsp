@@ -289,8 +289,7 @@
 							contentType: 'application/json; charset=utf-8',
 							success : function(data){
 								console.log(data);
-								
-								var listtest = data.list;
+								var listtest = data;
 								if(listtest.length == 0){
 									html += "<li class=\'noData'\>";
 									html += "<p class=\'txt'\>검색 결과가 없습니다.</p>";
@@ -299,47 +298,48 @@
 									$('.listBox .countList .count em').text(listtest.length);
 								}else{
 									$.each(listtest, function(){
-										if(this.username == "#"){
-											html += "<li class=\'data data"+this.num+" canceled'\>";
+										if(this.USERNAME == "#"){
+											html += "<li class=\'data data"+this.NUM+" canceled'\>";
 											html += "<div class=\'left'\>";
-											html += "<div class=\'thum'\><img src="+this.img+"></div>";
+											html += "<div class=\'thum'\><img src=\'resources/"+this.IMG+"'\></div>";
 											html += "</div>";
 											html += "<div class=\'right'\>";
 											html += "<div class=\'contents'\>";
-											html += "<p class=\'title'\>"+this.name+"</p>";
-											html += "<p class=\'benefit'\>"+this.detailView+" | Size : "+this.rSize+"㎡</p>";
+											html += "<p class=\'title'\>"+this.NAME+"</p>";
+											html += "<p class=\'benefit'\>"+this.DETAIL_VIEW+" | Size : "+this.R_SIZE+"㎡</p>";
 											html += "</div>";
 											html += "<div class=\'mycontents'\>";
-											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.startDate.substring(0,10).replaceAll("-", ".")+" - "+this.endDate.substring(0,10).replaceAll("-", ".")+"</p>";
-											html += "<p class=\'adult'\><span>ADULT</span>"+this.adult+"</p>";
-											html += "<p class=\'children'\><span>CHILDREN</span>"+this.children+"</p>";
+											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.STARTDATE+" - "+this.ENDDATE+"</p>";
+											html += "<p class=\'adult'\><span>ADULT</span>"+this.ADULTCNT+"</p>";
+											html += "<p class=\'children'\><span>CHILDREN</span>"+this.CHILDRENCNT+"</p>";
 											html += "</div>";
 											html += "<div class=\'reserveinfo'\>";
-											html += "<p class=\'price'\>"+this.totalPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
+											html += "<p class=\'price'\>"+this.TOTAL_PAY.replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
 											html += "<button type=\'button'\ class=\'btnSC btnL'\ style=\'cursor: inherit;'\>예약취소</button>";
 											html += "</div>";
 											html += "</div>";
 											html += "</li>";
 										}else{
-											html += "<li class=\'data data"+this.num+" reserved'\>";
-											html += "<input type=\'hidden'\ id=\'startDate'\ value=\'"+this.startDate.substring(0,10).replaceAll("-", ".")+"'\>";
-											html += "<input type=\'hidden'\ id=\'endDate'\ value=\'"+this.endDate.substring(0,10).replaceAll("-", ".")+"'\>";
+											console.log(this.NUM);
+											html += "<li class=\'data data"+this.NUM+" reserved'\>";
+											html += "<input type=\'hidden'\ id=\'startDate'\ value=\'"+this.STARTDATE+"'\>";
+											html += "<input type=\'hidden'\ id=\'endDate'\ value=\'"+this.ENDDATE+"'\>";
 											html += "<div class=\'left'\>";
-											html += "<div class=\'thum'\><img src="+this.img+"></div>";
+											html += "<div class=\'thum'\><img src=\'resources/"+this.IMG+"'\></div>";
 											html += "</div>";
 											html += "<div class=\'right'\>";
 											html += "<div class=\'contents'\>";
-											html += "<p class=\'title'\>"+this.name+"</p>";
-											html += "<p class=\'benefit'\>"+this.detailView+" | Size : "+this.rSize+"㎡</p>";
+											html += "<p class=\'title'\>"+this.NAME+"</p>";
+											html += "<p class=\'benefit'\>"+this.DETAIL_VIEW+" | Size : "+this.R_SIZE+"㎡</p>";
 											html += "</div>";
 											html += "<div class=\'mycontents'\>";
-											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.startDate.substring(0,10).replaceAll("-", ".")+" - "+this.endDate.substring(0,10).replaceAll("-", ".")+"</p>";
-											html += "<p class=\'adult'\><span>ADULT</span>"+this.adult+"</p>";
-											html += "<p class=\'children'\><span>CHILDREN</span>"+this.children+"</p>";
+											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.STARTDATE+" - "+this.ENDDATE+"</p>";
+											html += "<p class=\'adult'\><span>ADULT</span>"+this.ADULTCNT+"</p>";
+											html += "<p class=\'children'\><span>CHILDREN</span>"+this.CHILDRENCNT+"</p>";
 											html += "</div>";
 											html += "<div class=\'reserveinfo'\>";
-											html += "<p class=\'price'\>"+this.totalPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
-											html += "<button type=\'button'\ class=\'btnSC btnL active'\ onclick=\'deleteReservation("+this.num+","+this.roomNumber+")'\>예약취소</button>";
+											html += "<p class=\'price'\>"+this.TOTAL_PAY.replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
+											html += "<button type=\'button'\ class=\'btnSC btnL active'\ onclick=\'deleteReservation("+this.NUM+","+this.ROOM_NUMBER+")'\>예약취소</button>";
 											html += "</div>";
 											html += "</div>";
 											html += "</li>";

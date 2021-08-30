@@ -1,6 +1,7 @@
 package com.josun.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.josun.dto.MemberDTO;
 
@@ -30,4 +31,7 @@ public interface MemberDAO {
 	//회원삭제
 	String checkPw(String id);
 	int deleteMember(String id, String pw);
+	
+	//예약확인
+	List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate);
 }

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -135,6 +133,20 @@ public class MyPageController {
 		
 		System.out.println("파라미터 확인 : " + id + ", " + searchStartDate + ", " + searchEndDate);
 		
-		return null;
+		List<Map<String, Object>> data = service.reserveConfirm(id, searchStartDate, searchEndDate);
+		for(Object datamap : data) {
+			Map map = (Map) datamap;
+			String formatStartDate = map.get("STARTDATE").toString();
+			String formatEndDate = map.get("ENDDATE").toString();
+			String formatPay = map.get("TOTAL_PAY").toString();
+			formatStartDate = formatStartDate.substring(0,10).replaceAll("-", ".");
+			formatEndDate = formatEndDate.substring(0, 10).replaceAll("-", ".");
+			map.put("STARTDATE", formatStartDate);
+			map.put("ENDDATE", formatEndDate);
+			map.put("TOTAL_PAY", formatPay);
+		}
+		
+		System.out.println(data);
+		return data;
 	}
 }

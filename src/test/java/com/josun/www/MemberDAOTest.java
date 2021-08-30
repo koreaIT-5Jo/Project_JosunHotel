@@ -1,6 +1,8 @@
 package com.josun.www;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,5 +72,29 @@ public class MemberDAOTest {
 		System.out.println(dao.deleteMember("test0000", "test0000")); //0
 	}
 	
+	@Test
+	public void reserveList() throws Exception{
+		
+		List<Map<String, Object>> list = dao.reserveConfirm("admin", "2021-08-25", "2021-09-01");
+		for (int i=0; i< list.size(); i++){
+			String formatDate = list.get(i).get("STARTDATE").toString();
+			list.get(i).get("STARTDATE");
+			//System.out.println(list.get(i));
+
+		}
+		
+		System.out.println("--------------------------");
+		
+		for(Object listmap : list) {
+			Map map = (Map) listmap;
+			System.out.println(map.get("STARTDATE"));
+			String format = map.get("STARTDATE").toString();
+			format = format.substring(0,10).replaceAll("-", ".");
+			System.out.println(format);
+			map.put("STARTDATE", format);
+		}
+		
+		System.out.println(list.toString());
+	}
 	
 }

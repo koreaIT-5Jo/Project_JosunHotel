@@ -1,6 +1,7 @@
 package com.josun.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.josun.dto.MemberDTO;
 
@@ -30,4 +31,7 @@ public interface MemberService {
 	//회원정보 삭제
 	String checkPw(String id);
 	int deleteMem(String id, String pw);
+	
+	//예약확인
+	List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate);
 }

@@ -1,6 +1,7 @@
 package com.josun.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -84,6 +85,13 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int deleteMem(String id, String pw) {
 		return dao.deleteMember(id, pw);
+	}
+	
+	//예약확인
+	@Override
+	public List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate) {
+		List<Map<String, Object>> list = dao.reserveConfirm(id, searchStartDate, searchEndDate);
+		return list;
 	}
 
 }
