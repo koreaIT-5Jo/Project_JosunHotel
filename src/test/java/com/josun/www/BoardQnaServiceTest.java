@@ -19,7 +19,7 @@ import com.josun.service.BoardQnaService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class BoardServiceTest {
+public class BoardQnaServiceTest {
 	@Autowired
 	private BoardQnaService service;
 	@Autowired

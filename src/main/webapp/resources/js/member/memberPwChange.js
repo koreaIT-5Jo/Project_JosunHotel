@@ -74,8 +74,6 @@ function fnChngPwApi() { //  fnChngPwApi
 	} else {
 		var sendPw = {curPw : userPw, newPw : newPw};
 		
-		alert(JSON.stringify(sendPw));
-		
 		$.ajax({
 			url:'http://localhost:9091/www/myPage/memberUpdatePwAction/json',
 			type:'post',

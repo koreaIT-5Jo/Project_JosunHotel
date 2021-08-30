@@ -157,16 +157,20 @@
 		console.log(num + ", " + startDate);
 		if(confirm('예약을 취소하시겠습니까?')){
 			$.ajax({
-				type : 'POST',
 				url : 'SearchReserveCancleServlet',
+				type : 'POST',
 				data : {num : num, roomNumber : roomNumber, startDate : startDate, endDate : endDate},
 				datatype : 'JSON',
+				contentType: 'application/json; charset=utf-8',
 				success : function(data){
 					console.log("result : " + data.result);
 					if(data.result > 1){
 						$('.data'+num+' button').removeClass('active');
 						$('.data'+num+' button').attr('onclick','');
 					}
+				},
+				error : function(){
+					console.log('오류');
 				}
 			})
 		}else{

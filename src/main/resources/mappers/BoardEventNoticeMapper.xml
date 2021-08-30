@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.BoardEventNoticeMapper">
+	<select id="enbList" resultType="com.josun.dto.BoardEventNoticeDTO">
+		<![CDATA[
+		SELECT t2.* FROM
+		(SELECT ROWNUM rnum, t.* FROM 
+		(SELECT c.catename , e.* FROM event_notice e, en_cate c 
+		WHERE e.category = c.num AND e.content LIKE #{content} AND e.category LIKE #{category} ORDER BY e.write_date DESC)
+		t) t2 WHERE #{startNum} <= rnum AND rnum <= #{endNum}
+		]]>
+	</select>
+	<select id="totalCount" resultType="int">
+		<![CDATA[
+		SELECT count(*) FROM event_notice WHERE content LIKE #{content} AND category LIKE #{category}
+		]]>
+	</select>
+</mapper>
+

@@ -25,6 +25,10 @@ import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
 import com.josun.service.BoardQnaCommentService;
+import com.josun.dto.BoardEventNoticeDTO;
+import com.josun.dto.BoardQnaDTO;
+import com.josun.dto.MemberDTO;
+import com.josun.service.BoardEventNoticeService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 
@@ -45,6 +49,8 @@ public class HomeController {
 	private JavaMailSender mailSender;
 
 	//메인
+	BoardEventNoticeService enService;
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
 		return "home";
@@ -90,8 +96,71 @@ public class HomeController {
 	
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
-	public String enList() {
-		return "board/board_event_noticeList";
+	public String enList(Model model, String page, String content, String category) {
+		System.out.println("파라미터 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
+		int curPage = 1;//현재페이지
+		if(page != null) curPage = Integer.parseInt(page);
+		
+		if((category == null && content == null) || (category == null && content.equals(""))) {
+			content = "%%";
+			category = "%%";
+		}
+		System.out.println("93번째 줄 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
+		
+		int start = enService.startPage(content, category);
+		int end = enService.endPage(content, category);
+		
+		List<BoardEventNoticeDTO> list = enService.enList(content, category, curPage);
+		int totalPage = enService.totalCountSize(content, category);
+		
+		String param = "";
+		if(!content.equals("")){
+			if(category.equals("0")) {
+				param = "category="+"%%";
+				param += "&content="+content;
+			} else {
+				param = "category="+category;
+				param += "&content="+content;
+			}
+		}
+		
+		/*
+		 * String url = "enList?"+param; StringBuffer pageNav = new StringBuffer();
+		 * 
+		 * for(int i=1; i<=totalPage; i++){ 
+		 * 	int prev = i-1; 
+		 * 	if(prev == 0) prev = 1;
+		 * 	int next = i+1; 
+		 * 	
+		 * 	if(curPage == i) {
+		 * 		pageNav.append("<a class=\"first\" href=\""+url+"page="+start+"\">"+start+"<span class=\"hidden\">first</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"prev\" href=\""+url+"page="+prev+"\">"+prev+"<span class=\"hidden\">prev</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"current\" href=\""+url+"page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"next\" href=\""+url+"page="+next+"\">"+next+"<span class=\"hidden\">next</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"last\" href=\""+url+"page="+end+"\">"+end+"<span class=\"hidden\">last</span></a>&nbsp;"); 
+		 *	} 
+		 *}
+		 */
+		
+		model.addAttribute("enList", list);
+		//model.addAttribute("pageNav", pageNav.toString());
+		
+		return "board/board_EventNoticeList";
+	}
+	//게시판 - 이벤트, 공지사항 수정
+	@RequestMapping(value = "/enModify")
+	public String enModify() {
+		return "board/board_EventNoticeModify";
+	}
+	//게시판 - 이벤트, 공지사항 상세보기
+	@RequestMapping(value = "/enDetailView")
+	public String enDetailView() {
+		return "board/board_EventNoticeDetailView";
+	}
+	//게시판 - 이벤트, 공지사항 글쓰기
+	@RequestMapping(value = "/enWrite")
+	public String enWrite() {
+		return "board/board_EventNoticeWrite";
 	}
 	
 	//회원가입
