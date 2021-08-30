@@ -48,7 +48,13 @@
 	<select id="reserveConfirm" resultType="map">
 		select r.num, r.name as username, r.startdate, r.enddate, r.adultcnt, r.childrencnt, r.total_pay, r2.name, r2.img, r2.r_size, r2.detail_view, r.room_number
 		from reservation r, room r2 where r.room_number = r2.num and
-		r.member_id = #{id} and (r.startdate BETWEEN to_date(#{searchStartDate}) and to_date(#{searchEndDate}) or r.enddate BETWEEN to_date(#{searchStartDate}) and to_date(#{searchEndDate}))
+		r.member_id = #{id} and (r.startdate BETWEEN to_date(#{searchStartDate}) and to_date(#{searchEndDate}) or r.enddate BETWEEN to_date(#{searchStartDate}) and to_date(#{searchEndDate})) order by r.startdate desc
 	</select>
+	<update id="reserveCancel">
+		update reservation set name = '#' where num = ${num}
+	</update>
+	<delete id="reserveRoomCancel">
+		delete from reserved_room where reserved_date = #{addDay} and num = ${roomNumber}
+	</delete>
 </mapper>
 

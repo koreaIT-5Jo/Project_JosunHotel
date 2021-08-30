@@ -1,6 +1,5 @@
 package com.josun.dao;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.josun.dto.MemberDTO;
+import com.josun.util.DateUtil;
 
 public class MemberDAOImpl implements MemberDAO {
 	@Autowired
@@ -114,7 +114,8 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("pw", pw);
 		return sqlsession.delete(NAMESPACE + ".deleteMem", map);
 	}
-
+	
+	//예약확인
 	@Override
 	public List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate) {
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -122,6 +123,21 @@ public class MemberDAOImpl implements MemberDAO {
 		map.put("searchStartDate", searchStartDate);
 		map.put("searchEndDate", searchEndDate);
 		return sqlsession.selectList(NAMESPACE + ".reserveConfirm", map);
+	}
+	
+	//예약취소 
+	@Override
+	public int reserveCancel(int num, int roomNumber, String startDate, String endDate) throws Exception {
+		int result = sqlsession.update(NAMESPACE+".reserveCancel", num);
+		
+		DateUtil dateUtil = new DateUtil();
+		for(int i=0; i<dateUtil.seDay(startDate,endDate); i++ ) {
+			HashMap<String,Object> map = new HashMap<String, Object>();
+			map.put("roomNumber", roomNumber);
+			map.put("addDay", dateUtil.addDay(startDate, i));
+			result += sqlsession.delete(NAMESPACE+".reserveRoomCancel",map);
+		}
+		return result;
 	}
 
 	

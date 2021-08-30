@@ -97,4 +97,10 @@ public class MemberDAOTest {
 		System.out.println(list.toString());
 	}
 	
+	//파라미터 확인 : 150, 3, 2021.09.20, 2021.09.21
+	@Test
+	public void reserveCancel() throws Exception{
+		int result = dao.reserveCancel(150, 3, "2021.09.20", "2021.09.21");
+		System.out.println(result);
+	}
 }

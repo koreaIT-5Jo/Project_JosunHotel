@@ -154,19 +154,32 @@
 	function deleteReservation(num, roomNumber){
 		var startDate = $(".cardList li.data"+num+"").find('#startDate').val();
 		var endDate = $(".cardList li.data"+num+"").find('#endDate').val();
-		console.log(num + ", " + startDate);
+		var deleteReserveData = {
+			num : num,
+			roomNumber : roomNumber,
+			startDate : startDate,
+			endDate : endDate
+		};
 		if(confirm('예약을 취소하시겠습니까?')){
 			$.ajax({
-				url : 'SearchReserveCancleServlet',
+				url : '/www/myPage/reserveCancel/json',
 				type : 'POST',
-				data : {num : num, roomNumber : roomNumber, startDate : startDate, endDate : endDate},
+				data : JSON.stringify(deleteReserveData),
 				datatype : 'JSON',
 				contentType: 'application/json; charset=utf-8',
 				success : function(data){
-					console.log("result : " + data.result);
+					console.log(data);
 					if(data.result > 1){
 						$('.data'+num+' button').removeClass('active');
 						$('.data'+num+' button').attr('onclick','');
+						$('.data'+num+' button').css('cursor','inherit');
+						$('.data'+num).removeClass('reserved');
+						$('.data'+num).addClass('canceled');
+						$('#searchCtgry').val('ALL');
+						if($('#searchCtgry').val()=='ALL'){
+							$('.cardList li.reserved').show();
+							$('.cardList li.canceled').show();
+						}
 					}
 				},
 				error : function(){

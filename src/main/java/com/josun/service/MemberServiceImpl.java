@@ -93,5 +93,12 @@ public class MemberServiceImpl implements MemberService {
 		List<Map<String, Object>> list = dao.reserveConfirm(id, searchStartDate, searchEndDate);
 		return list;
 	}
+	
+	//예약취소
+	@Override
+	public int reserveCancel(int num, int roomNumber, String startDate, String endDate) throws Exception {
+		int result = dao.reserveCancel(num, roomNumber, startDate, endDate);
+		return result;
+	}
 
 }

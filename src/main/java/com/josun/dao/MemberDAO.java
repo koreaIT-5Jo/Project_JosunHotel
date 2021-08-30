@@ -34,4 +34,7 @@ public interface MemberDAO {
 	
 	//예약확인
 	List<Map<String, Object>> reserveConfirm(String id, String searchStartDate, String searchEndDate);
+	
+	//예약취소
+	int reserveCancel(int num, int roomNumber, String startDate, String endDate) throws Exception;
 }

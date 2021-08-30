@@ -149,4 +149,27 @@ public class MyPageController {
 		System.out.println(data);
 		return data;
 	}
+	
+	//마이페이지 - 예약취소
+	@RequestMapping("/reserveCancel/json")
+	public Map<String, Integer> reserveCancel(@RequestBody Map<String, String> param) {
+		int num = Integer.parseInt(param.get("num"));
+		int roomNumber = Integer.parseInt(param.get("roomNumber"));
+		String startDate = param.get("startDate");
+		String endDate = param.get("endDate");
+		
+		System.out.println("파라미터 확인 : " + num + ", " + roomNumber + ", " + startDate + ", " + endDate);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int result = 0;
+		try {
+			service.reserveCancel(num, roomNumber, startDate, endDate);
+			result = 2;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		map.put("result", result);
+		System.out.println(map);
+		return map;
+	}
 }

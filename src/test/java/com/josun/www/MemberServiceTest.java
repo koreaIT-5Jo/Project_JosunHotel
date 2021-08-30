@@ -76,4 +76,12 @@ public class MemberServiceTest {
 		List<Map<String, Object>> list = service.reserveConfirm("admin", "2021-08-25", "2021-09-01");
 		System.out.println(list.toString());
 	}
+	
+	
+	//149, 2, 2021.08.30 - 2021.08.31
+	@Test
+	public void reserveCancel() throws Exception{
+		int result = service.reserveCancel(149, 2, "2021.08.30", "2021.08.31");
+		System.out.println(result);
+	}
 }
