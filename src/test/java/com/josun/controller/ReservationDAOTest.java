@@ -1,6 +1,8 @@
 package com.josun.controller;
 
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +41,17 @@ public class ReservationDAOTest {
 		} else {
 			System.out.println("예약 가능");
 		}
+	}
+	
+	@Test
+	public void reserveList() throws Exception{
+		List<ReservationDTO> list = dao.reserveList(1, 10, "name", "%%");
+		for(ReservationDTO dto : list) {
+			System.out.println(dto.getRnum() + ", " + dto.getName() + ", " + dto.getRoom_number() + ", " + dto.getAdultCnt() + ", " + dto.getChildrenCnt() + ", " + dto.getAdult_breakfast() + ", " + dto.getChil_breakfast() + ", " + dto.getTxtRequest() + ", " + dto.getTotal_pay() + ", " + dto.getPhoneNum());
+		}
+	}
+	@Test
+	public void getDataList() throws Exception{
+		System.out.println(dao.getDataList("name", "%%"));
 	}
 }

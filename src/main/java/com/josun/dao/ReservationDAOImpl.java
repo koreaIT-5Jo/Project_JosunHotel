@@ -1,6 +1,7 @@
 package com.josun.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,25 @@ public class ReservationDAOImpl implements ReservationDAO {
 		
 		int count = sqlSession.selectOne("com.josun.mapper.reservationMapper.okReservation",map);
 		return count;
+	}
+	
+	// 관리자페이지 - 예약내역 조회
+	@Override
+	public List<ReservationDTO> reserveList(int start, int end, String searchKey, String searchValue) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		return sqlSession.selectList("com.josun.mapper.reservationMapper.reserveList", map);
+	}
+	//관리자페이지 - 전체 데이터 개수
+	@Override
+	public int getDataList(String searchKey, String searchValue) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		return sqlSession.selectOne("com.josun.mapper.reservationMapper.getDataList", map);
 	}
 
 }

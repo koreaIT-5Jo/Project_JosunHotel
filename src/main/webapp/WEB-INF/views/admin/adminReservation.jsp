@@ -1,13 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@page import="java.util.List" %>
-<%-- <%@page import="room.*" %> --%>
-<%-- <%
-	String id = (String) session.getAttribute("idKey");
-	List<ReservationVO> lists = (List<ReservationVO>)request.getAttribute("lists");
-	String pageNav = (String)request.getAttribute("page");
-	System.out.println(pageNav);
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,8 +40,7 @@
 			</ul>
 		</div>
 		<div class="right">
-			<form name="searchfrm" method="post" action="Controller">
-				<input type="hidden" name="command" value="adminReservationList">
+			<form name="searchfrm" method="post" action="">
 				<div class="search">
 					<div class="selectWrap">
 						<select name="searchKey" id="searchType" class="form-control">
@@ -65,6 +57,7 @@
 				</div>
 			</form>
 			<div class="contents">
+				<p>* 예약자명이 "#" 이면 예약취소된 내역입니다.</p>
 				<table class="memberList">
 					<thead>
 						<tr>
@@ -86,25 +79,25 @@
 						</tr>
 					</thead>
 					<tbody>
-						<%-- <%for(ReservationVO vo : lists){%>
-						<tr>
-							<td><%=vo.getRnum()%></td>
-							<td><%=vo.getName()%></td>
-							<td><%=vo.getRoom_number()%></td>
-							<td><%=vo.getStartDate()%> ~ <%=vo.getEndDate()%></td>
-							<td><%=vo.getAdultCnt()%></td>
-							<td><%=vo.getChildrenCnt()%></td>
-							<td><%=vo.getAdult_breakfast()%></td>
-							<td><%=vo.getChil_breakfast()%></td>
-							<td><%=vo.getRequest()%></td>
-							<td><%=vo.getPay()%></td>
-							<td><%=vo.getPhoneNum()%></td>
-						</tr>
-						<%}%> --%>
+						<c:forEach var="reserve" items="${list}">
+							<tr>
+								<td>${reserve.rnum}</td>
+								<td>${reserve.name}</td>
+								<td>${reserve.room_number}</td>
+								<td>${fn:substring(reserve.startDate, 0, 10)} ~ ${fn:substring(reserve.endDate, 0, 10)}</td>
+								<td>${reserve.adultCnt}</td>
+								<td>${reserve.childrenCnt}</td>
+								<td>${reserve.adult_breakfast}</td>
+								<td>${reserve.chil_breakfast}</td>
+								<td><span>${reserve.txtRequest}</span></td>
+								<td>${reserve.total_pay}</td>
+								<td>${reserve.phoneNum}</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 				<div class="page">
-					<%-- <%=pageNav %> --%>
+					${pageNav}
 				</div>
 			</div>
 		</div>

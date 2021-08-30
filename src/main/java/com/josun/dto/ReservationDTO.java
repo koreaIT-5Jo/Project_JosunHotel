@@ -1,6 +1,7 @@
 package com.josun.dto;
 
 public class ReservationDTO {
+	private int rnum;
 	private int num;
 	private String name;
 	private String startDate;
@@ -44,6 +45,13 @@ public class ReservationDTO {
 		this.room_number = room_number;
 		this.card_Password = card_pw;
 		this.member_Id = member_Id;
+	}
+	
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
 	}
 	public String getName() {
 		return name;

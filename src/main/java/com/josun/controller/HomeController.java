@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,21 +19,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.josun.dto.BoardEventNoticeDTO;
 import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
-import com.josun.service.BoardQnaCommentService;
-import com.josun.dto.BoardEventNoticeDTO;
-import com.josun.dto.BoardQnaDTO;
-import com.josun.dto.MemberDTO;
+import com.josun.dto.ReservationDTO;
 import com.josun.service.BoardEventNoticeService;
+import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
-
-import com.josun.dto.ReservationDTO;
-import com.josun.dto.RoomDTO;
-import com.josun.service.RoomService;
-import com.josun.util.DateUtil;
+import com.josun.service.ReservationService;
 
 @Controller
 public class HomeController {
@@ -47,10 +40,10 @@ public class HomeController {
 	BoardQnaCommentService comservice;
 	@Autowired
 	private JavaMailSender mailSender;
-
-	//메인
 	@Autowired
 	BoardEventNoticeService enService;
+	@Autowired
+	ReservationService reserveservice;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -330,7 +323,39 @@ public class HomeController {
 	
 	//관리자페이지 - 예약
 	@RequestMapping(value = "/adminReservation")
-	public String adminReservation() {
+	public String adminReservation(String page, String searchKey, String searchValue, Model model) {
+		int pageNo = 1;
+		if(page != null) pageNo = Integer.parseInt(page);
+		int pageSize = 18;
+		int start = pageNo * pageSize - (pageSize-1);
+		int end = pageNo * pageSize;
+		
+		if(searchKey == null && searchValue == null) {
+			searchKey = "name";
+			searchValue = "%%";
+		}else {
+			searchValue = "%"+searchValue+"%";
+		}
+		
+		List<ReservationDTO> list = reserveservice.reserveList(start, end, searchKey, searchValue);
+		int dataCount = reserveservice.getDataList(searchKey, searchValue);
+		int pageCount = dataCount / pageSize;
+		if(dataCount%pageSize != 0) pageCount++;
+		int totalPage = pageCount;
+		
+		String param = "";
+		if(!searchValue.equals("")) {
+			param = "searchKey="+searchKey;
+			param += "&searchValue="+searchValue+"&";
+		}
+		String url = "adminReservation?"+param;
+		StringBuffer pageNav = new StringBuffer();
+		for(int i=1; i<=totalPage; i++) {
+			if(pageNo == i) pageNav.append("<a class=\"active\" href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+			else pageNav.append("<a href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminReservation";
 	}
 	//관리자페이지 - Q&A목록

@@ -1,5 +1,7 @@
 package com.josun.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,18 @@ public class ReservationServiceImpl implements ReservationService {
 			e.printStackTrace();
 		}		
 		return -4;	// 그냥 에러
+	}
+	
+	//관리자페이지 - 예약내역 조회
+	@Override
+	public List<ReservationDTO> reserveList(int start, int end, String searchKey, String searchValue) {
+		List<ReservationDTO> list = dao.reserveList(start, end, searchKey, searchValue);
+		return list;
+	}
+	//관리자페이지 - 전체 데이터 개수
+	@Override
+	public int getDataList(String searchKey, String searchValue) {
+		return dao.getDataList(searchKey, searchValue);
 	}
 
 }

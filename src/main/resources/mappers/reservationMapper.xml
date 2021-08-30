@@ -13,4 +13,15 @@
 	<select id="okReservation" resultType="Integer">
 		SELECT COUNT(*) FROM reserved_room WHERE reserved_date in(${reserveDateList}) and num = #{room_number}
 	</select>
+	<select id="reserveList" resultType="com.josun.dto.ReservationDTO">
+		<![CDATA[
+		select * from(select rownum rnum, r.* from
+		(select name, room_number, startdate, enddate, adultcnt, childrencnt, adult_breakfast, chil_breakfast, request, total_pay, phone_number from 
+		reservation where ${searchKey} like #{searchValue} order by startdate)r)
+		where rnum >=#{start} and rnum<=#{end}
+		]]>
+	</select>
+	<select id="getDataList" resultType="int">
+		select count(*) from reservation where ${searchKey} like #{searchValue}
+	</select>
 </mapper>

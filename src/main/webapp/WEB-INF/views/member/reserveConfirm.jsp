@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %> <!-- 자바 클래스 사용 --> 
 <%String id = (String) session.getAttribute("id");%>
 <!DOCTYPE html>
 <html>
@@ -191,17 +190,14 @@
 		}
 	}
 </script>
+<%if(session.getAttribute("id")==null){%>
+<script>
+	alert('회원가입 또는 로그인 후 확인 가능합니다.');
+	location.href = 'login';
+</script>
+<%} %>
 </head>
 <body>
-<%
-	if(session.getAttribute("id")==null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('회원가입 또는 로그인 후 확인 가능합니다.')");
-		script.println("location.href = 'login.jsp?url="+request.getServletPath()+"'");
-		script.println("</script>");
-	}
-%>
 <div class="wrapper">
 	<div class="header">
 		<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
@@ -241,11 +237,11 @@
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
-					<li><a href="Logout">로그아웃</a></li>
+					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="adminMember">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
+					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
