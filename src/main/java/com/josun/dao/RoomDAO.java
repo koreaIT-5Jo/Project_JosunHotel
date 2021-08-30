@@ -10,4 +10,5 @@ public interface RoomDAO {
 	String getDuplicateCheckRoomNumList(String startDate, String endDate)throws Exception;
 	HashMap<String,String> roomDetailInfo(int num);
 	RoomDTO roomOptionInfo(int num);
+	RoomDTO detailReviewRoomInfo(int num);
 }

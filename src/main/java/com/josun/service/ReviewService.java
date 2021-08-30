@@ -7,4 +7,5 @@ import com.josun.dto.ReviewDTO;
 public interface ReviewService {
 	List<ReviewDTO> reviewMainList(int currentPage);
 	int reviewPageCnt();
+	ReviewDTO detailReview(int idx);
 }

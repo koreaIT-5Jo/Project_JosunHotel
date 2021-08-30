@@ -31,4 +31,10 @@ public class ReviewServiceImpl implements ReviewService {
 		return pageCnt;
 	}
 
+	@Override
+	public ReviewDTO detailReview(int idx) {
+		ReviewDTO dto = dao.detailReview(idx);
+		return dto;
+	}
+
 }

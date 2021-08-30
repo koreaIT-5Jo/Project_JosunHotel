@@ -35,5 +35,10 @@ public class RoomDAOTest {
 		RoomDTO dto = dao.roomOptionInfo(1);
 		System.out.println(dto);
 	}
+	@Test
+	public void detailReviewRoom() {
+		RoomDTO dto = dao.detailReviewRoomInfo(1);
+		System.out.println(dto);
+	}
 	
 }

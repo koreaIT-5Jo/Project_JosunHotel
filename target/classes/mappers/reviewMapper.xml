@@ -14,5 +14,8 @@
 	<select id="reviewWritingCnt" resultType="Integer">
 		SELECT COUNT(*) FROM board_review
 	</select>
+	<select id="detailReview" resultType="com.josun.dto.ReviewDTO">
+			select * from board_review where idx = #{idx}
+	</select>
 	
 </mapper>

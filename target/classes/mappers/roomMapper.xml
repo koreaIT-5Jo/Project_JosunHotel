@@ -15,4 +15,8 @@
 	<select id="roomOptionInfo" resultType="com.josun.dto.RoomDTO">
 		select num,name,price,r_size,detail_view  from room  WHERE num = #{num}
 	</select>
+	<select id="detailReviewRoom" resultType="com.josun.dto.RoomDTO">
+		select name,img,beds,r_size,detail_view,features from  room  where num = #{num}
+	</select>
+	
 </mapper>

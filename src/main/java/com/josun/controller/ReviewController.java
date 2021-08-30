@@ -8,7 +8,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.josun.dto.ReviewDTO;
+import com.josun.dto.RoomDTO;
 import com.josun.service.ReviewService;
+import com.josun.service.RoomService;
 import com.josun.vo.PageVO;
 
 @Controller
@@ -17,6 +19,8 @@ public class ReviewController {
 	
 	@Autowired
 	ReviewService reviewService;
+	@Autowired
+	RoomService roomService;
 	
 	@RequestMapping(value = "main")
 	public String main(PageVO pageVo, Model model) {
@@ -32,9 +36,18 @@ public class ReviewController {
 		}
 		model.addAttribute("pageVo",pageVo);
 		model.addAttribute("list",list);
-		System.out.println(pageVo.getStartPage());
-		System.out.println(pageVo.getEndPage());
 		
 		return "review/reviewMain";
 	}
+	@RequestMapping(value = "detailView")
+	public String detailView(int bno,Model model ) {
+		ReviewDTO reviewDto = reviewService.detailReview(bno);
+		RoomDTO roomDto = roomService.detailReviewRoomInfo(reviewDto.getRoomNumber());
+		
+		model.addAttribute("reviewDto",reviewDto);
+		model.addAttribute("roomDto",roomDto);
+		
+		return"review/detailView";
+	}
+	
 }

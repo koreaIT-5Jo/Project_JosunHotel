@@ -87,5 +87,4 @@ public class RoomDTO {
 				+ ", viewPoint=" + viewPoint + ", detailView=" + detail_View + "]\n";
 	}
 	
-	
 }

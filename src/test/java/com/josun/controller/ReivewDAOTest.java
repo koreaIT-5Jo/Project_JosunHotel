@@ -28,5 +28,10 @@ public class ReivewDAOTest {
 		int writingCnt = dao.reviewWritingCnt();
 		System.out.println(writingCnt);
 	}
+	@Test
+	public void detailReview() {
+		ReviewDTO dto = dao.detailReview(96);
+		System.out.println(dto);
+	}
 	
 }

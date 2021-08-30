@@ -26,7 +26,7 @@
 	function loginGo(){
 		let form = document.getElementById("loginForm");
 		form.method="get";
-		form.action='Login';
+		form.action='../login';
 		form.submit();
 	}
 	
@@ -168,7 +168,7 @@
 		</div>
 		<!-- End. header -->
 	<form name="loginForm" id="loginForm" method="post" action="">
-		<input type="hidden" name="url" id="nextURL" value="">
+		<input type="hidden" name="url" id="nextURL" value="review/main">
 	</form>
 	<form id="reviewForm" name="reviewForm" method="post">
 	<input type="hidden" id="page" name="currentPage" value="${pageVo.getCurrentPage() }">
@@ -189,7 +189,7 @@
 				<!-- LNB -->
 				<div class="lnbArea">
 					<ul class="lnb ctmType">
-						<li><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
+						<li><a href="../qna">Q&amp;A</a></li>
 						<li class="on"><a href="review/main">REVIEW</a></li>
 					</ul>
 				</div>
