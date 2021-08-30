@@ -18,17 +18,39 @@ public class BoardEventNoticeDAOTest {
 	private BoardEventNoticeDAO dao;
 	
 	@Test
-	public void testEnList() throws Exception{
+	public void testEnList() throws Exception {
 		List <BoardEventNoticeDTO> enList = dao.enList("%%", "%%", 1, 5);
 		for(BoardEventNoticeDTO dto : enList) {
-			System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getWriteDate());
+			System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getFile_name() + " " + dto.getWrite_date());
 		}
 	}
 	
 	@Test
-	public void testTotalCount() throws Exception{
+	public void testTotalCount() throws Exception {
 		System.out.println(dao.totalCount("%%", "%%"));		//11
 		System.out.println(dao.totalCount("%%", "%1%"));	//6
 		System.out.println(dao.totalCount("%%", "%2%"));	//5
+	}
+	
+	@Test
+	public void testHitCount() throws Exception {
+		System.out.println(dao.hitCount(21));//1
+		System.out.println(dao.hitCount(1)); //0
+	}
+	
+	@Test
+	public void testDetailView() throws Exception {
+		BoardEventNoticeDTO dto = dao.detailView(24);
+		System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getFile_name() + " " + dto.getWrite_date());
+	}
+	
+	@Test
+	public void testPrevIndx() throws Exception {
+		System.out.println(dao.getPrevIdx(22));
+	}
+	
+	@Test
+	public void testNextIndx() throws Exception {
+		System.out.println(dao.getNextIdx(22));
 	}
 }

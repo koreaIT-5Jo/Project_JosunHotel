@@ -12,9 +12,32 @@
 		t) t2 WHERE #{startNum} <= rnum AND rnum <= #{endNum}
 		]]>
 	</select>
+	
 	<select id="totalCount" resultType="int">
 		<![CDATA[
 		SELECT count(*) FROM event_notice WHERE content LIKE #{content} AND category LIKE #{category}
+		]]>
+	</select>
+	
+	<update id="hitCount">
+		<![CDATA[
+		UPDATE event_notice SET hitCount = hitCount + 1 WHERE idx = #{idx}
+		]]>
+	</update>
+	
+	<select id="detailPost" resultType="com.josun.dto.BoardEventNoticeDTO">
+		SELECT * FROM event_notice WHERE idx = #{idx}
+	</select>
+	
+	<select id="getPrevIdx" resultType="int">
+		<![CDATA[
+		SELECT max(idx) FROM event_notice WHERE idx < #{idx}
+		]]>
+	</select>
+	
+	<select id="getNextIdx" resultType="int">
+		<![CDATA[
+		SELECT min(idx) FROM event_notice WHERE idx > #{idx}
 		]]>
 	</select>
 </mapper>

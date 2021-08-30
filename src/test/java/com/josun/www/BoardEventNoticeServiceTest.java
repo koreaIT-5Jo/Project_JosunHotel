@@ -19,25 +19,41 @@ public class BoardEventNoticeServiceTest {
 	private BoardEventNoticeService service;
 	
 	@Test
-	public void testEnList() throws Exception{
-		List <BoardEventNoticeDTO> list = service.enList("%%", "%1%", 1); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
+	public void testEnList() throws Exception {
+		List <BoardEventNoticeDTO> list = service.enList("%%", "%%", 3); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
 		for(BoardEventNoticeDTO dto : list) {
-			System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getFileName() );
+			System.out.println(dto.getIdx() + " / " + dto.getCategory() + " / " + dto.getTitle() + " / " + dto.getContent() + " / " + dto.getFile_name() + " / " + dto.getHitCount() + " / " + dto.getWrite_date() );
 		}
 	}
 	
 	@Test
-	public void testTotalCountSize() throws Exception{
+	public void testTotalCountSize() throws Exception {
 		System.out.println("총 게시물 수 " + service.totalCountSize("%%", "%%"));
 	}
 	
 	@Test
-	public void testStartPage() throws Exception{
+	public void testStartPage() throws Exception {
 		System.out.println(service.startPage("%%", "%%"));
 	}
 	
 	@Test
-	public void testEndPage() throws Exception{
+	public void testEndPage() throws Exception {
 		System.out.println(service.endPage("%%", "%%"));
+	}
+	
+	@Test
+	public void testHitCountUp() throws Exception {
+		System.out.println(service.hitCountUp(24)); //true
+		System.out.println(service.hitCountUp(1));  //false
+	}
+	
+	@Test
+	public void testPrevIdx() throws Exception {
+		System.out.println(service.getPrevIdx(22));
+	}
+	
+	@Test
+	public void testNextIdx() throws Exception {
+		System.out.println(service.getNextIdx(22));
 	}
 }

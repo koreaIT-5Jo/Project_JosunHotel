@@ -80,71 +80,129 @@ public class HomeController {
 	
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
-	public String enList(Model model, String page, String content, String category) {
-		System.out.println("파라미터 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
+	public String enList(Model model, String page, String category, String keyword) {
+
 		int curPage = 1;//현재페이지
 		if(page != null) curPage = Integer.parseInt(page);
 		
-		if((category == null && content == null) || (category == null && content.equals(""))) {
-			content = "%%";
-			category = "%%";
+		//검색을 하지 않았을 때
+		if((category == null && keyword == null) || (category == null && keyword.equals(""))) {
+	         keyword = "%%";
+	         category = "%%";
+	         
+	    //검색을 했을 때
+		} else if (category != null || keyword.equals("") || keyword != null) {
+			
+			if(category.equals("0")) { category = "%%"; }
+								else { category = "%"+ category +"%"; }
+			
+			keyword = "%"+keyword+"%";
 		}
-		System.out.println("93번째 줄 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
 		
-		int start = enService.startPage(content, category);
-		int end = enService.endPage(content, category);
+		//System.out.println("93번째 줄 확인 : 키워드 : " + keyword +" /카테고리: " + category + " /페이지 : " + page);
 		
-		List<BoardEventNoticeDTO> list = enService.enList(content, category, curPage);
-		int totalPage = enService.totalCountSize(content, category);
+		int start = enService.startPage(keyword, category);
+		int end = enService.endPage(keyword, category);
+		int totalPage = enService.totalCountSize(keyword, category);
+		
+		List<BoardEventNoticeDTO> list = enService.enList(keyword, category, curPage);
+		for(BoardEventNoticeDTO dto : list) {
+			if(dto.getCategory() == 1) { dto.setCateName("이벤트");}
+			else if(dto.getCategory() == 2) { dto.setCateName("공지사항");}
+		}	
 		
 		String param = "";
-		if(!content.equals("")){
+		String url = "enList";
+		if(!keyword.equals("")){
 			if(category.equals("0")) {
 				param = "category="+"%%";
-				param += "&content="+content;
+				param += "&content="+keyword;
 			} else {
 				param = "category="+category;
-				param += "&content="+content;
+				param += "&content="+keyword;
 			}
+			url += "?"+param; 
 		}
 		
-		/*
-		 * String url = "enList?"+param; StringBuffer pageNav = new StringBuffer();
-		 * 
-		 * for(int i=1; i<=totalPage; i++){ 
-		 * 	int prev = i-1; 
-		 * 	if(prev == 0) prev = 1;
-		 * 	int next = i+1; 
-		 * 	
-		 * 	if(curPage == i) {
-		 * 		pageNav.append("<a class=\"first\" href=\""+url+"page="+start+"\">"+start+"<span class=\"hidden\">first</span></a>&nbsp;");
-		 * 		pageNav.append("<a class=\"prev\" href=\""+url+"page="+prev+"\">"+prev+"<span class=\"hidden\">prev</span></a>&nbsp;");
-		 * 		pageNav.append("<a class=\"current\" href=\""+url+"page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
-		 * 		pageNav.append("<a class=\"next\" href=\""+url+"page="+next+"\">"+next+"<span class=\"hidden\">next</span></a>&nbsp;");
-		 * 		pageNav.append("<a class=\"last\" href=\""+url+"page="+end+"\">"+end+"<span class=\"hidden\">last</span></a>&nbsp;"); 
-		 *	} 
-		 *}
-		 */
+		System.out.println(url);
 		
+		StringBuffer pageNav = new StringBuffer();
+		
+		for(int i=1; i<=totalPage; i++){ 
+			
+			int prev = i-1; 
+			if(prev == 0) prev = start;
+			
+			int next = i+1; 
+			if(end < next) next = end;
+		  	
+		  	if(curPage == i) {
+		  		pageNav.append("<a class=\"first\" href=\""+url+"page="+start+"\">"+start+"<span class=\"hidden\">first</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"prev\" href=\""+url+"page="+prev+"\">"+prev+"<span class=\"hidden\">prev</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"current\" href=\""+url+"page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"next\" href=\""+url+"page="+next+"\">"+next+"<span class=\"hidden\">next</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"last\" href=\""+url+"page="+end+"\">"+end+"<span class=\"hidden\">last</span></a>&nbsp;"); 
+		 	} 
+		 }
+		 
 		model.addAttribute("enList", list);
-		//model.addAttribute("pageNav", pageNav.toString());
+		model.addAttribute("pageNav", pageNav.toString());
 		
 		return "board/board_EventNoticeList";
 	}
-	//게시판 - 이벤트, 공지사항 수정
-	@RequestMapping(value = "/enModify")
-	public String enModify() {
-		return "board/board_EventNoticeModify";
-	}
+	
 	//게시판 - 이벤트, 공지사항 상세보기
 	@RequestMapping(value = "/enDetailView")
-	public String enDetailView() {
+	public String enDetailView(Model model, int idx) {
+		
+		boolean hitCount = enService.hitCountUp(idx);
+		
+		int prevIdx = enService.getPrevIdx(idx);
+		int nextIdx = enService.getNextIdx(idx);
+		
+		StringBuffer prev = new StringBuffer();
+		StringBuffer next = new StringBuffer();
+		
+		String prevTitle = enService.detailView(prevIdx).getTitle();
+		String nextTitle = enService.detailView(nextIdx).getTitle();
+		
+		String prevUrl = "enDetailView?idx="+prevIdx;
+		String nextUrl = "enDetailView?idx="+nextIdx;
+		String listUrl = "enList";
+		
+		if(prevIdx == 0) {
+			prev.append("<a class=\"ellipsis\" href=\"" + listUrl + "\">이전 글이 없습니다.</a>");
+			next.append("<a class=\"ellipsis\" href=\"" + nextUrl + "\">" + nextTitle + "</a>");
+		} else if(nextIdx == 0) {
+			prev.append("<a class=\"ellipsis\" href=\"" + prevUrl + "\">" + prevTitle + "</a>");
+			next.append("<a class=\"ellipsis\" href=\"" + listUrl + "\">다음 글이 없습니다.</a>");
+		} else {
+			prev.append("<a class=\"ellipsis\" href=\"" + prevUrl + "\">" + prevTitle + "</a>");
+			next.append("<a class=\"ellipsis\" href=\"" + nextUrl + "\">" + nextTitle + "</a>");
+		}
+		
+		model.addAttribute("prev", prev.toString());
+		model.addAttribute("next", next.toString());
+		model.addAttribute("title", enService.detailView(idx).getTitle());
+		model.addAttribute("writeDate", enService.detailView(idx).getWrite_date());
+		model.addAttribute("content", enService.detailView(idx).getContent());
+		
 		return "board/board_EventNoticeDetailView";
 	}
 	//게시판 - 이벤트, 공지사항 글쓰기
 	@RequestMapping(value = "/enWrite")
 	public String enWrite() {
 		return "board/board_EventNoticeWrite";
+	}
+	//게시판 - 이벤트, 공지사항 수정
+	@RequestMapping(value = "/enModify")
+	public String enModify() {
+		return "board/board_EventNoticeModify";
+	}
+	//게시판 - 이벤트, 공지사항 삭제
+	@RequestMapping(value = "/enDelete")
+	public String enDelete() {
+		return "board/board_EventNoticeList.jsp";
 	}
 	
 	//회원가입

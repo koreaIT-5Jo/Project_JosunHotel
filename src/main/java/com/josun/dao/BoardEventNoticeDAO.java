@@ -10,4 +10,16 @@ public interface BoardEventNoticeDAO {
 	
 	//총 게시글 수
 	int totalCount(String content, String category);
+	
+	//조회수 올리기
+	int hitCount(int idx);
+	
+	//상세보기
+	BoardEventNoticeDTO detailView(int idx);
+	
+	//이전 글 번호
+	int getPrevIdx(int idx);
+	
+	//다음 글 번호
+	int getNextIdx(int idx);
 }

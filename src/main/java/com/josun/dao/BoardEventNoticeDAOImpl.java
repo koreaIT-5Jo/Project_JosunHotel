@@ -33,4 +33,24 @@ public class BoardEventNoticeDAOImpl implements BoardEventNoticeDAO {
 		return sqlSession.selectOne(NAMESPACE + ".totalCount", map);
 	}
 
+	@Override
+	public int hitCount(int idx) {
+		return sqlSession.update(NAMESPACE + ".hitCount", idx);
+	}
+
+	@Override
+	public BoardEventNoticeDTO detailView(int idx) {
+		return sqlSession.selectOne(NAMESPACE + ".detailPost", idx);
+	}
+
+	@Override
+	public int getPrevIdx(int idx) {
+		return sqlSession.selectOne(NAMESPACE + ".getPrevIdx", idx);
+	}
+
+	@Override
+	public int getNextIdx(int idx) {
+		return sqlSession.selectOne(NAMESPACE + ".getNextIdx", idx);
+	}
+
 }

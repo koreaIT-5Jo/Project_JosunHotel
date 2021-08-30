@@ -9,13 +9,11 @@
 <meta charset="utf-8">
 <title>EVENT &amp; NOTICE | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="resources/js/board/board_event_noticeList.js"></script>
+<script type="text/javascript" src="resources/js/board/board_EventNoticeList.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
-<link rel="stylesheet" href="resources/css/board/board_event_noticeList.css">
+<link rel="stylesheet" href="resources/css/board/board_EventNoticeList.css">
 <script>
 	function enWrite() {		//글쓰기
 		var thisLocation = window.location.hostname;
@@ -100,7 +98,7 @@
 						</div>
 						<div class="intWord">
 							<span class="intArea"> 
-								<input type="text" style="width: 873px" id="searchDataValue" name="content" title="검색어 입력" placeholder="검색어를 입력해주세요." value="">
+								<input type="text" style="width: 873px" id="searchDataValue" name="keyword" title="검색어 입력" placeholder="검색어를 입력해주세요." value="">
 							</span>
 							<button type="submit" class="btnSC btnM">검색</button>
 						</div>
@@ -120,24 +118,32 @@
 					<tr>
 						<th scope="col">카테고리</th>
 						<th scope="col">제목</th>
-						<th scope="col">첨부파일</th>
+						<th scope="col">조회수</th>
 						<th scope="col">등록일</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="eventNotice" items="${enList}">
 						<tr>
-							<td><c:out value="${eventNotice. category}" /></td>
-							<td id = "td" class="tleft"><a href=""><c:out value="${eventNotice.title}" /></a></td>
-							<!-- <td>&#x2714;</td> -->
-							<td><c:out value="${eventNotice.fileName}"/></td>
-							<td class="date"><fmt:formatDate value="${eventNotice.writeDate}" pattern="yyMMdd"/></td>
+							<td>
+								<c:out value="${eventNotice.cateName}" />
+							</td>
+							<td id = "td" class="tleft">
+								<a href="enDetailView?idx=${eventNotice.idx}"><c:out value="${eventNotice.title}" /></a>
+							</td>
+							<td>
+								<c:out value="${eventNotice.hitCount}" />
+							</td>
+							<td class="date">
+								<fmt:parseDate value='${eventNotice.write_date}' var='writeDay' pattern='yyyy-mm-dd 00:00:00'/>
+								<fmt:formatDate value="${writeDay}" pattern="yy.mm.dd"/>
+							</td>
 						</tr>					
 					</c:forEach>
 				</tbody>
 			</table>
 			<div class="pagination">
-				
+				${pageNav}
 			</div> 
 <%-- 			<div class="btnArea">
  				<%if(id.equals("admin")) {%>

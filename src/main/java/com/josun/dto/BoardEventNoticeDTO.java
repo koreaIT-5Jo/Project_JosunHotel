@@ -6,20 +6,22 @@ public class BoardEventNoticeDTO {
 	private int category;
 	private String title;
 	private String content;
-	private String fileName;
-	private String writeDate;
+	private String file_name;
+	private int hitCount;
+	private String write_date;
 	
 	
 	public BoardEventNoticeDTO() {}
-	public BoardEventNoticeDTO(int idx, String cateName, int category, String title, String content, String fileName, String writeDate) {
+	public BoardEventNoticeDTO(int idx, String cateName, int category, String title, String content, String fileName, int hitCount, String writeDate) {
 		super();
 		this.idx = idx;
 		this.cateName = cateName;
 		this.category = category;
 		this.title = title;
 		this.content = content;
-		this.fileName = fileName;
-		this.writeDate = writeDate;
+		this.file_name = fileName;
+		this.hitCount = hitCount;
+		this.write_date = writeDate;
 	}
 	
 	public int getIdx() {
@@ -52,17 +54,24 @@ public class BoardEventNoticeDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getFileName() {
-		return fileName;
+	public String getFile_name() {
+		return file_name;
 	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
+	public void setFile_name(String fileName) {
+		this.file_name = fileName;
 	}
-	public String getWriteDate() {
-		return writeDate;
+	public int getHitCount() {
+		return hitCount;
 	}
-	public void setWriteDate(String writeDate) {
-		this.writeDate = writeDate;
+	public void setHitCount(int hitCount) {
+		this.hitCount = hitCount;
 	}
+	public String getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(String writeDate) {
+		this.write_date = writeDate;
+	}
+ 
 
 }
