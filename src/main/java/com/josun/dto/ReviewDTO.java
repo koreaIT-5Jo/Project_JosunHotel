@@ -1,7 +1,5 @@
 package com.josun.dto;
 
-import java.text.SimpleDateFormat;
-
 public class ReviewDTO {
 	private int rnum;
 	private int idx;

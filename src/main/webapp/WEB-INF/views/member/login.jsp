@@ -65,7 +65,7 @@ if(request.getAttribute("msg") != null){
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+									<li><a href="reviewboard">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>

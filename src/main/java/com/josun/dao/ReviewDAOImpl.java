@@ -30,4 +30,10 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return list;
 	}
 
+	@Override
+	public int reviewWritingCnt() {
+		int writingCnt = sqlSession.selectOne("com.josun.mapper.reviewMapper.reviewWritingCnt");
+		return writingCnt;
+	}
+
 }

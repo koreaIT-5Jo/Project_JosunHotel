@@ -11,4 +11,8 @@
 		 b3 
 		<![CDATA[where rnum>= #{rNumStart} and rnum<=#{rNumEnd}]]> 
 	</select>
+	<select id="reviewWritingCnt" resultType="Integer">
+		SELECT COUNT(*) FROM board_review
+	</select>
+	
 </mapper>

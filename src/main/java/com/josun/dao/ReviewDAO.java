@@ -6,4 +6,5 @@ import com.josun.dto.ReviewDTO;
 
 public interface ReviewDAO {
 	List<ReviewDTO> reivewMainList(int page);
+	int reviewWritingCnt();
 }

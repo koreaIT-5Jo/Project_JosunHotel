@@ -8,25 +8,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.josun.dao.ReviewDAO;
 import com.josun.dto.ReviewDTO;
+import com.josun.service.ReviewService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations= {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
-public class ReivewDAOTest {
-	
+public class ReviewServiceTest {
+
 	@Autowired
-	ReviewDAO dao;
+	ReviewService service;
 	
 	@Test
-	public void reviewMainList( ) {
-		List<ReviewDTO> list = dao.reivewMainList(6); 
+	public void ReviewMainPage() {
+		
+		List<ReviewDTO> list = service.reviewMainList(1);
 		System.out.println(list);
 	}
-	@Test
-	public void reviewWritingCnt() {
-		int writingCnt = dao.reviewWritingCnt();
-		System.out.println(writingCnt);
-	}
-	
 }

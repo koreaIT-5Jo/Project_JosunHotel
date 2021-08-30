@@ -2,12 +2,12 @@ package com.josun.vo;
 
 public class PageVO {
 	private final static int pageSize = 5;
+	private int pageCnt;
 	private int currentPage;
 	private int startPage;
 	private int endPage;
-	private int pageCnt;
 	
-	public PageVO() {}
+	public PageVO() {this.currentPage = 1;}
 	public PageVO(int currentPage, int pageCnt) {
 		this.currentPage = currentPage;
 		this.pageCnt = pageCnt;

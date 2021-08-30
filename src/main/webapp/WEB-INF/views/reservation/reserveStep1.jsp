@@ -274,7 +274,6 @@ function roomReserveBtn(roomNum){
 						<li><a href="reserveConfirm">마이페이지</a></li>
 						<%} %>
 					</ul>
-					</ul>
 				</div>
 				<!-- //gnbUtil -->
 			</div>

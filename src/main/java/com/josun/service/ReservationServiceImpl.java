@@ -20,9 +20,6 @@ public class ReservationServiceImpl implements ReservationService {
 		String startDate = dto.getStartDate();
 		String endDAte = dto.getEndDate();
 		int num = dto.getRoom_number();
-		System.out.println(startDate);
-		System.out.println(endDAte);
-		System.out.println(num);
 		try {
 			okReservation = dao.okReservation( startDate,endDAte,num);
 			if(okReservation == 0) {	// 0일때 예약 가능
