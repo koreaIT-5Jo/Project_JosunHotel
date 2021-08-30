@@ -20,19 +20,12 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 	public List<BoardEventNoticeDTO> enList(String content, String category, int page) {
 		int totalSize = totalCountSize(content, category);	//총 페이징 수
 		int pageNum = page;									//현재페이지
+		if(totalSize <= pageNum) {pageNum = totalSize;}
 		
 		int staRow = pageNum * PAGESIZE - (PAGESIZE-1);		//게시물 rowNum 시작
 		int endRow = pageNum * PAGESIZE;					//게시물 rowNum 끝
 		
-		List<BoardEventNoticeDTO> list;
-		
-		if(totalSize < pageNum) {
-			pageNum = totalSize;
-			list = dao.enList(content, category, staRow, endRow);
-		} else {
-			list = dao.enList(content, category, staRow, endRow);
-		}
-		
+		List<BoardEventNoticeDTO> list = dao.enList(content, category, staRow, endRow);
 		
 		return list;
 	}
@@ -45,7 +38,7 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 		if ((totalPost / PAGESIZE) == 0)
 			totalSize = 1;
 		else if((totalPost % PAGESIZE) > 0)
-			totalSize += 1;
+			totalSize++;
 		
 		return totalSize;
 	}

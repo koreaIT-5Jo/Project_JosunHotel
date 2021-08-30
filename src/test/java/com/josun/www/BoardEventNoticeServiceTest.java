@@ -20,7 +20,7 @@ public class BoardEventNoticeServiceTest {
 	
 	@Test
 	public void testEnList() throws Exception{
-		List <BoardEventNoticeDTO> list = service.enList("%%", "%1%", 3); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
+		List <BoardEventNoticeDTO> list = service.enList("%%", "%1%", 1); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
 		for(BoardEventNoticeDTO dto : list) {
 			System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getFileName() );
 		}

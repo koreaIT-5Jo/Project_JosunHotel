@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.josun.dto.BoardEventNoticeDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
 import com.josun.service.BoardEventNoticeService;
@@ -79,23 +80,54 @@ public class HomeController {
 	
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
-	@ResponseBody
-	public String enList(HttpServletRequest request, String pageNum) {
-		String content = "%"+"%";
-		String category = "%"+"%";
+	public String enList(Model model, String page, String content, String category) {
+		System.out.println("파라미터 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
+		int curPage = 1;//현재페이지
+		if(page != null) curPage = Integer.parseInt(page);
 		
-		int page = 0;
-		if(pageNum != null) page = Integer.parseInt(pageNum);
+		if((category == null && content == null) || (category == null && content.equals(""))) {
+			content = "%%";
+			category = "%%";
+		}
+		System.out.println("93번째 줄 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
 		
-		int prev = page - 1;
-		int next = page + 1;
+		int start = enService.startPage(content, category);
+		int end = enService.endPage(content, category);
 		
-		request.setAttribute("boardList", enService.enList(content, category, page));
-		request.setAttribute("startPage", enService.startPage(content, category));
-		request.setAttribute("endPage", enService.endPage(content, category));
-		request.setAttribute("prev", prev);
-		request.setAttribute("page", page);
-		request.setAttribute("next", next);
+		List<BoardEventNoticeDTO> list = enService.enList(content, category, curPage);
+		int totalPage = enService.totalCountSize(content, category);
+		
+		String param = "";
+		if(!content.equals("")){
+			if(category.equals("0")) {
+				param = "category="+"%%";
+				param += "&content="+content;
+			} else {
+				param = "category="+category;
+				param += "&content="+content;
+			}
+		}
+		
+		/*
+		 * String url = "enList?"+param; StringBuffer pageNav = new StringBuffer();
+		 * 
+		 * for(int i=1; i<=totalPage; i++){ 
+		 * 	int prev = i-1; 
+		 * 	if(prev == 0) prev = 1;
+		 * 	int next = i+1; 
+		 * 	
+		 * 	if(curPage == i) {
+		 * 		pageNav.append("<a class=\"first\" href=\""+url+"page="+start+"\">"+start+"<span class=\"hidden\">first</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"prev\" href=\""+url+"page="+prev+"\">"+prev+"<span class=\"hidden\">prev</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"current\" href=\""+url+"page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"next\" href=\""+url+"page="+next+"\">"+next+"<span class=\"hidden\">next</span></a>&nbsp;");
+		 * 		pageNav.append("<a class=\"last\" href=\""+url+"page="+end+"\">"+end+"<span class=\"hidden\">last</span></a>&nbsp;"); 
+		 *	} 
+		 *}
+		 */
+		
+		model.addAttribute("enList", list);
+		//model.addAttribute("pageNav", pageNav.toString());
 		
 		return "board/board_EventNoticeList";
 	}
