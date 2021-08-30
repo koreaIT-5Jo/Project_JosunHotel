@@ -51,17 +51,13 @@
 	
 	<bean id="MemberDAOImpl" class="com.josun.dao.MemberDAOImpl"/>
 	<bean id="BoardQnaDAOImpl" class="com.josun.dao.BoardQnaDAOImpl"/>
-<<<<<<< HEAD
 	<bean id="BoardQnaCommentDAOImpl" class="com.josun.dao.BoardQnaCommentDAOImpl"/>
 	
 	<bean id="roomDAOImpl" class="com.josun.dao.RoomDAOImpl"/>
 	<bean id="roomServiceImpl" class="com.josun.service.RoomServiceImpl"/>
 	<bean id="reservationDAOImpl" class="com.josun.dao.ReservationDAOImpl"/>
 	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
-=======
 	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
-	<context:component-scan base-package="com.josun.service"/>
->>>>>>> origin/chiWorld
 	
 	<context:component-scan base-package="com.josun.service" />
 </beans>

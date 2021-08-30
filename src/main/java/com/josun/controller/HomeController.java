@@ -49,6 +49,7 @@ public class HomeController {
 	private JavaMailSender mailSender;
 
 	//메인
+	@Autowired
 	BoardEventNoticeService enService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -104,7 +105,15 @@ public class HomeController {
 		if((category == null && content == null) || (category == null && content.equals(""))) {
 			content = "%%";
 			category = "%%";
+		}else if(category != null || content.equals("") || content != null) {
+			if(category.equals("0")) {
+				category = "%%";
+			}else {
+				category = "%"+category+"%";
+			}
+			content = "%"+content+"%";
 		}
+		
 		System.out.println("93번째 줄 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
 		
 		int start = enService.startPage(content, category);

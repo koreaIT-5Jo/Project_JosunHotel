@@ -127,7 +127,7 @@
 				<tbody>
 					<c:forEach var="eventNotice" items="${enList}">
 						<tr>
-							<td><c:out value="${eventNotice. category}" /></td>
+							<td><c:out value="${eventNotice.category}" /></td>
 							<td id = "td" class="tleft"><a href=""><c:out value="${eventNotice.title}" /></a></td>
 							<!-- <td>&#x2714;</td> -->
 							<td><c:out value="${eventNotice.fileName}"/></td>
