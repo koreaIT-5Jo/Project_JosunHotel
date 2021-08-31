@@ -20,7 +20,7 @@ public class ReivewDAOTest {
 	
 	@Test
 	public void reviewMainList( ) {
-		List<ReviewDTO> list = dao.reivewMainList(6); 
+		List<ReviewDTO> list = dao.reivewMainList(1); 
 		System.out.println(list);
 	}
 	@Test
@@ -33,5 +33,19 @@ public class ReivewDAOTest {
 		ReviewDTO dto = dao.detailReview(96);
 		System.out.println(dto);
 	}
-	
+	@Test
+	public void writeReview() {
+		int result = dao.writeReview(new ReviewDTO("lsjdf","dlajdsf","kigo0307",1,"캡처.jpg"));
+		if(result == 1 ) {System.out.println("성공");}
+	}
+	@Test
+	public void writeDelete() {
+		int result = dao.writeDelete(115);
+		if(result == 1 ) {System.out.println("성공");}
+	}
+	@Test
+	public void writeModify() {
+		int result = dao.writeModify(new ReviewDTO(121,"ladsjf","dklajf","kigo0307",2,"캡처.jpg"));
+		if(result == 1 ) {System.out.println("성공");}
+	}
 }

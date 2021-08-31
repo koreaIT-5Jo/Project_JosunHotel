@@ -42,4 +42,27 @@ public class ReviewDAOImpl implements ReviewDAO {
 		return dto;
 	}
 
+	@Override
+	public int writeReview(ReviewDTO dto) {
+		int result = sqlSession.insert("com.josun.mapper.reviewMapper.writeReview",dto);
+		return result;
+	}
+
+	@Override
+	public int writeDelete(int idx) {
+		int result = sqlSession.delete("com.josun.mapper.reviewMapper.writeDelete",idx);
+		return result;
+	}
+
+	@Override
+	public int plusHitCount(int idx) {
+		int result = sqlSession.update("com.josun.mapper.reviewMapper.plusHitCount",idx);
+		return result;
+	}
+
+	@Override
+	public int writeModify(ReviewDTO dto) {
+		int result = sqlSession.update("com.josun.mapper.reviewMapper.wirteModify",dto);
+		return result;
+	}
 }

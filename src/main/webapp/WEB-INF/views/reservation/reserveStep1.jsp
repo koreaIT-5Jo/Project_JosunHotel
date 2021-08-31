@@ -214,13 +214,14 @@ function roomReserveBtn(roomNum){
 	var loginCheck = "<%=session.getAttribute("id")%>";
 	console.log(loginCheck);
 	
-	<%-- if(loginCheck == "null"){
+	 if(loginCheck == "null"){
 		alert('회원가입 또는 로그인 후 예약 가능합니다.');
-		location.href="/ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%>;
-	}else{ --%>
+		form.action="/www/login"
+		form.submit();
+	}else{ 
 		form.action= "step2";
 		form.submit();
-	//}
+	}
 }
 </script>
 </head>
@@ -228,7 +229,7 @@ function roomReserveBtn(roomNum){
 <div class="wrapper ">
 		<div class="header">
 			<div class="headArea">
-				<strong class="logo"><a href="/www">JOSUN HOTELS &amp; RESORTS</a></strong>
+				<strong class="logo"><a href="/www">JOSUN HOTELS &amp;	RESORTS</a></strong>
 				<button type="button" class="btnMenu">메뉴 열기</button>
 				<div class="allMenu">
 					<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
@@ -236,23 +237,23 @@ function roomReserveBtn(roomNum){
 						<ul class="menuDepth01">
 							<li>BRAND STORY
 								<ul class="menuDepth02">
-									<li><a href="brand">그랜드 조선 제주</a></li>
+									<li><a href="/www/brand">그랜드 조선 제주</a></li>
 								</ul>
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="enList">EVENT & NOTICE</a></li>
+									<li><a href="/www/enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="reserveConfirm">예약확인</a></li>
+									<li><a href="/www/reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+									<li><a href="/www/review/main">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -261,17 +262,16 @@ function roomReserveBtn(roomNum){
 				<!-- //allMenu -->
 				<div class="gnbUtil">
 					<ul>
-						<%-- /ProjectWepJosun/Controller?command=RoomLoginAction&startDate=<%=startDate%>&endDate=<%=endDate%>&adltCntArr=<%=adltCntArr%>&chldCntArr=<%=chldCntArr%> --%>
 						<%if(id == null || id == ""){%>
-						<li><a href="login">로그인</a></li>
-						<li><a href="register">회원가입</a></li>
+						<li><a href="/www/login">로그인</a></li>
+						<li><a href="/www/register">회원가입</a></li>
 						<%}else if(id.equals("admin")){ %>
-						<li><a href="logout">로그아웃</a></li>
-						<li><a href="reserveConfirm">마이페이지</a></li>
-						<li><a href="adminMember">관리자페이지</a></li>
+						<li><a href="/www/logout">로그아웃</a></li>
+						<li><a href="/www/reserveConfirm">마이페이지</a></li>
+						<li><a href="/www/adminMember">관리자페이지</a></li>
 						<%}else{ %>
-						<li><a href="logout">로그아웃</a></li>
-						<li><a href="reserveConfirm">마이페이지</a></li>
+						<li><a href="/www/logout">로그아웃</a></li>
+						<li><a href="/www/reserveConfirm">마이페이지</a></li>
 						<%} %>
 					</ul>
 				</div>
@@ -280,6 +280,7 @@ function roomReserveBtn(roomNum){
 		</div>
 		<!-- End. header -->
 		<form action="" name="step1Form" id="step1Form" method="post">
+			<input type="hidden" name="nextURL" id="nextURL" value="reservation/step1">
 			<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
 			<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
 			<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">
@@ -655,9 +656,9 @@ function roomReserveBtn(roomNum){
 </div>
 <script>
 	//list 없을때
-    let list = '<c:out value="${roomLits}"/>';
+    let list = '<c:out value="${roomList }"/>';
       //alert(list.length);
-      if(list == null) {
+      if(list == '') {
          $(".noData").css("display", "");
       } 
 </script>

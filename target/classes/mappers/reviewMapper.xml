@@ -15,7 +15,22 @@
 		SELECT COUNT(*) FROM board_review
 	</select>
 	<select id="detailReview" resultType="com.josun.dto.ReviewDTO">
-			select * from board_review where idx = #{idx}
+		SELECT * from board_review where idx = #{idx}
 	</select>
-	
+	<insert id="writeReview">
+		INSERT into board_review(idx,title,content,member_id,room_number,file_name) 
+		VALUES(REVIEW.nextval,#{title},#{content},#{member_ID},#{room_Number},#{fileName})
+	</insert>
+	<delete id="writeDelete">
+		DELETE FROM  board_review WHERE idx = #{idx}
+	</delete>
+	<update id="plusHitCount">
+		update board_review set hitcount = hitcount + 1 where idx = #{idx}
+	</update>
+	<update id="wirteModify">
+		update board_review SET title = #{title}, content = #{content}, room_number = #{room_Number}, file_name = #{fileName} where idx= #{idx}
+	</update>
+	<select id="file_name" resultType="String">
+		select file_name from board_review where idx = #{idx}
+	</select>
 </mapper>

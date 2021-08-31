@@ -21,7 +21,7 @@
 		location.href="main";
 	}
 
-	function registReview(){
+	function updateReview(){
 		let form = document.getElementById("review_WriteForm");
 		
 		if($("#reservedRoom").val().length==0 || $("#reservedRoom").val()==null ){
@@ -38,7 +38,7 @@
 			$("#dsCont").focus();
 			return false;
 		}
-		form.action = "reviewWriteAction";
+		form.action = "modifyReviewAction";
 		form.submit();
 	}
 	
@@ -51,6 +51,11 @@
 			a = a.substr(4)
 			$("#reservedRoom").val(a);
 		});
+		$(".roomlist li").each(function(){
+			if($(this).attr("id").substr(4,2) == $("#reservedRoom").val() ){
+				$(this).children().css({"border" : "5px solid black"})	
+			}
+		});
 	});
 </script>
 </head>
@@ -59,7 +64,7 @@
 		<div class="header">
 				<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
 				<div class="headArea">
-					<strong class="logo"><a href="/www">JOSUN HOTELS &amp;	RESORTS</a></strong>
+				<strong class="logo"><a href="/www">JOSUN HOTELS &amp;	RESORTS</a></strong>
 					<button type="button" class="btnMenu">메뉴 열기</button>
 					<div class="allMenu">
 						<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
@@ -109,8 +114,9 @@
 				</div>
 			</div>
 			<!-- End. header -->
-		<form id="review_WriteForm" name="review_WriteForm" method="post" action="" enctype="multipart/form-data">
-		<input type="hidden" id="reservedRoom" name="room_Number" value="" />
+		<form id="review_WriteForm" name="review_WriteForm" method="post" action="reviewServlet" enctype="multipart/form-data">
+		<input type="hidden" id="reservedRoom" name="room_Number" value="${reviewDto.room_Number }" />
+		<input type="hidden" id="idx" name="idx" value="${reviewDto.idx}"/>
 		<div id="container" class="container mypage ctmService">
 				<!-- 컨텐츠 S -->
 				<h1 class="hidden">고객센터</h1>
@@ -136,7 +142,7 @@
 					<h3 class="titDep2" style="margin-left: 400px;">REVIEW</h3>
 					<div class="writeReView">
 						<ul class="roomlist">
-							<!-- 반복문 -->
+						<!-- 반복문 -->
 							<c:forEach var="dto" items="${list }">
 								<li id="room${dto.num}" >
 									<dl class="roomIntro">
@@ -163,7 +169,7 @@
 								</div>
 								<div class="intInner">
 									<span class="intArea"> 
-										<input type="text" id="title" name="title" style="width: 100%" aria-required="true" placeholder="제목을 입력해주세요." > 
+										<input type="text" id="title" name="title" style="width: 100%" aria-required="true" placeholder="제목을 입력해주세요." value="${reviewDto.title }"> 
 									</span>
 								</div>
 							</li>
@@ -173,7 +179,7 @@
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-										<textarea id="dsCont" name="content" class="noLine" style="min-height:300px; width:100%;" placeholder="내용을 입력해주세요."></textarea></span>
+										<textarea id="dsCont" name="content" class="noLine" style="min-height:300px; width:100%;" placeholder="내용을 입력해주세요." >${reviewDto.content }</textarea></span>
 								</div>
 							</li>
 							<li>
@@ -184,13 +190,14 @@
 									<!-- 스크립트 위임 적용 commonJs.setFileUpload('.fileUpload'); -->
 									<div class="fileUpload">
 										<div class="intDel">
-											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px"  value="" readonly >
+											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px" readonly value="${reviewDto.getFileName() }">
+											<input type="hidden" id="nmFile2" name="originFileName" value="${reviewDto.getFileName() }"/>
 											<!-- btnDel -->
 											<button type="button" class="btnDel">삭제</button>
 											<!-- //btnDel -->
 										</div>
-										<label for="uploadFile" class="btnSC btnM" value="">파일선택</label> 
-										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png"  value="">
+										<label for="uploadFile" class="btnSC btnM">파일선택</label> 
+										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png" >
 									</div>
 								</div>
 								<p class="txtGuide">* 첨부가능 파일종류 : jpg, png, jpeg (용량 5MB)</p>
@@ -198,7 +205,7 @@
 						</ul>
 					<div class="btnArea">
 								<a href="#none" onclick="cancle()" class="btnSC btnL cancel">취소</a> 
-								<a href="#none" onclick="registReview()" class="btnSC btnL active">저장</a>
+								<a href="#none" onclick="updateReview()" class="btnSC btnL active">저장</a>
 								<div style="clear:both;"></div> 
 							</div>
 					</div>

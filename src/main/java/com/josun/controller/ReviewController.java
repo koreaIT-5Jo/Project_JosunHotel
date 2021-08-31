@@ -2,7 +2,10 @@ package com.josun.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,8 +38,8 @@ public class ReviewController {
 		pageVo = new PageVO(currentPage, pageCnt);
 		List<ReviewDTO> list = reviewService.reviewMainList(currentPage);
 		for(ReviewDTO dto:list) {
-			if(dto.getFile_Name()=="" || dto.getFile_Name() == null) {
-				dto.setFileName(dto.getRoomNumber() +".jpg");;
+			if(dto.getFileName() == null || dto.getFileName().equals("")) {
+				dto.setFile_Name(dto.getRoom_Number() +".jpg");;
 			}
 		}
 		model.addAttribute("pageVo",pageVo);
@@ -47,7 +50,7 @@ public class ReviewController {
 	@RequestMapping(value = "detailView")
 	public String detailView(int bno,Model model ) {
 		ReviewDTO reviewDto = reviewService.detailReview(bno);
-		RoomDTO roomDto = roomService.detailReviewRoomInfo(reviewDto.getRoomNumber());
+		RoomDTO roomDto = roomService.detailReviewRoomInfo(reviewDto.getRoom_Number());
 		
 		model.addAttribute("reviewDto",reviewDto);
 		model.addAttribute("roomDto",roomDto);
@@ -67,19 +70,84 @@ public class ReviewController {
 		String filePath = session.getServletContext().getRealPath("/resources/img/review");
 		System.out.println("경로 : " + filePath);
 		MultipartFile multipart = reviewDto.getUploadFile();
+		String uuid = UUID.randomUUID().toString();
 		String fileName = "";
 		if(!multipart.isEmpty()) {
-			fileName = multipart.getOriginalFilename();
+			fileName = uuid + "_" + multipart.getOriginalFilename();
 			File file = new File(filePath,fileName);
 			if(!file.exists()) {
 				file.mkdirs();
 			}
 			multipart.transferTo(file);
 		}
-		reviewDto.setFileName(fileName);
+		reviewDto.setFile_Name(fileName);
 		reviewDto.setMember_ID((String)session.getAttribute("id"));
-		System.out.println(reviewDto);
-		return "mainGo";
+		
+		reviewService.writeReview(reviewDto);	// 글쓰기 디비 저장
+		
+		return "review/mainGo";
 	}
-	
+	@RequestMapping(value = "delete")
+	public String delete(int idx,String fileName, HttpSession session) {
+		reviewService.writeDelete(idx);	// 디비 정보 삭제
+		String filePath = session.getServletContext().getRealPath("/resources/img/review");
+		
+		
+		File file = new File(filePath,fileName);
+		if(file.exists()) {
+			file.delete();
+		}
+		
+		return "review/mainGo";
+	}
+	@RequestMapping(value = "modify")
+	public String modifyPage(int idx,HttpSession session,Model model) {
+		ReviewDTO dto = reviewService.ModityReviewInfo(idx);
+		String id = (String) session.getAttribute("id");
+		List<RoomDTO> list = roomService.writeReviewRoomInfo(id);
+		
+		model.addAttribute("reviewDto",dto);	
+		model.addAttribute("list", list);
+		return "review/modifyReview";
+	}
+	@RequestMapping(value = "modifyReviewAction")
+	public String modifyAction(String originFileName,ReviewDTO reviewDto, HttpSession session) throws IllegalStateException, IOException {
+		String filePath = session.getServletContext().getRealPath("/resources/img/review");
+		System.out.println("경로 : " + filePath);
+		MultipartFile multipart = reviewDto.getUploadFile();
+		String uuid = UUID.randomUUID().toString();
+		String fileName = "";
+		if(!multipart.isEmpty()) {
+			System.out.println("noEmpty");
+			fileName = uuid + "_" + multipart.getOriginalFilename();
+			File file = new File(filePath,fileName);
+			
+			if(!file.exists()) {
+				file.mkdirs();
+			}
+			if(!(originFileName == null || originFileName == "")) {
+				//System.out.println("originFileName : "+originFileName);
+				File originFile = new File(filePath,originFileName);	// 기존파일
+				if(originFile.exists()) {
+					originFile.delete();
+				}
+			}
+			
+			multipart.transferTo(file);
+			reviewDto.setFile_Name(fileName);
+		} else {				
+			System.out.println("Empty");
+			
+			 if(!(originFileName == null || originFileName == "")) { 
+				 fileName = originFileName; 
+				 reviewDto.setFile_Name(originFileName); 
+			 }
+		}
+		reviewDto.setMember_ID((String)session.getAttribute("id"));
+		
+		//System.out.println(reviewDto);
+		reviewService.writeModify(reviewDto);
+		
+		return "review/mainGo";
+	}
 }

@@ -115,7 +115,10 @@ public class HomeController {
 	
 	//로그인
 	@RequestMapping(value = "/login")
-	public String login() {
+	public String login(ReservationDTO reservationDto,Model model,String nextURL) {
+		model.addAttribute("reservationDto",reservationDto);
+		model.addAttribute("nextURL",nextURL);
+		
 		return "member/login";
 	}
 	//로그인 액션

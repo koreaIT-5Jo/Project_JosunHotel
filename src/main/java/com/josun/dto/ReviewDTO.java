@@ -11,48 +11,46 @@ public class ReviewDTO {
 	private int hitCount;
 	private String member_ID;
 	private int room_Number;
-	private String file_Name;
+	private String fileName;
 	private MultipartFile uploadFile;
 	
 	
 	public ReviewDTO() {}
-	public ReviewDTO(String title, String content, String member_ID, int room_Number, String file_Name) {
+	public ReviewDTO(String title, String content, String member_ID, int room_Number, String fileName) {
 		this.title = title;
 		this.content = content;
 		this.member_ID = member_ID;
 		this.room_Number = room_Number;
-		this.file_Name = file_Name;
+		this.fileName = fileName;
 	}
-	public ReviewDTO(int idx, String title, String content, String writeDate, int hitCount, String memberID,
-			int roomNumber, String fileName) {
+	
+	
+	public ReviewDTO(int idx, String title, String content, String member_ID, int room_Number, String fileName) {
 		this.idx = idx;
 		this.title = title;
 		this.content = content;
-		this.write_Date = writeDate;
-		this.hitCount = hitCount;
-		this.member_ID = memberID;
-		this.room_Number = roomNumber;
-		this.file_Name = fileName;
+		this.member_ID = member_ID;
+		this.room_Number = room_Number;
+		this.fileName = fileName;
 	}
-	
-	
+	public ReviewDTO(int rnum, int idx, String title, String content, String write_Date, int hitCount, String member_ID,
+			int room_Number, String fileName, MultipartFile uploadFile) {
+		this.rnum = rnum;
+		this.idx = idx;
+		this.title = title;
+		this.content = content;
+		this.write_Date = write_Date;
+		this.hitCount = hitCount;
+		this.member_ID = member_ID;
+		this.room_Number = room_Number;
+		this.fileName = fileName;
+		this.uploadFile = uploadFile;
+	}
 	public int getRnum() {
 		return rnum;
 	}
 	public void setRnum(int rnum) {
 		this.rnum = rnum;
-	}
-	public String getWrite_Date() {
-		return write_Date;
-	}
-	public String getMember_ID() {
-		return member_ID;
-	}
-	public int getRoom_Number() {
-		return room_Number;
-	}
-	public void setFile_Name(String file_Name) {
-		this.file_Name = file_Name;
 	}
 	public int getIdx() {
 		return idx;
@@ -72,11 +70,11 @@ public class ReviewDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getWriteDate() {
+	public String getWrite_Date() {
 		return write_Date;
 	}
-	public void setWrite_Date(String writeDate) {
-		this.write_Date = writeDate;
+	public void setWrite_Date(String write_Date) {
+		this.write_Date = write_Date;
 	}
 	public int getHitCount() {
 		return hitCount;
@@ -84,23 +82,23 @@ public class ReviewDTO {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
-	public String getMemberID() {
+	public String getMember_ID() {
 		return member_ID;
 	}
-	public void setMember_ID(String memberID) {
-		this.member_ID = memberID;
+	public void setMember_ID(String member_ID) {
+		this.member_ID = member_ID;
 	}
-	public int getRoomNumber() {
+	public int getRoom_Number() {
 		return room_Number;
 	}
-	public void setRoom_Number(int roomNumber) {
-		this.room_Number = roomNumber;
+	public void setRoom_Number(int room_Number) {
+		this.room_Number = room_Number;
 	}
-	public String getFile_Name() {
-		return file_Name;
+	public String getFileName() {
+		return fileName;
 	}
-	public void setFileName(String fileName) {
-		this.file_Name = fileName;
+	public void setFile_Name(String fileName) {
+		this.fileName = fileName;
 	}
 	public MultipartFile getUploadFile() {
 		return uploadFile;
@@ -108,11 +106,11 @@ public class ReviewDTO {
 	public void setUploadFile(MultipartFile uploadFile) {
 		this.uploadFile = uploadFile;
 	}
-	
 	@Override
 	public String toString() {
-		return "ReviewDTO [idx=" + idx + ", title=" + title + ", content=" + content + ", writeDate=" + write_Date
-				+ ", hitCount=" + hitCount + ", memberID=" + member_ID + ", roomNumber=" + room_Number + ", fileName="
-				+ file_Name + "]\n";
+		return "ReviewDTO [rnum=" + rnum + ", idx=" + idx + ", title=" + title + ", content=" + content
+				+ ", write_Date=" + write_Date + ", hitCount=" + hitCount + ", member_ID=" + member_ID
+				+ ", room_Number=" + room_Number + ", fileName=" + fileName + ", uploadFile=" + uploadFile + "]\n";
 	}
+	
 }

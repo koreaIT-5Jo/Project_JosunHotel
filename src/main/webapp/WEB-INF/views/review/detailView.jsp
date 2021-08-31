@@ -46,23 +46,23 @@
 							<ul class="menuDepth01">
 								<li>BRAND STORY
 									<ul class="menuDepth02">
-										<li><a href="brand">그랜드 조선 제주</a></li>
+										<li><a href="/www/brand">그랜드 조선 제주</a></li>
 									</ul>
 								</li>
 								<li>EVENT & NOTICE
 									<ul class="menuDepth02">
-										<li><a href="enList">EVENT & NOTICE</a></li>
+										<li><a href="/www/enList">EVENT & NOTICE</a></li>
 									</ul>
 								</li>
 								<li>RESERVATION
 									<ul class="menuDepth02">
-										<li><a href="reserveConfirm">예약확인</a></li>
+										<li><a href="/www/reserveConfirm">예약확인</a></li>
 									</ul>
 								</li>
 								<li>CUSTOMER SERVICE
 									<ul class="menuDepth02">
 										<li><a href="qna">Q&amp;A</a></li>
-										<li><a href="review/main">REVIEW</a></li>
+										<li><a href="/www/review/main">REVIEW</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -72,15 +72,15 @@
 					<div class="gnbUtil">
 						<ul>
 							<%if(id == null || id == ""){%>
-							<li><a href="login">로그인</a></li>
-							<li><a href="register">회원가입</a></li>
+							<li><a href="/www/login">로그인</a></li>
+							<li><a href="/www/register">회원가입</a></li>
 							<%}else if(id.equals("admin")){ %>
-							<li><a href="logout">로그아웃</a></li>
-							<li><a href="reserveConfirm">마이페이지</a></li>
-							<li><a href="adminMember">관리자페이지</a></li>
+							<li><a href="/www/logout">로그아웃</a></li>
+							<li><a href="/www/reserveConfirm">마이페이지</a></li>
+							<li><a href="/www/adminMember">관리자페이지</a></li>
 							<%}else{ %>
-							<li><a href="logout">로그아웃</a></li>
-							<li><a href="reserveConfirm">마이페이지</a></li>
+							<li><a href="/www/logout">로그아웃</a></li>
+							<li><a href="/www/reserveConfirm">마이페이지</a></li>
 							<%} %>
 						</ul>
 					</div>
@@ -89,7 +89,7 @@
 			</div>
 			<!-- End. header -->
 		<form action="" id = "detailReviewForm" name="detailReviewForm">
-		<input type="hidden" id="idx" name="idx" value="${dto.idx }"/>
+		<input type="hidden" id="idx" name="idx" value="${reviewDto.idx }"/>
 		<div id="container" class="container mypage ctmService">
 				<!-- 컨텐츠 S -->
 				<h1 class="hidden">고객센터</h1>
@@ -106,8 +106,8 @@
 					<!-- LNB -->
 					<div class="lnbArea">
 						<ul class="lnb ctmType">
-							<li><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
-							<li class="on"><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+							<li><a href="/www/qna">Q&amp;A</a></li>
+							<li class="on"><a href="/www/review/main">REVIEW</a></li>
 						</ul>
 					</div>
 					<!-- //LNB -->
@@ -120,7 +120,7 @@
 									<dt class="roomName">
 										${roomDto.name } 
 									</dt>
-									<dd class="roomBenefit">NUMBER |  ${roomDto.num } 호</dd>
+									<dd class="roomBenefit">NUMBER |  ${roomDto.getNum()} 호</dd>
 									<dd class="roomBenefit">BEDS |  ${roomDto.beds }</dd>
 									<dd class="roomBenefit">${roomDto.getDetailView() } |  Size: ${roomDto.r_Size}㎡</dd>
 									<dd class="roomBenefit">ROOM FEATURES |  ${roomDto.features}</dd>
@@ -140,14 +140,15 @@
 					<p class="txtBox">
 						${reviewDto.content}
 					</p>
-					<c:if test="${reviewDto.file_Name != null}">
-						<div class="imgBox" style="background-image: url(../resources/img/review/${reviewDto.file_Name});">
+					<c:if test="${reviewDto.fileName != null}">
+						<div class="imgBox" style="background-image: url(../resources/img/review/${reviewDto.fileName});">
 						</div>
-					</c:if>	
+						<input type="hidden" id="fileName" name="fileName" value="${reviewDto.fileName}">
+				 	</c:if>	
 					<div class="btnArea">
 						<a href="#none" onclick="boardMain()" class="btnSC btnL">목록</a>
 						
-						<c:if test="${id == reivewDto.member_id || id == 'admin' }">
+						<c:if test="${id == reviewDto.getMember_ID() || id == 'admin' }">
 							<a class="btnEdit" onclick="reviewDelete()">삭제</a>
 							<a class="btnEdit" onclick="reviewModify()">수정</a>
 						</c:if>

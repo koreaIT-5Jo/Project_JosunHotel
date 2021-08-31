@@ -33,8 +33,34 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	public ReviewDTO detailReview(int idx) {
+		dao.plusHitCount(idx);
 		ReviewDTO dto = dao.detailReview(idx);
 		return dto;
 	}
+
+	@Override
+	public int writeReview(ReviewDTO dto) {
+		int result = dao.writeReview(dto);
+		return result;
+	}
+
+	@Override
+	public int writeDelete(int idx) {
+		int result = dao.writeDelete(idx);
+		return result;
+	}
+
+	@Override
+	public ReviewDTO ModityReviewInfo(int idx) {
+		ReviewDTO dto = dao.detailReview(idx);
+		return dto;
+	}
+
+	@Override
+	public int writeModify(ReviewDTO dto) {
+		int result = dao.writeModify(dto);
+		return result;
+	}
+
 
 }

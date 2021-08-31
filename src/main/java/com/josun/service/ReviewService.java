@@ -8,4 +8,8 @@ public interface ReviewService {
 	List<ReviewDTO> reviewMainList(int currentPage);
 	int reviewPageCnt();
 	ReviewDTO detailReview(int idx);
+	int writeReview(ReviewDTO dto);
+	int writeDelete(int idx);
+	ReviewDTO ModityReviewInfo(int idx);
+	int writeModify(ReviewDTO dto);
 }

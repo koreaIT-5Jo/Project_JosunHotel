@@ -125,23 +125,23 @@
 						<ul class="menuDepth01">
 							<li>BRAND STORY
 								<ul class="menuDepth02">
-									<li><a href="brand">그랜드 조선 제주</a></li>
+									<li><a href="/www/brand">그랜드 조선 제주</a></li>
 								</ul>
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="enList">EVENT & NOTICE</a></li>
+									<li><a href="/www/enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION
 								<ul class="menuDepth02">
-									<li><a href="reserveConfirm">예약확인</a></li>
+									<li><a href="/www/reserveConfirm">예약확인</a></li>
 								</ul>
 							</li>
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="review/main">REVIEW</a></li>
+									<li><a href="/www/review/main">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -152,14 +152,14 @@
 					<ul>
 					<%if(id == null || id == ""){%>
 					<li><a href="#none" onclick="loginGo()">로그인</a></li>
-					<li><a href="register">회원가입</a></li>
+					<li><a href="/www/register">회원가입</a></li>
 					<%}else if(id.equals("admin")){ %>
-					<li><a href="logout">로그아웃</a></li>
-						<li><a href="reserveConfirm">마이페이지</a></li>
-						<li><a href="adminMember">관리자페이지</a></li>
+					<li><a href="/www/logout">로그아웃</a></li>
+						<li><a href="/www/reserveConfirm">마이페이지</a></li>
+						<li><a href="/www/adminMember">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="logout">로그아웃</a></li>
-						<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/logout">로그아웃</a></li>
+						<li><a href="/www/reserveConfirm">마이페이지</a></li>
 					<%} %>
 					</ul>
 				</div>
@@ -189,8 +189,8 @@
 				<!-- LNB -->
 				<div class="lnbArea">
 					<ul class="lnb ctmType">
-						<li><a href="../qna">Q&amp;A</a></li>
-						<li class="on"><a href="review/main">REVIEW</a></li>
+						<li><a href="/www/qna">Q&amp;A</a></li>
+						<li class="on"><a href="/www/review/main">REVIEW</a></li>
 					</ul>
 				</div>
 				<!-- //LNB -->
@@ -202,7 +202,7 @@
 						<!-- 반복문 -->
 							<c:forEach var="dto" items="${list}">
 								<tr>
-									<td class="writing${dto.idx}"><div style="background-image:url(../resources/img/review/${dto.file_Name});"></div></td>
+									<td class="writing${dto.idx}"><div style="background-image:url(../resources/img/review/${dto.fileName});"></div></td>
 									<td>
 										<p>
 											제목&nbsp;&nbsp;&nbsp; | ${dto.title}  <br>
