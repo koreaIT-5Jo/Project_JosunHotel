@@ -30,7 +30,7 @@
 		var idx = { idx : curIdx };
 		
 		$.ajax({
-			url:'/www/envetNotice//delPostAction/json',
+			url:'/www/eventNotice/delPostAction/json',
 			type:'post',
 			data: JSON.stringify(idx),
 			dataType: 'json',
@@ -79,22 +79,22 @@
 					<ul class="menuDepth01">
 						<li>BRAND STORY
 							<ul class="menuDepth02">
-								<li><a href="brand">그랜드 조선 제주</a></li>
+								<li><a href="/www/brand">그랜드 조선 제주</a></li>
 							</ul>
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="enList">EVENT & NOTICE</a></li>
+								<li><a href="/www/enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="reserveConfirm">예약확인</a></li>
+								<li><a href="/www/reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
-								<li><a href="qna">Q&amp;A</a></li>
+								<li><a href="/www/qna">Q&amp;A</a></li>
 								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
 							</ul>
 						</li>
@@ -135,11 +135,11 @@
 					<ul class="shortList">
 						<li class="prev">
 							<span>이전 글</span>
-								<a class="ellipsis" href="#none" onclick="movePrevPost();">${prevTitle}</a>
+							<a class="ellipsis" href="#none" onclick="movePrevPost();">${prevTitle}</a>
 						</li>
 						<li class="next">
 							<span>다음 글</span>
-								<a class="ellipsis" href="#none" onclick="moveNextPost();">${nextTitle}</a>
+							<a class="ellipsis" href="#none" onclick="moveNextPost();">${nextTitle}</a>
 						</li>
 					</ul>
 					<div class="btnArea">

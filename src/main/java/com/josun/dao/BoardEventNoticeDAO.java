@@ -25,4 +25,7 @@ public interface BoardEventNoticeDAO {
 	
 	//글삭제
 	int deletePost(int idx);
+	
+	//글쓰기
+	int postWrite(int category, String title, String content, String fileName);
 }

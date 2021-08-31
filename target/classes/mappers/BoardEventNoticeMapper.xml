@@ -45,5 +45,11 @@
 		DELETE FROM event_notice WHERE idx= #{idx}
 		]]>
 	</delete>
+	<insert id="writePost">
+	<![CDATA[
+		INSERT INTO event_notice(idx, category, title, content, write_date, hitcount, file_name) 
+		VALUES ( EN_SEQ.nextval, #{category}, #{title}, #{content}, sysdate, 0, #{fileName} )
+	]]>
+	</insert>
 </mapper>
 

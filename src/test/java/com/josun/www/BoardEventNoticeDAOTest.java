@@ -60,4 +60,9 @@ public class BoardEventNoticeDAOTest {
 	public void testDelPost() throws Exception {
 		System.out.println(dao.deletePost(24)); //1
 	}
+	
+	@Test
+	public void testWritePost() throws Exception {
+		System.out.println(dao.postWrite(2, "테스트제목", "테스트내용", "null")); //1
+	}
 }

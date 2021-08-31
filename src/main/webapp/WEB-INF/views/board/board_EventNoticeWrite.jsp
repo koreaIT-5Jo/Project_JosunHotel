@@ -1,23 +1,27 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% String id = (String) session.getAttribute("idKey"); %>
+<% String id = (String) session.getAttribute("id"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
-<title>EVENT &amp; NOTICE | 그랜드 조선 호텔</title>
-<script type="text/javascript" src="smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script><!-- 글쓰기 라이브러리 -->
+<title>EVENT &amp; NOTICE 글쓰기 | 그랜드 조선 호텔</title>
+<!-- 글쓰기 라이브러리 -->
+<script type="text/javascript" src="resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="js/event_noticeWrite.js"></script>
-<script type="text/javascript" src="js/header.js"></script>
-<link rel="stylesheet" href="css/event_noticeWrite.css"/>
-<link rel="stylesheet" href="css/headerfooter.css">
-<link rel="stylesheet" href="css/default.css">
+<script type="text/javascript" src="resources/js/board/board_EventNoticeWrite.js"></script>
+<script type="text/javascript" src="resources/js/header.js"></script>
+<link rel="stylesheet" href="resources/css/board/board_EventNoticeWrite.css">
+<link rel="stylesheet" href="resources/css/headerfooter.css">
+<link rel="stylesheet" href="resources/css/default.css">
 <script>
-	function writeCancle() {		//취소하기
-		location.href = 'event_noticeList.jsp';
+	//취소하기
+	function writeCancle() {
+		location.href = '/www/enList';
 	}
 	
-	function writeSave() {			//저장하기
+	//저장하기
+	function writeSave() {
 		oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);  
 	
 		var cate = 0;
@@ -33,24 +37,23 @@
 			fileN = $("#nmFile1").val();
 		} else {
 			fileN = '';
-		} 
+		}
+		
+		var writePostData = { cate : cate, tit : tit, con : con, fileN : fileN }
 	    		
 		$.ajax({
-			type:"post",
-			url:"Controller",
-			data:{"cate":cate, "tit":tit, "con":con, "fileN":fileN, "command":"EnWriteAction"},
-			datatype: "json",
-			success: function(data) {
-				if(data.fileSaveCheck == true) {
-					alert('게시글이 저장되었습니다.');
-					location.href='event_noticeList.jsp';
-				} else {
-					alert('게시글 저장이 취소되었습니다.');
-					location.href='event_noticeList.jsp';
-				}
+			type:'post',
+			url:'/www/eventNotice/writePostAction',
+			data:JSON.stringify(writePostData),
+			datatype: 'json',
+			contentType: 'application/json; charset=utf-8',
+			success: function(response) {
+				alert(response.msg);
+				location.href = '/www/enList';
 			},
-			error:function(request, status, error) { alert("ERR.") }
-
+			error:function(request, status, error) { 
+				alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error);  
+			}
 		});
 	}
 	
@@ -60,49 +63,49 @@
 <body>
 	<div class="header">
 		<div class="headArea">
-			<strong class="logo"><a href="/ProjectWepJosun/main.jsp">JOSUN HOTELS &amp; RESORTS</a></strong>
+			<strong class="logo"><a href="/www">JOSUN HOTELS &amp; RESORTS</a></strong>
 			<button type="button" class="btnMenu">메뉴 열기</button>
 			<div class="allMenu">
 				<!-- 화면 높이값 계산 height:적용, body:overflow:hidden -->
 				<div class="inner">
 					<ul class="menuDepth01">
-							<li>BRAND STORY
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/brandStory.jsp">그랜드 조선 제주</a></li>
-								</ul>
-							</li>
-							<li>EVENT & NOTICE
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
-								</ul>
-							</li>
-							<li>RESERVATION
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/memberReservation.jsp">예약확인</a></li>
-								</ul>
-							</li>
-							<li>CUSTOMER SERVICE
-								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/qna.jsp">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
-								</ul>
-							</li>
-						</ul>
+						<li>BRAND STORY
+							<ul class="menuDepth02">
+								<li><a href="/www/brand">그랜드 조선 제주</a></li>
+							</ul>
+						</li>
+						<li>EVENT & NOTICE
+							<ul class="menuDepth02">
+								<li><a href="/www/enList">EVENT & NOTICE</a></li>
+							</ul>
+						</li>
+						<li>RESERVATION
+							<ul class="menuDepth02">
+								<li><a href="/www/reserveConfirm">예약확인</a></li>
+							</ul>
+						</li>
+						<li>CUSTOMER SERVICE
+							<ul class="menuDepth02">
+								<li><a href="/www/qna">Q&amp;A</a></li>
+								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+							</ul>
+						</li>
+					</ul>
 				</div>
 			</div>
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
 					<%if(id == null || id == ""){%>
-					<li><a href="Login?url=<%= request.getServletPath() %>">로그인</a></li>
-					<li><a href="Join">회원가입</a></li>
+					<li><a href="login">로그인</a></li>
+					<li><a href="register">회원가입</a></li>
 					<%}else if(id.equals("admin")){ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
-					<li><a href="/ProjectWepJosun/Controller?command=adminMemberList">관리자페이지</a></li>
+					<li><a href="logout">로그아웃</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="adminMember">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="/ProjectWepJosun/memberReservation.jsp">마이페이지</a></li>
+					<li><a href="logout">로그아웃</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -166,8 +169,8 @@
 		
 											nhn.husky.EZCreator.createInIFrame({
 											    oAppRef: oEditors,
-											    elPlaceHolder: "txtContent",  						//textarea ID 입력
-											    sSkinURI: "smarteditor2/SmartEditor2Skin.html",		//martEditor2Skin.html 경로 입력
+											    elPlaceHolder: "txtContent",  									//textarea ID 입력
+											    sSkinURI: "resources/smarteditor2/SmartEditor2Skin.html",		//martEditor2Skin.html 경로 입력
 											    fCreator: "createSEditor2",
 											    htParams : { 
 											    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
@@ -221,7 +224,7 @@
 		<div style="background: #000;">
 			<div id="footer">
 				<div class="foot-logo">
-					<img src="img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
+					<img src="resources/img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
 				</div>
 				<div class="foot-txt">
 					서울시 중구 소공로 106 대표이사 한채양 T. 02-771-0500<br>

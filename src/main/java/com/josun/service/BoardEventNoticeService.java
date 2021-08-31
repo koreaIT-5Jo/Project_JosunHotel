@@ -30,4 +30,8 @@ public interface BoardEventNoticeService {
 	
 	//글 삭제
 	boolean delPost(int idx);
+	
+	//글쓰기
+	boolean writePost(int category, String title, String content, String fileName);
+	
 }

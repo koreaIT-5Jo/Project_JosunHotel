@@ -72,4 +72,15 @@ public class BoardEventNoticeDAOImpl implements BoardEventNoticeDAO {
 		return sqlSession.delete(NAMESPACE + ".deletePost", idx);
 	}
 
+	@Override
+	public int postWrite(int category, String title, String content, String fileName) {
+		HashMap <String, Object> map = new HashMap <String, Object>();
+		map.put("category", category);
+		map.put("title", title);
+		map.put("content", content);
+		map.put("fileName", fileName);
+		
+		return sqlSession.insert(NAMESPACE + ".writePost", map);
+	}
+
 }

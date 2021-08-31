@@ -153,7 +153,6 @@ public class HomeController {
 	@RequestMapping(value = "/enDetailView")
 	public String enDetailView(HttpServletRequest request, Model model, int idx) {
 		//조회수 증가
-		enService.hitCountUp(idx);
 		if(enService.hitCountUp(idx)) { System.out.println("조회수 업");}
 		
 		//글 상세보기

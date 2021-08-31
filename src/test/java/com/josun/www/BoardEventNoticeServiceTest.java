@@ -70,4 +70,9 @@ public class BoardEventNoticeServiceTest {
 		System.out.println(service.delPost(24)); //false
 		System.out.println(service.delPost(23)); //true
 	}
+	
+	@Test
+	public void testWritePost() throws Exception {
+		System.out.println(service.writePost(2, "서비스테스트", "서비스테스트성공", "null")); //true
+	}
 }

@@ -90,4 +90,10 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 		return success == 1;
 	}
 
+	@Override
+	public boolean writePost(int category, String title, String content, String fileName) {
+		int result = dao.postWrite(category, title, content, fileName);
+		return result == 1;
+	}
+
 }
