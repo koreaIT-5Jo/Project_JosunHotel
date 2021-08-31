@@ -45,12 +45,31 @@ public class BoardEventNoticeDAOImpl implements BoardEventNoticeDAO {
 
 	@Override
 	public int getPrevIdx(int idx) {
-		return sqlSession.selectOne(NAMESPACE + ".getPrevIdx", idx);
+		String dbPrevIdx = sqlSession.selectOne(NAMESPACE + ".getPrevIdx", idx);
+		int prevIdx = 0; 
+		if(dbPrevIdx == null) {
+			prevIdx = 0;
+		} else {
+			prevIdx = Integer.parseInt(sqlSession.selectOne(NAMESPACE + ".getPrevIdx", idx));
+		}
+		return prevIdx;
 	}
 
 	@Override
 	public int getNextIdx(int idx) {
-		return sqlSession.selectOne(NAMESPACE + ".getNextIdx", idx);
+		String dbNextIdx = sqlSession.selectOne(NAMESPACE + ".getNextIdx", idx);
+		int nextIdx = 0;
+		if(dbNextIdx == null) {
+			nextIdx = 0;
+		} else {
+			nextIdx = Integer.parseInt(sqlSession.selectOne(NAMESPACE + ".getNextIdx", idx));
+		}
+		return nextIdx;
+	}
+
+	@Override
+	public int deletePost(int idx) {
+		return sqlSession.delete(NAMESPACE + ".deletePost", idx);
 	}
 
 }

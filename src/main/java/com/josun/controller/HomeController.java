@@ -99,8 +99,6 @@ public class HomeController {
 			keyword = "%"+keyword+"%";
 		}
 		
-		//System.out.println("93번째 줄 확인 : 키워드 : " + keyword +" /카테고리: " + category + " /페이지 : " + page);
-		
 		int start = enService.startPage(keyword, category);
 		int end = enService.endPage(keyword, category);
 		int totalPage = enService.totalCountSize(keyword, category);
@@ -153,40 +151,39 @@ public class HomeController {
 	
 	//게시판 - 이벤트, 공지사항 상세보기
 	@RequestMapping(value = "/enDetailView")
-	public String enDetailView(Model model, int idx) {
+	public String enDetailView(HttpServletRequest request, Model model, int idx) {
+		//조회수 증가
+		enService.hitCountUp(idx);
+		if(enService.hitCountUp(idx)) { System.out.println("조회수 업");}
 		
-		boolean hitCount = enService.hitCountUp(idx);
+		//글 상세보기
+		BoardEventNoticeDTO dto = enService.detailView(idx);
 		
+		model.addAttribute("curIdx", dto.getIdx());
+		model.addAttribute("title", dto.getTitle());
+		model.addAttribute("content", dto.getContent());
+		model.addAttribute("writeDate", dto.getWrite_date());
+		
+		//이전글, 다음글 idx
 		int prevIdx = enService.getPrevIdx(idx);
 		int nextIdx = enService.getNextIdx(idx);
 		
-		StringBuffer prev = new StringBuffer();
-		StringBuffer next = new StringBuffer();
+		request.setAttribute("prevIdx", prevIdx);
+		request.setAttribute("nextIdx", nextIdx);
 		
-		String prevTitle = enService.detailView(prevIdx).getTitle();
-		String nextTitle = enService.detailView(nextIdx).getTitle();
+		//이전글, 다음글 title
+		String prevTitle = "";
+		if(prevIdx == 0) { prevTitle = "이전 글이 없습니다."; }
+		else { prevTitle = enService.detailView(prevIdx).getTitle(); }
+		String nextTitle = "";
+		if(nextIdx == 0) { nextTitle = "다음 글이 없습니다."; }
+		else { nextTitle = enService.detailView(nextIdx).getTitle(); }
 		
-		String prevUrl = "enDetailView?idx="+prevIdx;
-		String nextUrl = "enDetailView?idx="+nextIdx;
-		String listUrl = "enList";
+		System.out.println(prevTitle + " : 이전타이틀 / 다음 타이틀 : " + nextTitle);
 		
-		if(prevIdx == 0) {
-			prev.append("<a class=\"ellipsis\" href=\"" + listUrl + "\">이전 글이 없습니다.</a>");
-			next.append("<a class=\"ellipsis\" href=\"" + nextUrl + "\">" + nextTitle + "</a>");
-		} else if(nextIdx == 0) {
-			prev.append("<a class=\"ellipsis\" href=\"" + prevUrl + "\">" + prevTitle + "</a>");
-			next.append("<a class=\"ellipsis\" href=\"" + listUrl + "\">다음 글이 없습니다.</a>");
-		} else {
-			prev.append("<a class=\"ellipsis\" href=\"" + prevUrl + "\">" + prevTitle + "</a>");
-			next.append("<a class=\"ellipsis\" href=\"" + nextUrl + "\">" + nextTitle + "</a>");
-		}
-		
-		model.addAttribute("prev", prev.toString());
-		model.addAttribute("next", next.toString());
-		model.addAttribute("title", enService.detailView(idx).getTitle());
-		model.addAttribute("writeDate", enService.detailView(idx).getWrite_date());
-		model.addAttribute("content", enService.detailView(idx).getContent());
-		
+		model.addAttribute("prevTitle", prevTitle);
+		model.addAttribute("nextTitle", nextTitle);
+			
 		return "board/board_EventNoticeDetailView";
 	}
 	//게시판 - 이벤트, 공지사항 글쓰기
@@ -198,11 +195,6 @@ public class HomeController {
 	@RequestMapping(value = "/enModify")
 	public String enModify() {
 		return "board/board_EventNoticeModify";
-	}
-	//게시판 - 이벤트, 공지사항 삭제
-	@RequestMapping(value = "/enDelete")
-	public String enDelete() {
-		return "board/board_EventNoticeList.jsp";
 	}
 	
 	//회원가입

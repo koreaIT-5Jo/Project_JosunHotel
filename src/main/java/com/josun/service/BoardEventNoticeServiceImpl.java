@@ -84,4 +84,10 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 		return dao.getNextIdx(idx);
 	}
 
+	@Override
+	public boolean delPost(int idx) {
+		int success = dao.deletePost(idx);
+		return success == 1;
+	}
+
 }

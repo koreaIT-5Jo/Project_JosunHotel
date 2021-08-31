@@ -46,11 +46,18 @@ public class BoardEventNoticeDAOTest {
 	
 	@Test
 	public void testPrevIndx() throws Exception {
-		System.out.println(dao.getPrevIdx(22));
+		System.out.println(dao.getPrevIdx(3));	//0
+		System.out.println(dao.getPrevIdx(21)); //9
 	}
 	
 	@Test
 	public void testNextIndx() throws Exception {
-		System.out.println(dao.getNextIdx(22));
+		System.out.println(dao.getNextIdx(24)); //0
+		System.out.println(dao.getNextIdx(23)); //24
+	}
+	
+	@Test
+	public void testDelPost() throws Exception {
+		System.out.println(dao.deletePost(24)); //1
 	}
 }

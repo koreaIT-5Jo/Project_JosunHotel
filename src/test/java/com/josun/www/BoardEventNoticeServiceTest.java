@@ -48,12 +48,26 @@ public class BoardEventNoticeServiceTest {
 	}
 	
 	@Test
+	public void testDetailView() throws Exception {
+		BoardEventNoticeDTO dto = service.detailView(21);
+		System.out.println(dto.getIdx() + " / " + dto.getTitle() + " / " + dto.getContent() + " / " + dto.getFile_name() + " / " + dto.getWrite_date());
+	}
+	
+	@Test
 	public void testPrevIdx() throws Exception {
-		System.out.println(service.getPrevIdx(22));
+		System.out.println(service.getPrevIdx(3));
+		System.out.println(service.getPrevIdx(24));
 	}
 	
 	@Test
 	public void testNextIdx() throws Exception {
-		System.out.println(service.getNextIdx(22));
+		System.out.println(service.getNextIdx(3));
+		System.out.println(service.getNextIdx(24));
+	}
+	
+	@Test
+	public void testDelPost() throws Exception {
+		System.out.println(service.delPost(24)); //false
+		System.out.println(service.delPost(23)); //true
 	}
 }

@@ -22,4 +22,7 @@ public interface BoardEventNoticeDAO {
 	
 	//다음 글 번호
 	int getNextIdx(int idx);
+	
+	//글삭제
+	int deletePost(int idx);
 }

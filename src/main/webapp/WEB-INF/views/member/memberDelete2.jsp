@@ -21,7 +21,7 @@
 			var chk = {notichk : notichk};
 			
 			$.ajax({
-				url:'http://localhost:9091/www/myPage/memberDelete2Action/json',
+				url:'/www/myPage/memberDelete2Action/json',
 				type:'post',
 				data: JSON.stringify(chk),
 				dataType: 'json',
@@ -29,10 +29,10 @@
 				success: function(response) {
 					if(response.result) {
 						alert('회원탈퇴가 완료되었습니다.');
-						location.href='http://localhost:9091/www/';
+						location.href='/www/';
 					} else {
 						alert('회원탈퇴에 실패하였습니다.');
-						location.href='http://localhost:9091/www/memberDelete';
+						location.href='/www/memberDelete';
 					}
 				},
 				error:function(request, status, error) { 

@@ -27,4 +27,7 @@ public interface BoardEventNoticeService {
 	
 	//다음 글 번호
 	int getNextIdx(int idx);
+	
+	//글 삭제
+	boolean delPost(int idx);
 }
