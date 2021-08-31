@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="../resources/css/headerfooter.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="../resources/js/header.js"></script>
+<script type="text/javascript" src="../resources/js/board/board_event_noticeWrite.js"></script>
 <script>
 	
 	function cancle(){
@@ -147,7 +148,7 @@
 										<dd class="roomBenefit">${dto.getDetailView()} |  Size: ${dto.r_Size}㎡</dd>
 										<dd class="roomBenefit">ROOM FEATURES |  ${dto.features}</dd>
 										<dd class="thum">
-											<img src="../resourcese/${dto.img}">										
+											<img src="../resources/${dto.img}">										
 										</dd>
 									</dl>
 								</li>
@@ -183,13 +184,13 @@
 									<!-- 스크립트 위임 적용 commonJs.setFileUpload('.fileUpload'); -->
 									<div class="fileUpload">
 										<div class="intDel">
-											<input type="text" id="nmFile1" class="fileName" name="file_Name" style="width: 554px" readonly="">
+											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px"  value="" readonly >
 											<!-- btnDel -->
 											<button type="button" class="btnDel">삭제</button>
 											<!-- //btnDel -->
 										</div>
-										<label for="uploadFile" class="btnSC btnM">파일선택</label> 
-										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png" >
+										<label for="uploadFile" class="btnSC btnM" value="">파일선택</label> 
+										<input type="file" id="uploadFile" name="uploadFile" class="uploadBtn" accept=".jpg, .jpeg, .png"  value="">
 									</div>
 								</div>
 								<p class="txtGuide">* 첨부가능 파일종류 : jpg, png, jpeg (용량 5MB)</p>

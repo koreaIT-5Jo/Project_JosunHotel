@@ -16,7 +16,6 @@ import com.josun.dto.ReviewDTO;
 import com.josun.dto.RoomDTO;
 import com.josun.service.ReviewService;
 import com.josun.service.RoomService;
-import com.josun.vo.FileVO;
 import com.josun.vo.PageVO;
 
 @Controller
@@ -57,7 +56,7 @@ public class ReviewController {
 	}
 	@RequestMapping(value = "writeReview")
 	public String writeReview(HttpSession session,Model model) {
-		String id = session.getId();
+		String id = (String) session.getAttribute("id");
 		List<RoomDTO> list = roomService.writeReviewRoomInfo(id);
 		model.addAttribute("list", list);
 		
@@ -77,8 +76,8 @@ public class ReviewController {
 			}
 			multipart.transferTo(file);
 		}
-		reviewDto.setFileName(multipart.getName());
-		reviewDto.setMember_ID(session.getId());
+		reviewDto.setFileName(fileName);
+		reviewDto.setMember_ID((String)session.getAttribute("id"));
 		System.out.println(reviewDto);
 		return "mainGo";
 	}
