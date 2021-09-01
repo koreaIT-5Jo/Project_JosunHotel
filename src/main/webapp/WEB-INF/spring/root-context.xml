@@ -61,7 +61,7 @@
 	
 	<bean id="VisitDAO" class="com.josun.dao.VisitDAO"/>
 	<bean id="SalesStatusDAOImpl" class="com.josun.dao.SalesStatusDAOImpl"/>
-	<bean id="reviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"></bean>
+	<bean id="ReviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"/>
 	
 	<context:component-scan base-package="com.josun.service" />
 </beans>
