@@ -13,7 +13,7 @@ function gfncPatternCheck(str){
     }
 }
 
-function fnChngPwApi() { //  fnChngPwApi
+function fnChngPwApi() {
 	/*
 	사용자 입력정보 VALIDATION 체크
 	해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false

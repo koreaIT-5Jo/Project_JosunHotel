@@ -87,7 +87,7 @@
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
 								<li><a href="/www/qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="/www/review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>

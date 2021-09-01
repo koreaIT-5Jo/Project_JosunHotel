@@ -135,7 +135,6 @@ public class HomeController {
 		  		pageNav.append("<a class=\"current\" href=\""+url+"&page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
 		  		pageNav.append("<a class=\"next\" href=\""+url+"&page="+next+"\"><span class=\"hidden\">next</span></a>&nbsp;");
 		  		pageNav.append("<a class=\"last\" href=\""+url+"&page="+end+"\"><span class=\"hidden\">last</span></a>&nbsp;"); 
-		  		System.out.println("페이지 클릭시 : " + start + prev + i + next + end);
 		 }
 		 
 		model.addAttribute("enList", list);

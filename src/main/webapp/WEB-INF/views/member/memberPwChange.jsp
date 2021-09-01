@@ -25,23 +25,23 @@
 					<ul class="menuDepth01">
 						<li>BRAND STORY
 							<ul class="menuDepth02">
-								<li><a href="brand">그랜드 조선 제주</a></li>
+								<li><a href="/www/brand">그랜드 조선 제주</a></li>
 							</ul>
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="enList">EVENT & NOTICE</a></li>
+								<li><a href="/www/enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="reserveConfirm">예약확인</a></li>
+								<li><a href="/www/reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
-								<li><a href="qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="/www/qna">Q&amp;A</a></li>
+								<li><a href="/www/review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -51,12 +51,12 @@
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="reserveConfirm">마이페이지</a></li>
-					<li><a href="adminMember">관리자페이지</a></li>
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/adminMember">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -84,14 +84,14 @@
 				<ul class="lnb">
 					<li>예약확인
 						<ul>
-							<li><a href="reserveConfirm">객실 · 예약 내역</a></li>
+							<li><a href="/www/reserveConfirm">객실 · 예약 내역</a></li>
 						</ul>
 					</li>
 					<li>개인정보관리
 						<ul>
-							<li><a href="memberModify">회원 정보 수정</a></li>
-							<li><a href="memberPwChange">비밀번호 변경</a></li>
-							<li><a href="memberDelete">회원 탈퇴</a></li>
+							<li><a href="/www/memberModify">회원 정보 수정</a></li>
+							<li><a href="/www/memberPwChange">비밀번호 변경</a></li>
+							<li><a href="/www/memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>
