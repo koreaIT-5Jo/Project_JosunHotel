@@ -33,7 +33,6 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 			list = dao.enList(content, category, staRow, endRow);
 		}
 		
-		
 		return list;
 	}
 	

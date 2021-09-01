@@ -2,61 +2,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@page import="board.qna.BoardDAO" %>
-<%@page import="board.qna.BoardDTO" %>
-<%@page import="board.qna.BoardCommentDAO" %>
-<%@page import="board.qna.BoardCommentDTO" %>
-<%@page import="conn.DBConn" %>
-<%@page import="java.sql.Connection" %>
-<%@page import="java.util.List" %>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-	
-	String id = (String) session.getAttribute("idKey");
-	int num = Integer.parseInt(request.getParameter("num"));
-	String pageNum = request.getParameter("pageNum");
-	
-	//검색키와 키값
-	String searchKey = request.getParameter("searchKey");
-	String searchValue = request.getParameter("searchValue");
-	
-	if(searchValue==null){
-		searchKey = "content";
-		searchValue = "";
-	}
-	
-	//첨부파일 경로
-	String path = request.getContextPath()+"/upload";
-	
-	Connection conn = DBConn.getConnection();
-	BoardDAO dao = new BoardDAO(conn);
-	BoardCommentDAO daoC = new BoardCommentDAO(conn); 
-	
-	//글 가져오기
-	BoardDTO dto = dao.getReadData(num);
-	List<BoardCommentDTO> lists = daoC.getCommentData(num);
-	
-	//가져올 글이 없다면 LIST 화면으로 
-	if(dto == null){
-		response.sendRedirect("adminQnaList.jsp");
-	}
-	
-	//글 라인 수
-	int lineSu = dto.getContent().split("\n").length;
-	
-	//글 내용의 엔터를 <br>로 변경
-	dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-	
-	String param = "";
-	if(!searchValue.equals("")){
-		param = "&searchKey="+searchKey;
-		//param += "&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
-		param += "&searchValue="+searchValue;
-	}
-	
-	DBConn.close();
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,6 +12,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
 <script type="text/javascript" src="resources/js/admin/adminQnaRead.js"></script>
+<%
+if(request.getAttribute("msg") != null){
+	String msg = (String)request.getAttribute("msg");
+%>
+<script>
+	alert('<%=msg%>');
+</script>
+<%}%>
 </head>
 <body>
 <div class="wrapper">
@@ -91,6 +44,7 @@
 	<div class="container">
 		<div class="left">
 			<ul>
+				<li><a href="admin"><i class="fas fa-home"></i> 대시보드</a></li>
 				<li><a href="adminMember"><i class="fas fa-users-cog"></i> 회원관리</a></li>
 				<li><a href="adminReservation"><i class="fas fa-calendar-alt"></i> 예약관리</a></li>
 				<li class="on"><a href="adminQnaList"><i class="fas fa-question-circle"></i> 문의글 관리</a></li>
@@ -111,7 +65,7 @@
 							<th>핸드폰번호</th>
 							<td>${dto.phone}</td>
 							<th>이메일주소</th>
-							<td>${dto.email}</td>
+							<td class="userEmail">${dto.email}</td>
 						</tr>
 						<tr>
 							<th>답변방식</th>
@@ -143,14 +97,15 @@
 			<script>
 				function commentOk(){
 					var numQna = $(".listIdx span").text();
-					$("#numQna").val(numQna);
+					var userEmail = $(".qnaListRead table tr td.userEmail").text();
+					$("#qnaNum").val(numQna);
+					$("#email").val(userEmail);
 					jQuery("#commentForm").submit();
 				}
 			</script>
-				<form id="commentForm" name="commentForm" method="post" action="commentOk.jsp">
-					<input type="hidden" id="numQna" name="numQna" value="">
-	                <input type="hidden" name="pageNum" value='<%=request.getParameter("pageNum") %>'/>
-	                <input type="hidden" name="num" value='<%=request.getParameter("num") %>'/>
+				<form id="commentForm" name="commentForm" method="post" action="sendComment">
+					<input type="hidden" id="qnaNum" name="qnaNum" value="">
+					<input type="hidden" id="email" name="email" value="">
 					<div class="comCnt">
 		                <strong>댓글</strong>
 		            </div>
@@ -161,12 +116,13 @@
                 </form>
 			</div>
 			<div class="commentList">
-				<%-- <%for(BoardCommentDTO dtoC : lists) { %>
-					<p><span><%=dtoC.getRnum() %></span> <%=dtoC.getContent() %></p>
-				<%} %> --%>
+				<c:forEach var="comment" items="${list}">
+					<c:set target="${comment}" property="content" value="${fn:replace(comment.content, enter, '<br>')}" />
+					<p><span>${comment.rnum}</span>${comment.content}</p>
+				</c:forEach>
 			</div>
 			<div class="btnPrev">
-				<%-- <a href="#none" class="btnSC btnL" onclick="javascript:location.href='<%=cp%>/adminQnaList.jsp?pageNum=<%=pageNum %><%=param %>';">목록</a> --%>
+				<a href="#none" class="btnSC btnL" onclick="javascript:location.href='adminQnaList';">목록</a>
 			</div>
 		</div>
 	</div>

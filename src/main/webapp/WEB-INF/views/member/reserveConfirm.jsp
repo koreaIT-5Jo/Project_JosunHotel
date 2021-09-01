@@ -1,6 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter" %> <!-- 자바 클래스 사용 --> 
 <%String id = (String) session.getAttribute("id");%>
 <!DOCTYPE html>
 <html>
@@ -154,19 +153,36 @@
 	function deleteReservation(num, roomNumber){
 		var startDate = $(".cardList li.data"+num+"").find('#startDate').val();
 		var endDate = $(".cardList li.data"+num+"").find('#endDate').val();
-		console.log(num + ", " + startDate);
+		var deleteReserveData = {
+			num : num,
+			roomNumber : roomNumber,
+			startDate : startDate,
+			endDate : endDate
+		};
 		if(confirm('예약을 취소하시겠습니까?')){
 			$.ajax({
+				url : '/www/myPage/reserveCancel/json',
 				type : 'POST',
-				url : 'SearchReserveCancleServlet',
-				data : {num : num, roomNumber : roomNumber, startDate : startDate, endDate : endDate},
+				data : JSON.stringify(deleteReserveData),
 				datatype : 'JSON',
+				contentType: 'application/json; charset=utf-8',
 				success : function(data){
-					console.log("result : " + data.result);
+					console.log(data);
 					if(data.result > 1){
 						$('.data'+num+' button').removeClass('active');
 						$('.data'+num+' button').attr('onclick','');
+						$('.data'+num+' button').css('cursor','inherit');
+						$('.data'+num).removeClass('reserved');
+						$('.data'+num).addClass('canceled');
+						$('#searchCtgry').val('ALL');
+						if($('#searchCtgry').val()=='ALL'){
+							$('.cardList li.reserved').show();
+							$('.cardList li.canceled').show();
+						}
 					}
+				},
+				error : function(){
+					console.log('오류');
 				}
 			})
 		}else{
@@ -174,17 +190,14 @@
 		}
 	}
 </script>
+<%if(session.getAttribute("id")==null){%>
+<script>
+	alert('회원가입 또는 로그인 후 확인 가능합니다.');
+	location.href = 'login';
+</script>
+<%} %>
 </head>
 <body>
-<%
-	if(session.getAttribute("id")==null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('회원가입 또는 로그인 후 확인 가능합니다.')");
-		script.println("location.href = 'login.jsp?url="+request.getServletPath()+"'");
-		script.println("</script>");
-	}
-%>
 <div class="wrapper">
 	<div class="header">
 		<!-- 메뉴 열리면 gnbOn 클래스 추가 -->
@@ -214,7 +227,7 @@
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
 								<li><a href="qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -223,14 +236,17 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id.equals("admin")){ %>
-					<li><a href="Logout">로그아웃</a></li>
+					<%if(session.getAttribute("id")!=null){
+						if(id.equals("admin")){
+					%>
+					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<li><a href="adminMember">관리자페이지</a></li>
+					<li><a href="admin">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
+					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<%} %>
+					<%} 
+						}%>
 				</ul>
 			</div>
 			<!-- //gnbUtil -->
@@ -270,6 +286,11 @@
 				function fncSearch(){
 					var searchStartDate = $('#searchStartDate').val();
 					var searchEndDate = $('#searchEndDate').val();
+					var searchDate = {
+						searchStartDate:searchStartDate,
+						searchEndDate:searchEndDate
+					}
+					
 					if(searchStartDate == "" || searchEndDate == ""){
 						alert('날짜를 선택해주세요.');
 					}else{
@@ -277,12 +298,14 @@
 						$("#searchCtgry option:eq(0)").prop("selected", true);
 						var html = "";
 						$.ajax({
+							url : '/www/myPage/reserveConfirm/json',
 							type :'POST',
-							url : 'SearchReserveServlet',
-							data : {'searchStartDate':searchStartDate, 'searchEndDate':searchEndDate},
+							data : JSON.stringify(searchDate),
 							datatype:'JSON',
+							contentType: 'application/json; charset=utf-8',
 							success : function(data){
-								var listtest = data.list;
+								console.log(data);
+								var listtest = data;
 								if(listtest.length == 0){
 									html += "<li class=\'noData'\>";
 									html += "<p class=\'txt'\>검색 결과가 없습니다.</p>";
@@ -291,47 +314,48 @@
 									$('.listBox .countList .count em').text(listtest.length);
 								}else{
 									$.each(listtest, function(){
-										if(this.username == "#"){
-											html += "<li class=\'data data"+this.num+" canceled'\>";
+										if(this.USERNAME == "#"){
+											html += "<li class=\'data data"+this.NUM+" canceled'\>";
 											html += "<div class=\'left'\>";
-											html += "<div class=\'thum'\><img src="+this.img+"></div>";
+											html += "<div class=\'thum'\><img src=\'resources/"+this.IMG+"'\></div>";
 											html += "</div>";
 											html += "<div class=\'right'\>";
 											html += "<div class=\'contents'\>";
-											html += "<p class=\'title'\>"+this.name+"</p>";
-											html += "<p class=\'benefit'\>"+this.detailView+" | Size : "+this.rSize+"㎡</p>";
+											html += "<p class=\'title'\>"+this.NAME+"</p>";
+											html += "<p class=\'benefit'\>"+this.DETAIL_VIEW+" | Size : "+this.R_SIZE+"㎡</p>";
 											html += "</div>";
 											html += "<div class=\'mycontents'\>";
-											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.startDate.substring(0,10).replaceAll("-", ".")+" - "+this.endDate.substring(0,10).replaceAll("-", ".")+"</p>";
-											html += "<p class=\'adult'\><span>ADULT</span>"+this.adult+"</p>";
-											html += "<p class=\'children'\><span>CHILDREN</span>"+this.children+"</p>";
+											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.STARTDATE+" - "+this.ENDDATE+"</p>";
+											html += "<p class=\'adult'\><span>ADULT</span>"+this.ADULTCNT+"</p>";
+											html += "<p class=\'children'\><span>CHILDREN</span>"+this.CHILDRENCNT+"</p>";
 											html += "</div>";
 											html += "<div class=\'reserveinfo'\>";
-											html += "<p class=\'price'\>"+this.totalPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
+											html += "<p class=\'price'\>"+this.TOTAL_PAY.replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
 											html += "<button type=\'button'\ class=\'btnSC btnL'\ style=\'cursor: inherit;'\>예약취소</button>";
 											html += "</div>";
 											html += "</div>";
 											html += "</li>";
 										}else{
-											html += "<li class=\'data data"+this.num+" reserved'\>";
-											html += "<input type=\'hidden'\ id=\'startDate'\ value=\'"+this.startDate.substring(0,10).replaceAll("-", ".")+"'\>";
-											html += "<input type=\'hidden'\ id=\'endDate'\ value=\'"+this.endDate.substring(0,10).replaceAll("-", ".")+"'\>";
+											console.log(this.NUM);
+											html += "<li class=\'data data"+this.NUM+" reserved'\>";
+											html += "<input type=\'hidden'\ id=\'startDate'\ value=\'"+this.STARTDATE+"'\>";
+											html += "<input type=\'hidden'\ id=\'endDate'\ value=\'"+this.ENDDATE+"'\>";
 											html += "<div class=\'left'\>";
-											html += "<div class=\'thum'\><img src="+this.img+"></div>";
+											html += "<div class=\'thum'\><img src=\'resources/"+this.IMG+"'\></div>";
 											html += "</div>";
 											html += "<div class=\'right'\>";
 											html += "<div class=\'contents'\>";
-											html += "<p class=\'title'\>"+this.name+"</p>";
-											html += "<p class=\'benefit'\>"+this.detailView+" | Size : "+this.rSize+"㎡</p>";
+											html += "<p class=\'title'\>"+this.NAME+"</p>";
+											html += "<p class=\'benefit'\>"+this.DETAIL_VIEW+" | Size : "+this.R_SIZE+"㎡</p>";
 											html += "</div>";
 											html += "<div class=\'mycontents'\>";
-											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.startDate.substring(0,10).replaceAll("-", ".")+" - "+this.endDate.substring(0,10).replaceAll("-", ".")+"</p>";
-											html += "<p class=\'adult'\><span>ADULT</span>"+this.adult+"</p>";
-											html += "<p class=\'children'\><span>CHILDREN</span>"+this.children+"</p>";
+											html += "<p class=\'checkDate'\><span>CHECK IN / OUT</span>"+this.STARTDATE+" - "+this.ENDDATE+"</p>";
+											html += "<p class=\'adult'\><span>ADULT</span>"+this.ADULTCNT+"</p>";
+											html += "<p class=\'children'\><span>CHILDREN</span>"+this.CHILDRENCNT+"</p>";
 											html += "</div>";
 											html += "<div class=\'reserveinfo'\>";
-											html += "<p class=\'price'\>"+this.totalPay.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
-											html += "<button type=\'button'\ class=\'btnSC btnL active'\ onclick=\'deleteReservation("+this.num+","+this.roomNumber+")'\>예약취소</button>";
+											html += "<p class=\'price'\>"+this.TOTAL_PAY.replace(/\B(?=(\d{3})+(?!\d))/g, ',')+"<span> KRM</span></p>";
+											html += "<button type=\'button'\ class=\'btnSC btnL active'\ onclick=\'deleteReservation("+this.NUM+","+this.ROOM_NUMBER+")'\>예약취소</button>";
 											html += "</div>";
 											html += "</div>";
 											html += "</li>";
@@ -340,6 +364,9 @@
 									$('.cardList').append(html);
 									$('.listBox .countList .count em').text(listtest.length);
 								}
+							},
+							error:function(){
+								console.log('오류');
 							}
 						});
 					}

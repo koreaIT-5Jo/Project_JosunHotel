@@ -25,7 +25,7 @@
 					<a href="/www">홈페이지</a> <!-- 클릭하면 홈페이지 메인으로 이동 -->
 				</li>
 				<li>
-					<a href="Logout">로그아웃</a> <!-- 클릭하면 로그아웃되면서, 홈페이지 로그인화면으로 이동 -->
+					<a href="logout">로그아웃</a> <!-- 클릭하면 로그아웃되면서, 홈페이지 로그인화면으로 이동 -->
 				</li>
 			</ul>
 		</div>
@@ -35,6 +35,7 @@
 	<div class="container">
 		<div class="left">
 			<ul>
+				<li><a href="admin"><i class="fas fa-home"></i> 대시보드</a></li>
 				<li><a href="adminMember"><i class="fas fa-users-cog"></i> 회원관리</a></li>
 				<li><a href="adminReservation"><i class="fas fa-calendar-alt"></i> 예약관리</a></li>
 				<li class="on"><a href="adminQnaList"><i class="fas fa-question-circle"></i> 문의글 관리</a></li>

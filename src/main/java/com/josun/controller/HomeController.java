@@ -2,27 +2,35 @@ package com.josun.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.josun.dao.SalesStatusDAO;
 import com.josun.dto.BoardEventNoticeDTO;
+import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
+import com.josun.dto.ReservationDTO;
 import com.josun.service.BoardEventNoticeService;
+import com.josun.service.BoardQnaCommentService;
+import com.josun.service.BoardQnaService;
+import com.josun.service.MemberService;
+import com.josun.service.ReservationService;
+import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 
@@ -33,7 +41,15 @@ public class HomeController {
 	@Autowired
 	BoardQnaService qnaservice;
 	@Autowired
+	BoardQnaCommentService comservice;
+	@Autowired
+	private JavaMailSender mailSender;
+	@Autowired
 	BoardEventNoticeService enService;
+	@Autowired
+	ReservationService reserveservice;
+	@Autowired
+	SalesStatusDAO salesdao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -81,7 +97,6 @@ public class HomeController {
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
 	public String enList(Model model, String page, String category, String keyword) {
-
 		int curPage = 1;
 		if(page != null) curPage = Integer.parseInt(page);
 		System.out.println("현재페이지 : " + curPage);
@@ -93,12 +108,11 @@ public class HomeController {
 	    //검색을 했을 때
 		} else if (category != null || keyword.equals("") || keyword != null) {
 			if(category.equals("0")) { category = "%%"; }
-								else { category = "%"+ category +"%"; }
+			else { category = "%"+ category +"%"; }
 			keyword = "%"+keyword+"%";
 		}
 		
 		int totalPage = enService.totalCountSize(keyword, category);
-		
 		List<BoardEventNoticeDTO> list = enService.enList(keyword, category, curPage);
 		for(BoardEventNoticeDTO dto : list) {
 			if(dto.getCategory() == 1) { dto.setCateName("이벤트");}
@@ -139,7 +153,6 @@ public class HomeController {
 		 
 		model.addAttribute("enList", list);
 		model.addAttribute("pageNav", pageNav.toString());
-		
 		return "board/board_EventNoticeList";
 	}
 	
@@ -226,7 +239,10 @@ public class HomeController {
 	
 	//로그인
 	@RequestMapping(value = "/login")
-	public String login() {
+	public String login(ReservationDTO reservationDto,Model model,String nextURL) {
+		model.addAttribute("reservationDto",reservationDto);
+		model.addAttribute("nextURL",nextURL);
+		
 		return "member/login";
 	}
 	//로그인 액션
@@ -247,6 +263,33 @@ public class HomeController {
 			return "member/login";
 		}
 	}
+	
+	//로그인 액션 로그인 하기전 화면으로 가기위한 액션
+	@RequestMapping(value = "/loginActionUrl")
+	public String loginActionUrl(HttpServletRequest request,MemberDTO memberDto,ReservationDTO reservationDto) {
+		List<MemberDTO> list = memberservice.login(memberDto.getId(), memberDto.getPw());		
+		HttpSession session = request.getSession();
+		String url = (String)request.getParameter("nextUrl");
+		if(list.size() > 0) {
+			session.setAttribute("id", memberDto.getId());
+			for(MemberDTO dto : list) {
+				session.setAttribute("name", dto.getName());
+				session.setAttribute("addr", dto.getAddress());
+				session.setAttribute("phone", dto.getPhone());
+				session.setAttribute("email", dto.getEmail());
+			}
+			if(url.equals("reservation/step1Go")) {
+				request.setAttribute("reservationDto", reservationDto);
+			}
+			return url;
+		}else {
+			request.setAttribute("msg", "입력된 정보가 없습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			return "member/login";
+		}
+		
+	}
+	
+	
 	//로그아웃
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
@@ -322,6 +365,12 @@ public class HomeController {
 		return "member/memberDelete2";
 	}
 	
+	//관리자페이지 - 대시보드
+	@RequestMapping(value = "/admin")
+	public String admin() {
+		return "admin/adminDashboard";
+	}
+	
 	//관리자페이지 - 회원
 	@RequestMapping(value = "/adminMember")
 	public String adminMember(String page, String searchKey, String searchValue, Model model) {
@@ -363,7 +412,39 @@ public class HomeController {
 	
 	//관리자페이지 - 예약
 	@RequestMapping(value = "/adminReservation")
-	public String adminReservation() {
+	public String adminReservation(String page, String searchKey, String searchValue, Model model) {
+		int pageNo = 1;
+		if(page != null) pageNo = Integer.parseInt(page);
+		int pageSize = 18;
+		int start = pageNo * pageSize - (pageSize-1);
+		int end = pageNo * pageSize;
+		
+		if(searchKey == null && searchValue == null) {
+			searchKey = "name";
+			searchValue = "%%";
+		}else {
+			searchValue = "%"+searchValue+"%";
+		}
+		
+		List<ReservationDTO> list = reserveservice.reserveList(start, end, searchKey, searchValue);
+		int dataCount = reserveservice.getDataList(searchKey, searchValue);
+		int pageCount = dataCount / pageSize;
+		if(dataCount%pageSize != 0) pageCount++;
+		int totalPage = pageCount;
+		
+		String param = "";
+		if(!searchValue.equals("")) {
+			param = "searchKey="+searchKey;
+			param += "&searchValue="+searchValue+"&";
+		}
+		String url = "adminReservation?"+param;
+		StringBuffer pageNav = new StringBuffer();
+		for(int i=1; i<=totalPage; i++) {
+			if(pageNo == i) pageNav.append("<a class=\"active\" href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+			else pageNav.append("<a href=\""+url+"page="+i+"\">"+i+"</a>&nbsp;");
+		}
+		model.addAttribute("list", list);
+		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminReservation";
 	}
 	//관리자페이지 - Q&A목록
@@ -399,6 +480,9 @@ public class HomeController {
 		}
 		
 		model.addAttribute("list", list);
+//		model.addAttribute("searchKey", searchKey);
+//		model.addAttribute("searchValue", searchValue);
+//		model.addAttribute("page", page);
 		model.addAttribute("pageNav", pageNav.toString());
 		return "admin/adminQnaList";
 	}
@@ -406,9 +490,43 @@ public class HomeController {
 	@RequestMapping(value = "/adminQnaRead")
 	public String adminQnaRead(int idx, Model model) {
 		BoardQnaDTO dto = qnaservice.adminBoardRead(idx);
+		List<BoardQnaCommentDTO> list = comservice.getCommentData(idx);
 		model.addAttribute("dto", dto);
+		model.addAttribute("list",list);
 		return "admin/adminQnaRead";
 	}
-	
-	
+	//관리자페이지 - Q&A 댓글쓰기, 메일발송
+	@RequestMapping(value = "/sendComment")
+	public String sendComment(int qnaNum, String email, String content, Model model, BoardQnaCommentDTO cdto, HttpServletRequest request) {
+		System.out.println(qnaNum + ", " + content + ", " + email);
+		String subject = "[조선호텔제주] 문의주신 내용에 대한 답변입니다.";
+		String from = "조선호텔 담당자 <himedia.sora@gmail.com>";
+		String to = email;
+		String msg = "";
+		
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			MimeMessageHelper mailHelper = new MimeMessageHelper(mail, "utf-8");
+			
+			mailHelper.setFrom(from);
+			mailHelper.setTo(to);
+			mailHelper.setSubject(subject);
+			mailHelper.setText(content);
+			
+			mailSender.send(mail);
+			comservice.insertComment(cdto);
+			msg = "메일 전송이 완료되었습니다.";
+		}catch(Exception e) {
+			e.printStackTrace();
+			msg = "메일 전송 실패";
+		}
+		
+		BoardQnaDTO dto = qnaservice.adminBoardRead(qnaNum);
+		List<BoardQnaCommentDTO> list = comservice.getCommentData(qnaNum);
+		model.addAttribute("dto", dto);
+		model.addAttribute("list",list);
+		request.setAttribute("msg", msg);
+		return "admin/adminQnaRead";
+	}
+
 }

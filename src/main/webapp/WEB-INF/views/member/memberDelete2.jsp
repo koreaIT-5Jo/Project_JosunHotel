@@ -50,12 +50,12 @@
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
-					<li><a href="/www/Logout">로그아웃</a></li>
-					<li><a href="/www/reserveConfirm">마이페이지</a></li>
-					<li><a href="/www/adminMember">관리자페이지</a></li>
+					<li><a href="Logout">로그아웃</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="admin">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="/www/Logout">로그아웃</a></li>
-					<li><a href="/www/reserveConfirm">마이페이지</a></li>
+					<li><a href="logout">로그아웃</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>

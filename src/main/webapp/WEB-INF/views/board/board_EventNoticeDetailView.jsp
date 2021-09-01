@@ -8,7 +8,6 @@
 <title>EVENT &amp; NOTICE 상세보기 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
-<script type="text/javascript" src="resources/js/board/board_EventNoticeView.js"></script>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
 <link rel="stylesheet" href="resources/css/board/board_EventNoticeView.css">
@@ -170,7 +169,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- End. footer -->s
-	</div>
+	<!-- End. footer -->
 </body>
 </html>

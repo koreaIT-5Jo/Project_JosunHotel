@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.roomMapper">
+	<select id="getRoomNumList" resultType="com.josun.dto.RoomDTO">
+		SELECT num,name,price,img,r_size,detail_view FROM room  where num in (${roomNumList})
+	</select>
+	<select id="getduplicateCheckRoomNumList" resultType="String">
+		SELECT num from room where num not in(SELECT DISTINCT num FROM reserved_room WHERE reserved_date in(${reserveDateList}))	
+	</select>
+	<select id="roomDetailInfo" resultType="HashMap">
+		select r.name, r.img, r.location, r.beds, r.r_size, r.features, r.viewpoint, a.bath, a.bed, a.minibar, a.closet from room r, amenity_package a where r.amenity = a.num and r.num = #{num}
+	</select>
+	<select id="roomOptionInfo" resultType="com.josun.dto.RoomDTO">
+		select num,name,price,r_size,detail_view  from room  WHERE num = #{num}
+	</select>
+	<select id="detailReviewRoom" resultType="com.josun.dto.RoomDTO">
+		select num,name,img,beds,r_size,detail_view,features from  room  where num = #{num}
+	</select>
+	<select id="writeReviewRoomInfo" resultType="com.josun.dto.RoomDTO">
+		select DISTINCT ro.num,ro.name,ro.img,ro.beds,ro.r_size,ro.detail_view,ro.features from reservation re, room ro where re.room_number = ro.num and re.member_id = #{id}
+	</select>
+	
+</mapper>

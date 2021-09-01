@@ -74,12 +74,14 @@ content:'';}
 .wrapper .container .right .search .button button{width:100%; height:100%; background:#525252; color:#fff;}
 
 .wrapper .container .right .contents{padding:0 30px;}
+.wrapper .container .right .contents p{font-size: 15px; margin-bottom: 5px;color: #d8183c;}
 .wrapper .container .right .contents .memberList{width:100%; text-align:center;}
 .wrapper .container .right .contents .memberList thead tr th{font-size:16px; font-weight:500; border-left:1px solid #000; border-top:1px solid #000; border-bottom:1px solid #000; background:#525252; color:#fff;}
 .wrapper .container .right .contents .memberList thead tr th:last-child{border-right:1px solid #000;}
 
 .wrapper .container .right .contents .memberList tbody tr td{font-size:15px; font-weight:300; border-left:1px solid; border-bottom:1px solid #000;}
 .wrapper .container .right .contents .memberList tbody tr td:last-child{border-right:1px solid #000;}
+.wrapper .container .right .contents .memberList tbody tr td span{display: block; max-width: 270px; overflow: hidden;text-overflow: ellipsis;padding: 0 5px; white-space: nowrap;}
 
 .wrapper .container .right .page{position:absolute; bottom:3%; width:100%; text-align:center;}
 .wrapper .container .right .page a{display:inline-block; width:25px; font-size:17px; font-weight:300; color:#999;}

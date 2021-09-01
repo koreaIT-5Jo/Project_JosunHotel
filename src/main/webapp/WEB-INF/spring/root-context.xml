@@ -30,9 +30,38 @@
 		<property name="maxUploadSize" value="1000000"/>
 	</bean>
 	
+	<!-- 메일 설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> 
+    	<property name="host" value="smtp.gmail.com" />
+    	<property name="port" value="587" />
+ 		<property name="username" value="이메일 주소"/>
+		<property name="password" value="이메일 비밀번호"/>
+ 		<!-- 보안연결 TLS과 관련된 설정 -->
+     	<property name="javaMailProperties">
+    		<props>
+       			<prop key="mail.smtp.auth">true</prop>
+       			<prop key="mail.smtp.starttls.enable">true</prop>
+       			<prop key="mail.transport.protocol">smtp</prop>
+       			<prop key="mail.debug">true</prop>
+       			<prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+       			<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+    		</props>
+     	</property>
+	</bean>
+	
 	<bean id="MemberDAOImpl" class="com.josun.dao.MemberDAOImpl"/>
 	<bean id="BoardQnaDAOImpl" class="com.josun.dao.BoardQnaDAOImpl"/>
-	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
-	<context:component-scan base-package="com.josun.service"/>
+	<bean id="BoardQnaCommentDAOImpl" class="com.josun.dao.BoardQnaCommentDAOImpl"/>
 	
+	<bean id="roomDAOImpl" class="com.josun.dao.RoomDAOImpl"/>
+	<bean id="roomServiceImpl" class="com.josun.service.RoomServiceImpl"/>
+	<bean id="reservationDAOImpl" class="com.josun.dao.ReservationDAOImpl"/>
+	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
+	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
+	
+	<bean id="VisitDAO" class="com.josun.dao.VisitDAO"/>
+	<bean id="SalesStatusDAOImpl" class="com.josun.dao.SalesStatusDAOImpl"/>
+	<bean id="ReviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"/>
+	
+	<context:component-scan base-package="com.josun.service" />
 </beans>

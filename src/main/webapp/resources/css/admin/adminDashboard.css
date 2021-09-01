@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+/*배경 그라데이션 애니메이션*/
+background:linear-gradient(137deg, #fff6b7, #f77c99, #6578f2, #c2ffd8); 
+background-size: 800% 800%; 
+-webkit-animation: AnimationName 16s ease infinite; 
+-moz-animation: AnimationName 16s ease infinite; 
+-o-animation: AnimationName 16s ease infinite; 
+animation: AnimationName 16s ease infinite; 
+@-webkit-keyframes AnimationName { 
+	0%{background-position:0% 50%} 
+	50%{background-position:100% 50%} 
+	100%{background-position:0% 50%} 
+} 
+
+@-moz-keyframes AnimationName { 
+	0%{background-position:0% 50%} 
+	50%{background-position:100% 50%}
+	100%{background-position:0% 50%} 
+} 
+
+@-o-keyframes AnimationName { 
+	0%{background-position:0% 50%} 
+	50%{background-position:100% 50%} 
+	100%{background-position:0% 50%} 
+} 
+
+@keyframes AnimationName { 
+	0%{background-position:0% 50%} 
+	50%{background-position:100% 50%} 
+	100%{background-position:0% 50%} 
+} 
+
+.fa, .fas{text-align:center; width:22px;}
+
+.wrapper{background:#525252; color:#fff;}
+
+/*headerbar*/
+.wrapper .headerbar{display: flex; width:100%; padding: 25px 50px; justify-content: space-between;}
+.wrapper .headerbar .maintit p{font-size:30px; letter-spacing:3px; text-transform: uppercase;}
+
+/*headerbar - mnu*/
+.wrapper .headerbar .hbmnu ul{margin-top:25px;}
+.wrapper .headerbar .hbmnu ul li{float:left; margin:0px 20px; position:relative; line-height:1;}
+.wrapper .headerbar .hbmnu ul li:first-child:after{display:block; width:1px; height:100%; background:#fff; position:absolute; right:-20px; top:0; content:'';}
+.wrapper .headerbar .hbmnu ul li a{font-size:17px;}
+
+/*left - 왼쪽 메뉴*/
+.wrapper .container{display:flex; margin:15px 50px; height:760px; background:#fff; color:#000; justify-content: space-between;}
+.wrapper .container .left{width:15%; padding:30px;}
+.wrapper .container .left {color: #fff; background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab); background-size: 400% 400%; animation: AnimationName 15s ease infinite; }
+.wrapper .container .left ul li{line-height:2.3;}
+.wrapper .container .left ul li a{display:block; font-weight:300; position:relative;}
+.wrapper .container .left ul li.on a{font-weight:500;}
+.wrapper .container .left ul li.on a:after{display:block; position:absolute; right:0; top:10px; 
+width: 0px;height: 0px;
+  border-top:7px solid transparent;
+  border-bottom:15px solid #fff;
+  border-right: 7px solid transparent;
+  border-left: 7px solid  transparent;
+  transform: rotate(90deg);
+content:'';}
+
+/*right - 오른쪽 메뉴*/
+.wrapper .container .right{width:88%;position: relative; background: #fbfbfb;}
+.wrapper .container .right .contents{padding:30px;}
+.wrapper .container .right .contents .first{display:flex;}
+.wrapper .container .right .contents .first{margin-bottom:10px; height:150px;}
+.wrapper .container .right .contents .first .box p{font-size:16px;}
+.wrapper .container .right .contents .first .box p.monthPay,
+.wrapper .container .right .contents .first .box p.yearPay,
+.wrapper .container .right .contents .first .box p.memberCount{text-align: center; font-size: 35px; font-weight: bold; margin-top: 8px;}
+
+/* .wrapper .container .right .contents .sec{height:540px;} */
+.wrapper .container .right .contents .first .box,.wrapper .container .right .contents .sec .box{width:100%; height:100%;}
+.wrapper .container .right .contents .sec .visitChartWarp{height:265px;margin-bottom:10px;}
+.wrapper .container .right .contents .sec .salesChartWarp{height:265px;}
+
+.wrapper .container .right .contents .box{background: #fff; box-shadow: 0px 0px 5px rgb(0 0 0 / 30%); border-radius: 10px; padding: 15px; margin-right:10px;}
+
+
+

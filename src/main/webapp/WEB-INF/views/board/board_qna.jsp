@@ -53,7 +53,7 @@ if(request.getAttribute("msg") != null){
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+									<li><a href="review/main">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -68,7 +68,7 @@ if(request.getAttribute("msg") != null){
 						<%}else if(id.equals("admin")){ %>
 						<li><a href="logout">로그아웃</a></li>
 						<li><a href="reserveConfirm">마이페이지</a></li>
-						<li><a href="adminMember">관리자페이지</a></li>
+						<li><a href="admin">관리자페이지</a></li>
 						<%}else{ %>
 						<li><a href="logout">로그아웃</a></li>
 						<li><a href="reserveConfirm">마이페이지</a></li>
@@ -93,7 +93,7 @@ if(request.getAttribute("msg") != null){
 				<div class="lnbArea">
 					<ul class="lnb ctmType">
 						<li class="on"><a href="qna">Q&amp;A</a></li>
-						<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+						<li><a href="review/main">REVIEW</a></li>
 					</ul>
 				</div>
 				<!-- MY CONTENTS -->

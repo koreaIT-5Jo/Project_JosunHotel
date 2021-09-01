@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.josun.dao.BoardQnaCommentDAO;
 import com.josun.dao.BoardQnaDAO;
+import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -16,6 +18,8 @@ import com.josun.dto.BoardQnaDTO;
 public class BoardQnaDAOTest {
 	@Autowired
 	private BoardQnaDAO dao;
+	@Autowired
+	private BoardQnaCommentDAO cdao;
 	
 	@Test
 	public void insert() throws Exception{
@@ -41,5 +45,18 @@ public class BoardQnaDAOTest {
 		System.out.println(dto.getIdx() + ", " + dto.getCategoryName() + ", " + dto.getName() + ", " + dto.getPhone() + ", " + dto.getEmail() + ", " + dto.getReply() + ", " + dto.getWriteDate() + ", " + dto.getContent() + ", " + dto.getFileName());
 //		for(BoardQnaDTO dto : list) {
 //		}
+	}
+	
+	@Test
+	public void getCommentData() throws Exception{
+		List<BoardQnaCommentDTO> list = cdao.getCommentData(221);
+		for(BoardQnaCommentDTO dto : list) {
+			System.out.println(dto.getRnum() + ", " + dto.getContent());
+		}
+	}
+	
+	@Test
+	public void insertComment() throws Exception{
+		cdao.insertComment(new BoardQnaCommentDTO(221, "꾸악"));
 	}
 }

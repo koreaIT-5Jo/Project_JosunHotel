@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.salesStatusMapper">
+	<insert id="insert">
+		insert into salesstatus(reservation_num, totalpay) values(STATUS.nextval, ${totalpay}) 
+	</insert>
+	<delete id="delete">
+		delete salesstatus WHERE reservation_num = ${num}
+	</delete>
+	<select id="monthTotalPay" resultType="int">
+		select sum(totalpay) from salesstatus where reservation_date BETWEEN TO_DATE(#{startDate}, 'YYYY-MM-DD') AND TO_DATE(#{endDate}, 'YYYY-MM-DD HH24:MI:SS')
+	</select>
+	<select id="allMemberCount" resultType="int">
+		select count(*) from member
+	</select>
+	<select id="yearTotalPay" resultType="com.josun.dto.SalesStatusDTO">
+		SELECT sum(totalpay) as totalpay, EXTRACT(MONTH FROM reservation_date) as month FROM salesstatus group by EXTRACT(MONTH FROM reservation_date) order by month
+	</select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.visitMapper">
+	<select id="selectToday" resultType="int">
+		select count(*) from visit where v_date = #{v_date}
+	</select>
+	
+	<insert id="insertCount">
+		insert into visit(v_date, v_count) values(#{v_date}, ${v_count})
+	</insert>
+	
+	<update id="update">
+		update visit set v_count = v_count+1 where v_date = #{v_date}
+	</update>
+	
+	<select id="selectList" resultType="com.josun.dto.VisitDTO">
+		select * from visit where v_date BETWEEN TO_DATE(#{beforeDay}, 'YYYY-MM-DD') AND TO_DATE(#{today}, 'YYYY-MM-DD') order by v_date
+	</select>
+</mapper>

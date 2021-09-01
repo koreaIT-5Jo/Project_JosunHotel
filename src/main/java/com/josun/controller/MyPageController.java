@@ -1,10 +1,9 @@
 package com.josun.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.josun.dao.SalesStatusDAO;
 import com.josun.service.MemberService;
 
 @RestController
@@ -19,6 +19,8 @@ import com.josun.service.MemberService;
 public class MyPageController {
 	@Autowired
 	MemberService service;
+	@Autowired
+	SalesStatusDAO dao;
 	
 	//회원정보수정Action
 	@RequestMapping("/memberModifyAction/json")
@@ -61,15 +63,16 @@ public class MyPageController {
 		
 		System.out.println("contorller로 전송 된 값 확인 " + loginPw + curPw + newPw);
 		
-		int check = 0;
 		Map<String, Object>map = new HashMap<String, Object>();
+		boolean check = false;
+		String msg = "";
 		
 		if(loginPw.equals(curPw)) {
-			check = service.updatePw(loginId, newPw); //제대로 업데이트 되면 1
-			System.out.println("check 값 : " + check);
+			int updatePw = service.updatePw(loginId, newPw); //제대로 업데이트 되면 1
+			if(updatePw == 1) { check= true; }
 			session.invalidate();
 		} else {
-			check = 0;
+			check = false;
 		}
 		
 		map.put("result", check);
@@ -123,5 +126,55 @@ public class MyPageController {
 		
 		return map;
 	}
-
+	
+	
+	//마이페이지 - 예약확인
+	@RequestMapping("/reserveConfirm/json")
+	public List<Map<String, Object>> reserveConfirm(HttpSession session, @RequestBody Map<String, String> param){
+		String id = (String)session.getAttribute("id");
+		String searchStartDate = param.get("searchStartDate");
+		String searchEndDate = param.get("searchEndDate");
+		
+		System.out.println("파라미터 확인 : " + id + ", " + searchStartDate + ", " + searchEndDate);
+		
+		List<Map<String, Object>> data = service.reserveConfirm(id, searchStartDate, searchEndDate);
+		for(Object datamap : data) {
+			Map map = (Map) datamap;
+			String formatStartDate = map.get("STARTDATE").toString();
+			String formatEndDate = map.get("ENDDATE").toString();
+			String formatPay = map.get("TOTAL_PAY").toString();
+			formatStartDate = formatStartDate.substring(0,10).replaceAll("-", ".");
+			formatEndDate = formatEndDate.substring(0, 10).replaceAll("-", ".");
+			map.put("STARTDATE", formatStartDate);
+			map.put("ENDDATE", formatEndDate);
+			map.put("TOTAL_PAY", formatPay);
+		}
+		
+		System.out.println(data);
+		return data;
+	}
+	
+	//마이페이지 - 예약취소
+	@RequestMapping("/reserveCancel/json")
+	public Map<String, Integer> reserveCancel(@RequestBody Map<String, String> param) {
+		int num = Integer.parseInt(param.get("num"));
+		int roomNumber = Integer.parseInt(param.get("roomNumber"));
+		String startDate = param.get("startDate");
+		String endDate = param.get("endDate");
+		
+		System.out.println("파라미터 확인 : " + num + ", " + roomNumber + ", " + startDate + ", " + endDate);
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		int result = 0;
+		try {
+			service.reserveCancel(num, roomNumber, startDate, endDate);
+			dao.delete(num); // 매출현황 테이블 delete
+			result = 2;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		map.put("result", result);
+		System.out.println(map);
+		return map;
+	}
 }

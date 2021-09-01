@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.josun.mapper.reservationMapper">
+	<insert id="reservation">
+		INSERT INTO reservation(num,name,startdate,enddate,adultcnt,childrencnt,adult_breakfast,chil_breakfast,request,phone_number,email,card_type,card_number,card_expiration_date,birthdate,total_pay,room_number,card_password,member_id)
+		VALUES(CHECKING.nextval,#{name},#{startDate},#{endDate},#{adultCnt},#{childrenCnt},#{adult_breakfast},#{chil_breakfast},#{request},#{phone_Number},#{email},#{card_type},#{card_Number},#{card_Expiration_Date},#{birthDate},#{total_pay},#{room_number},#{card_Password},#{member_Id})
+	</insert>
+	<insert id="reservedRoom">
+		INSERT INTO reserved_room(num, reserved_date) VALUES(#{room_number},#{date})
+	</insert>
+	<select id="okReservation" resultType="Integer">
+		SELECT COUNT(*) FROM reserved_room WHERE reserved_date in(${reserveDateList}) and num = #{room_number}
+	</select>
+	<select id="reserveList" resultType="com.josun.dto.ReservationDTO">
+		<![CDATA[
+		select * from(select rownum rnum, r.* from
+		(select name, room_number, startdate, enddate, adultcnt, childrencnt, adult_breakfast, chil_breakfast, request, total_pay, phone_number from 
+		reservation where ${searchKey} like #{searchValue} order by startdate)r)
+		where rnum >=#{start} and rnum<=#{end}
+		]]>
+	</select>
+	<select id="getDataList" resultType="int">
+		select count(*) from reservation where ${searchKey} like #{searchValue}
+	</select>
+</mapper>

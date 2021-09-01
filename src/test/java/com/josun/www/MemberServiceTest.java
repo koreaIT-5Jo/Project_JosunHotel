@@ -1,6 +1,7 @@
 package com.josun.www;
 
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,4 +71,17 @@ public class MemberServiceTest {
 		System.out.println(service.deleteMem("test0000", "test0000")); //예상 : 0
 	}
 	
+	@Test
+	public void reserveList() throws Exception{
+		List<Map<String, Object>> list = service.reserveConfirm("admin", "2021-08-25", "2021-09-01");
+		System.out.println(list.toString());
+	}
+	
+	
+	//149, 2, 2021.08.30 - 2021.08.31
+	@Test
+	public void reserveCancel() throws Exception{
+		int result = service.reserveCancel(149, 2, "2021.08.30", "2021.08.31");
+		System.out.println(result);
+	}
 }
