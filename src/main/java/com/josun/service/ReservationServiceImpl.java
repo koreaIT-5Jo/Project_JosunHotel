@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.josun.dao.ReservationDAO;
+import com.josun.dao.SalesStatusDAO;
 import com.josun.dto.ReservationDTO;
 
 @Service
@@ -13,6 +14,8 @@ public class ReservationServiceImpl implements ReservationService {
 
 	@Autowired
 	ReservationDAO dao;
+	@Autowired
+	SalesStatusDAO sdao;
 	
 	@Override
 	public int doReserve(ReservationDTO dto) {
@@ -27,6 +30,8 @@ public class ReservationServiceImpl implements ReservationService {
 			okReservation = dao.okReservation( startDate,endDAte,num);
 			if(okReservation == 0) {	// 0일때 예약 가능
 				reservationResult = dao.reservation(dto);	// 예약
+				System.out.println(dto.getTotal_pay());
+				sdao.insert(dto.getTotal_pay()); // 매출현황 테이블 insert
 				if(reservationResult == 1) {	// 예약 입력 성공
 					reservedRoomResult = dao.reservedRoom(startDate, endDAte, num);
 					if(reservedRoomResult > 0) {

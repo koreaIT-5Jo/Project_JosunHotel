@@ -34,6 +34,7 @@
 	<div class="container">
 		<div class="left">
 			<ul>
+				<li><a href="admin"><i class="fas fa-home"></i> 대시보드</a></li>
 				<li><a href="adminMember"><i class="fas fa-users-cog"></i> 회원관리</a></li>
 				<li class="on"><a href="adminReservation"><i class="fas fa-calendar-alt"></i> 예약관리</a></li>
 				<li><a href="adminQnaList"><i class="fas fa-question-circle"></i> 문의글 관리</a></li>

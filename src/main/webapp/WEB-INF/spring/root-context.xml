@@ -59,5 +59,8 @@
 	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
 	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
 	
+	<bean id="VisitDAO" class="com.josun.dao.VisitDAO"/>
+	<bean id="SalesStatusDAOImpl" class="com.josun.dao.SalesStatusDAOImpl"/>
+	
 	<context:component-scan base-package="com.josun.service" />
 </beans>

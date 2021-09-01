@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.josun.dao.SalesStatusDAO;
 import com.josun.service.MemberService;
 
 @RestController
@@ -18,6 +19,8 @@ import com.josun.service.MemberService;
 public class MyPageController {
 	@Autowired
 	MemberService service;
+	@Autowired
+	SalesStatusDAO dao;
 	
 	//회원정보수정Action
 	@RequestMapping("/memberModifyAction/json")
@@ -163,6 +166,7 @@ public class MyPageController {
 		int result = 0;
 		try {
 			service.reserveCancel(num, roomNumber, startDate, endDate);
+			dao.delete(num); // 매출현황 테이블 delete
 			result = 2;
 		} catch (Exception e) {
 			e.printStackTrace();

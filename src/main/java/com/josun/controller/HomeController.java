@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.josun.dao.SalesStatusDAO;
 import com.josun.dto.BoardEventNoticeDTO;
 import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
@@ -44,6 +45,8 @@ public class HomeController {
 	BoardEventNoticeService enService;
 	@Autowired
 	ReservationService reserveservice;
+	@Autowired
+	SalesStatusDAO salesdao;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home() {
@@ -280,6 +283,12 @@ public class HomeController {
 	public String memberDeleteNext(HttpServletRequest request, HttpSession session) {
 		request.setAttribute("name", (String)session.getAttribute("name"));
 		return "member/memberDelete2";
+	}
+	
+	//관리자페이지 - 대시보드
+	@RequestMapping(value = "/admin")
+	public String admin() {
+		return "admin/adminDashboard";
 	}
 	
 	//관리자페이지 - 회원

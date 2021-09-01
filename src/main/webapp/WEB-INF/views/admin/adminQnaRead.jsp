@@ -2,61 +2,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@page import="board.qna.BoardDAO" %>
-<%@page import="board.qna.BoardDTO" %>
-<%@page import="board.qna.BoardCommentDAO" %>
-<%@page import="board.qna.BoardCommentDTO" %>
-<%@page import="conn.DBConn" %>
-<%@page import="java.sql.Connection" %>
-<%@page import="java.util.List" %>
-<%
-	request.setCharacterEncoding("UTF-8");
-	String cp = request.getContextPath();
-	
-	String id = (String) session.getAttribute("idKey");
-	int num = Integer.parseInt(request.getParameter("num"));
-	String pageNum = request.getParameter("pageNum");
-	
-	//검색키와 키값
-	String searchKey = request.getParameter("searchKey");
-	String searchValue = request.getParameter("searchValue");
-	
-	if(searchValue==null){
-		searchKey = "content";
-		searchValue = "";
-	}
-	
-	//첨부파일 경로
-	String path = request.getContextPath()+"/upload";
-	
-	Connection conn = DBConn.getConnection();
-	BoardDAO dao = new BoardDAO(conn);
-	BoardCommentDAO daoC = new BoardCommentDAO(conn); 
-	
-	//글 가져오기
-	BoardDTO dto = dao.getReadData(num);
-	List<BoardCommentDTO> lists = daoC.getCommentData(num);
-	
-	//가져올 글이 없다면 LIST 화면으로 
-	if(dto == null){
-		response.sendRedirect("adminQnaList.jsp");
-	}
-	
-	//글 라인 수
-	int lineSu = dto.getContent().split("\n").length;
-	
-	//글 내용의 엔터를 <br>로 변경
-	dto.setContent(dto.getContent().replaceAll("\n", "<br>"));
-	
-	String param = "";
-	if(!searchValue.equals("")){
-		param = "&searchKey="+searchKey;
-		//param += "&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
-		param += "&searchValue="+searchValue;
-	}
-	
-	DBConn.close();
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -99,6 +44,7 @@ if(request.getAttribute("msg") != null){
 	<div class="container">
 		<div class="left">
 			<ul>
+				<li><a href="admin"><i class="fas fa-home"></i> 대시보드</a></li>
 				<li><a href="adminMember"><i class="fas fa-users-cog"></i> 회원관리</a></li>
 				<li><a href="adminReservation"><i class="fas fa-calendar-alt"></i> 예약관리</a></li>
 				<li class="on"><a href="adminQnaList"><i class="fas fa-question-circle"></i> 문의글 관리</a></li>
