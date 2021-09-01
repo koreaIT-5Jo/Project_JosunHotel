@@ -47,4 +47,17 @@ public class RoomDAOImpl implements RoomDAO {
 		RoomDTO dto = sqlSession.selectOne("com.josun.mapper.roomMapper.roomOptionInfo",num);
 		return dto;
 	}
+
+	@Override
+	public RoomDTO detailReviewRoomInfo(int num) {
+		RoomDTO dto = sqlSession.selectOne("com.josun.mapper.roomMapper.detailReviewRoom",num);
+		return dto;
+	}
+
+	@Override
+	public List<RoomDTO> writeReviewRoomInfo(String id) {
+		List<RoomDTO> list = sqlSession.selectList("com.josun.mapper.roomMapper.writeReviewRoomInfo",id);
+		return list;
+	}
+
 }

@@ -22,7 +22,7 @@ public class ReservationServiceTest {
 	
 	@Test
 	public void reservation() {
-		ReservationDTO dto = new ReservationDTO("kg","2021.09.09","2021.09.10",2,2,2,2,"123","010-4740-3713","rladlj@naver.com","02","1111-1111-1111-1111","2030/12","19880241",20000000,1,"12","kigo0307");
+		ReservationDTO dto = new ReservationDTO("kg","2021.09.10","2021.09.12",2,2,2,2,"123","010-4740-3713","rladlj@naver.com","02","1111-1111-1111-1111","2030/12","19880241",20000000,1,"12","kigo0307");
 		System.out.println("roomnum: " + dto.getRoom_number());
 		int okReserve = service.doReserve(dto);
 		

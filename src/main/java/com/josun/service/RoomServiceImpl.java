@@ -33,4 +33,16 @@ public class RoomServiceImpl implements RoomService {
 		return dto;
 	}
 
+	@Override
+	public RoomDTO detailReviewRoomInfo(int num) {
+		RoomDTO dto = dao.detailReviewRoomInfo(num);
+		return dto;
+	}
+
+	@Override
+	public List<RoomDTO> writeReviewRoomInfo(String id) {
+		List<RoomDTO> list = dao.writeReviewRoomInfo(id);
+		return list;
+	}
+
 }

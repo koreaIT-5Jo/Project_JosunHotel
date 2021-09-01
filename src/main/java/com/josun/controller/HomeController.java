@@ -30,6 +30,9 @@ import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
 import com.josun.service.ReservationService;
+import com.josun.service.BoardQnaCommentService;
+import com.josun.service.BoardQnaService;
+import com.josun.service.MemberService;
 
 @Controller
 public class HomeController {
@@ -189,7 +192,10 @@ public class HomeController {
 	
 	//로그인
 	@RequestMapping(value = "/login")
-	public String login() {
+	public String login(ReservationDTO reservationDto,Model model,String nextURL) {
+		model.addAttribute("reservationDto",reservationDto);
+		model.addAttribute("nextURL",nextURL);
+		
 		return "member/login";
 	}
 	//로그인 액션
@@ -210,6 +216,33 @@ public class HomeController {
 			return "member/login";
 		}
 	}
+	
+	//로그인 액션 로그인 하기전 화면으로 가기위한 액션
+	@RequestMapping(value = "/loginActionUrl")
+	public String loginActionUrl(HttpServletRequest request,MemberDTO memberDto,ReservationDTO reservationDto) {
+		List<MemberDTO> list = memberservice.login(memberDto.getId(), memberDto.getPw());		
+		HttpSession session = request.getSession();
+		String url = (String)request.getParameter("nextUrl");
+		if(list.size() > 0) {
+			session.setAttribute("id", memberDto.getId());
+			for(MemberDTO dto : list) {
+				session.setAttribute("name", dto.getName());
+				session.setAttribute("addr", dto.getAddress());
+				session.setAttribute("phone", dto.getPhone());
+				session.setAttribute("email", dto.getEmail());
+			}
+			if(url.equals("reservation/step1Go")) {
+				request.setAttribute("reservationDto", reservationDto);
+			}
+			return url;
+		}else {
+			request.setAttribute("msg", "입력된 정보가 없습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			return "member/login";
+		}
+		
+	}
+	
+	
 	//로그아웃
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {

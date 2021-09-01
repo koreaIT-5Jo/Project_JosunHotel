@@ -84,8 +84,7 @@ public class RoomDTO {
 	public String toString() {
 		return "RoomDTO [hotelNumber=" + hotelNumber + ", num=" + num + ", name=" + name + ", price=" + price + ", img="
 				+ img + ", location=" + location + ", beds=" + beds + ", r_Size=" + r_Size + ", features=" + features
-				+ ", viewPoint=" + viewPoint + ", detailView=" + detail_View + "]\n";
+				+ ", viewPoint=" + viewPoint + ", detailView=" + detail_View + "]";
 	}
-	
 	
 }

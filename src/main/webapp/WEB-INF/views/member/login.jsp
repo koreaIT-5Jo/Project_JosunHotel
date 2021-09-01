@@ -65,7 +65,7 @@ if(request.getAttribute("msg") != null){
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+									<li><a href="reviewboard">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>
@@ -119,17 +119,25 @@ if(request.getAttribute("msg") != null){
 					return false;
 				}
 				
+				/* 추가 21.09.01  로그인 하기전 화면으로 가기위한 기능 추가*/
+				nextUrl = $('#nextUrl').val();
+				if(nextUrl != ''){
+					$('#loginform').attr("action","loginActionUrl");
+					$('#loginform').submit();
+				}
+				/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+				
 				$('#loginform').submit();
 			}
 		</script>
 		<!--(페이지 URL)-->
 		<form id="loginform" name="loginform" action="loginAction" method="post">
-			<input type="hidden" id="nextUrl" name="nextUrl" value="<%=request.getParameter("url")%>">
+			<input type="hidden" id="nextUrl" name="nextUrl" value="${nextURL}">
 			<!-- 룸보기에서 로그인할 경우 -->
-			<input type="hidden" name="startDate" value="<%=startDate%>">
-			<input type="hidden" name="endDate" value="<%=endDate%>">
-			<input type="hidden" name="adltCntArr" value="<%=adltCntArr%>">
-			<input type="hidden" name="chldCntArr" value="<%=chldCntArr%>">
+			<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
+			<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
+			<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">
+			<input type="hidden" name="childrenCnt" id="childrenCnt" value="${reservationDto.childrenCnt}">
 			<div id="container" class="container login">
 				<!-- 컨텐츠 S -->
 				<div class="topArea">
