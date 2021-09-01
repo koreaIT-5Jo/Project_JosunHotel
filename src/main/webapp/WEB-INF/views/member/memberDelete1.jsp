@@ -8,43 +8,11 @@
 <meta charset="utf-8">
 <title>회원탈퇴 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="resources/js/member/memberDelete1.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
 <link rel="stylesheet" href="resources/css/default.css">
 <link rel="stylesheet" href="resources/css/headerfooter.css">
 <link rel="stylesheet" href="resources/css/member/memberDelete1.css">
-<script>
-	function fncWithDraPwCfmApi() {
-		var password = $("#password").val();
-		
-		if (password.length == 0) {
-			$('.intInner > span').addClass("error");
-			$('.intInner > span').find(".alertMessage").show();
-			return;
-		}
-		
-		var pw = {password : password};
-		
-		$.ajax({
-			url:'http://localhost:9091/www/myPage/memberDelete1Action/json',
-			type:'post',
-			data: JSON.stringify(pw),
-			dataType: 'json',
-			contentType: 'application/json; charset=utf-8',
-			success: function(response) {
-				if(response.result) {
-					alert('비밀번호가 일치합니다. 회원탈퇴는 신중히 해주시기 바랍니다.');
-					location.href = 'http://localhost:9091/www/memberDeleteNext';
-				} else {
-					alert('비밀번호가 일치하지 않습니다. 다시 확인해주세요.');
-					$('#password').focus();
-				}
-			},
-			error:function(request, status, error) { 
-				alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
-			}
-		});
-	}
-</script>
 </head>
 <body>
 	<div class="header">
@@ -57,23 +25,23 @@
 					<ul class="menuDepth01">
 						<li>BRAND STORY
 							<ul class="menuDepth02">
-								<li><a href="brand">그랜드 조선 제주</a></li>
+								<li><a href="/www/brand">그랜드 조선 제주</a></li>
 							</ul>
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="enList">EVENT & NOTICE</a></li>
+								<li><a href="/www/enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="reserveConfirm">예약확인</a></li>
+								<li><a href="/www/reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
-								<li><a href="qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="/www/qna">Q&amp;A</a></li>
+								<li><a href="/www/review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -83,12 +51,18 @@
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
+<<<<<<< HEAD
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="admin">관리자페이지</a></li>
+=======
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/adminMember">관리자페이지</a></li>
+>>>>>>> origin/chiWorld
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -115,14 +89,14 @@
 				<ul class="lnb">
 					<li>예약확인
 						<ul>
-							<li><a href="reserveConfirm">객실 · 예약 내역</a></li>
+							<li><a href="/www/reserveConfirm">객실 · 예약 내역</a></li>
 						</ul>
 					</li>
 					<li>개인정보관리
 						<ul>
-							<li><a href="memberModify">회원 정보 수정</a></li>
-							<li><a href="memberPwChange">비밀번호 변경</a></li>
-							<li><a href="memberDelete">회원 탈퇴</a></li>
+							<li><a href="/www/memberModify">회원 정보 수정</a></li>
+							<li><a href="/www/memberPwChange">비밀번호 변경</a></li>
+							<li><a href="/www/memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>

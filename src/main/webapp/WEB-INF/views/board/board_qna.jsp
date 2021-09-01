@@ -42,7 +42,7 @@ if(request.getAttribute("msg") != null){
 							</li>
 							<li>EVENT & NOTICE
 								<ul class="menuDepth02">
-									<li><a href="/ProjectWepJosun/event_noticeList.jsp">EVENT & NOTICE</a></li>
+									<li><a href="enList">EVENT & NOTICE</a></li>
 								</ul>
 							</li>
 							<li>RESERVATION

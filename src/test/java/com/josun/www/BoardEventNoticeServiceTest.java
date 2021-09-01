@@ -19,25 +19,65 @@ public class BoardEventNoticeServiceTest {
 	private BoardEventNoticeService service;
 	
 	@Test
-	public void testEnList() throws Exception{
-		List <BoardEventNoticeDTO> list = service.enList("%%", "%1%", 1); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
+	public void testEnList() throws Exception {
+		List <BoardEventNoticeDTO> list = service.enList("%%", "%%", 2); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
 		for(BoardEventNoticeDTO dto : list) {
-			System.out.println(dto.getIdx() + " " + dto.getCategory() + " " + dto.getTitle() + " " + dto.getContent() + " " + dto.getFileName() );
+			System.out.println(dto.getIdx() + " / " + dto.getCategory() + " / " + dto.getTitle() + " / " + dto.getContent() + " / " + dto.getFile_name() + " / " + dto.getHitCount() + " / " + dto.getWrite_date() );
 		}
 	}
 	
 	@Test
-	public void testTotalCountSize() throws Exception{
+	public void testTotalCountSize() throws Exception {
 		System.out.println("총 게시물 수 " + service.totalCountSize("%%", "%%"));
 	}
 	
 	@Test
-	public void testStartPage() throws Exception{
+	public void testStartPage() throws Exception {
 		System.out.println(service.startPage("%%", "%%"));
 	}
 	
 	@Test
-	public void testEndPage() throws Exception{
+	public void testEndPage() throws Exception {
 		System.out.println(service.endPage("%%", "%%"));
+	}
+	
+	@Test
+	public void testHitCountUp() throws Exception {
+		System.out.println(service.hitCountUp(24)); //true
+		System.out.println(service.hitCountUp(1));  //false
+	}
+	
+	@Test
+	public void testDetailView() throws Exception {
+		BoardEventNoticeDTO dto = service.detailView(21);
+		System.out.println(dto.getIdx() + " / " + dto.getTitle() + " / " + dto.getContent() + " / " + dto.getFile_name() + " / " + dto.getWrite_date());
+	}
+	
+	@Test
+	public void testPrevIdx() throws Exception {
+		System.out.println(service.getPrevIdx(3));
+		System.out.println(service.getPrevIdx(24));
+	}
+	
+	@Test
+	public void testNextIdx() throws Exception {
+		System.out.println(service.getNextIdx(3));
+		System.out.println(service.getNextIdx(24));
+	}
+	
+	@Test
+	public void testDelPost() throws Exception {
+		System.out.println(service.delPost(24)); //false
+		System.out.println(service.delPost(23)); //true
+	}
+	
+	@Test
+	public void testWritePost() throws Exception {
+		System.out.println(service.writePost(2, "서비스테스트", "서비스테스트성공", null)); //true
+	}
+	
+	@Test
+	public void testUpdatePost() throws Exception {
+		System.out.println(service.updatePost(1, "게시글제목", "게시글내용", null, 3));
 	}
 }

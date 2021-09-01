@@ -13,7 +13,7 @@ function gfncPatternCheck(str){
     }
 }
 
-function fnChngPwApi() { //  fnChngPwApi
+function fnChngPwApi() {
 	/*
 	사용자 입력정보 VALIDATION 체크
 	해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
@@ -75,7 +75,7 @@ function fnChngPwApi() { //  fnChngPwApi
 		var sendPw = {curPw : userPw, newPw : newPw};
 		
 		$.ajax({
-			url:'http://localhost:9091/www/myPage/memberUpdatePwAction/json',
+			url:'/www/myPage/memberUpdatePwAction/json',
 			type:'post',
 			data: JSON.stringify(sendPw),
 			dataType: 'json',
@@ -83,10 +83,10 @@ function fnChngPwApi() { //  fnChngPwApi
 			success: function(response) {
 				if(response.result == 1) {
 					alert('비밀번호가 변경되었습니다. 다시 로그인해주세요.');
-					location.href='http://localhost:9091/www/login';
+					location.href='/www/login';
 				} else {
 					alert('비밀번호가 변경되지 않았습니다.');
-					location.href='http://localhost:9091/www/memberPwChange';
+					location.href='/www/memberPwChange';
 				}
 			},
 			error:function(request, status, error) { 

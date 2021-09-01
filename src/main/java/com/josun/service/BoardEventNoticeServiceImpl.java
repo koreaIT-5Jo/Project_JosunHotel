@@ -18,6 +18,7 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 	
 	@Override
 	public List<BoardEventNoticeDTO> enList(String content, String category, int page) {
+<<<<<<< HEAD
 		int totalSize = totalCountSize(content, category);   //총 페이징 수
 	      int pageNum = page;                           //현재페이지
 	      
@@ -32,6 +33,23 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 	      } else {
 	         list = dao.enList(content, category, staRow, endRow);
 	      }
+=======
+		int totalSize = totalCountSize(content, category);	//총 페이징 수
+		int pageNum = page;									//현재페이지
+		
+		int staRow = pageNum * PAGESIZE - (PAGESIZE-1);		//게시물 rowNum 시작
+		int endRow = pageNum * PAGESIZE;					//게시물 rowNum 끝
+		
+		List<BoardEventNoticeDTO> list;
+		
+		if(totalSize <= pageNum) {
+			pageNum = totalSize;
+			list = dao.enList(content, category, staRow, endRow);
+		} else {
+			list = dao.enList(content, category, staRow, endRow);
+		}
+		
+>>>>>>> origin/chiWorld
 		
 		return list;
 	}
@@ -62,4 +80,43 @@ public class BoardEventNoticeServiceImpl implements BoardEventNoticeService {
 		return endPage;
 	}
 
+	@Override
+	public boolean hitCountUp(int idx) {
+		int result = dao.hitCount(idx);
+		return result==1;
+	}
+
+	@Override
+	public BoardEventNoticeDTO detailView(int idx) {
+		return dao.detailView(idx);
+	}
+
+	@Override
+	public int getPrevIdx(int idx) {
+		return dao.getPrevIdx(idx);
+	}
+
+	@Override
+	public int getNextIdx(int idx) {
+		return dao.getNextIdx(idx);
+	}
+
+	@Override
+	public boolean delPost(int idx) {
+		int success = dao.deletePost(idx);
+		return success == 1;
+	}
+
+	@Override
+	public boolean writePost(int category, String title, String content, String fileName) {
+		int result = dao.postWrite(category, title, content, fileName);
+		return result == 1;
+	}
+
+	@Override
+	public boolean updatePost(int category, String title, String content, String fileName, int idx) {
+		int result = dao.postUpdate(category, title, content, fileName, idx);
+		return result == 1;
+	}
+	
 }

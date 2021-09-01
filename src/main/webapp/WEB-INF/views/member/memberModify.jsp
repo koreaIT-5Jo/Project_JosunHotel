@@ -17,7 +17,7 @@
 function postcodeT(){
 	new daum.Postcode({
 	    oncomplete: function(data) {
-	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분
 	        // http://postcode.map.daum.net/guide 에서 예제를 활용하여 커스텀
 	
 			$('input[name=postcode]').val(data.zonecode);      // 우편번호(5자리)
@@ -44,22 +44,18 @@ function fncMyInfoUpdApi() {
 	var address = postcode + "//" + addr + "//" + detailAdd;//전체 주소
 	var email = emailId + "@" + eDomain;					//전체 이메일	
 
-	//alert(name + phone + address + email);
-	
 	var modifyData = {
 		name : name,
 		phone : phone,
 		address : address,
 		email : email
 	}
-	//alert(JSON.stringify(modifyData));
 	
 	/*
 	사용자 입력정보 VALIDATION 체크
 	해당 열  input, select 박스가 하나라도 미기재 된 경우 validation false
 	최초 미입력 된 element로 focus 이동됨
 	 */
-	 
  	var frstIdx = "";
 	
 	jQuery(".intList li").each(function(){
@@ -92,14 +88,14 @@ function fncMyInfoUpdApi() {
 	}
 	
 	$.ajax({
-		url:'http://localhost:9091/www/myPage/memberModifyAction/json',
+		url:'/www/myPage/memberModifyAction/json',
 		type:'post',
 		data: JSON.stringify(modifyData),
 		dataType: 'json',
 		contentType: 'application/json; charset=utf-8',
 		success: function(response) {
 			alert(response.msg);
-			location.href = 'http://localhost:9091/www/memberModify';
+			location.href = '/www/memberModify';
 		},
 		error:function(request, status, error) { 
 			alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error); 
@@ -119,23 +115,23 @@ function fncMyInfoUpdApi() {
 					<ul class="menuDepth01">
 						<li>BRAND STORY
 							<ul class="menuDepth02">
-								<li><a href="brand">그랜드 조선 제주</a></li>
+								<li><a href="/www/brand">그랜드 조선 제주</a></li>
 							</ul>
 						</li>
 						<li>EVENT & NOTICE
 							<ul class="menuDepth02">
-								<li><a href="enList">EVENT & NOTICE</a></li>
+								<li><a href="/www/enList">EVENT & NOTICE</a></li>
 							</ul>
 						</li>
 						<li>RESERVATION
 							<ul class="menuDepth02">
-								<li><a href="reserveConfirm">예약확인</a></li>
+								<li><a href="/www/reserveConfirm">예약확인</a></li>
 							</ul>
 						</li>
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
-								<li><a href="qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="/www/qna">Q&amp;A</a></li>
+								<li><a href="/www/review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -145,12 +141,12 @@ function fncMyInfoUpdApi() {
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="reserveConfirm">마이페이지</a></li>
-					<li><a href="adminMember">관리자페이지</a></li>
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/adminMember">관리자페이지</a></li>
 					<%}else{ %>
-					<li><a href="Logout">로그아웃</a></li>
-					<li><a href="reserveConfirm">마이페이지</a></li>
+					<li><a href="/www/Logout">로그아웃</a></li>
+					<li><a href="/www/reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>
@@ -177,14 +173,14 @@ s	<!-- Start. contents -->
 				<ul class="lnb">
 					<li>예약확인
 						<ul>
-							<li><a href="reserveConfirm">객실 · 예약 내역</a></li>
+							<li><a href="/www/reserveConfirm">객실 · 예약 내역</a></li>
 						</ul>
 					</li>
 					<li>개인정보관리
 						<ul>
-							<li><a href="memberModify">회원 정보 수정</a></li>
-							<li><a href="memberPwChange">비밀번호 변경</a></li>
-							<li><a href="memberDelete">회원 탈퇴</a></li>
+							<li><a href="/www/memberModify">회원 정보 수정</a></li>
+							<li><a href="/www/memberPwChange">비밀번호 변경</a></li>
+							<li><a href="/www/memberDelete">회원 탈퇴</a></li>
 						</ul>
 					</li>
 				</ul>

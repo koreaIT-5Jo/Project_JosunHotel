@@ -12,10 +12,49 @@
 		t) t2 WHERE #{startNum} <= rnum AND rnum <= #{endNum}
 		]]>
 	</select>
+	
 	<select id="totalCount" resultType="int">
 		<![CDATA[
 		SELECT count(*) FROM event_notice WHERE content LIKE #{content} AND category LIKE #{category}
 		]]>
 	</select>
+	
+	<update id="hitCount">
+		<![CDATA[
+		UPDATE event_notice SET hitCount = hitCount + 1 WHERE idx = #{idx}
+		]]>
+	</update>
+	
+	<select id="detailPost" resultType="com.josun.dto.BoardEventNoticeDTO">
+		SELECT * FROM event_notice WHERE idx = #{idx}
+	</select>
+	
+	<select id="getPrevIdx" resultType="string">
+		<![CDATA[
+		SELECT max(idx) FROM event_notice WHERE idx < #{idx}
+		]]>
+	</select>
+	
+	<select id="getNextIdx" resultType="string">
+		<![CDATA[
+		SELECT min(idx) FROM event_notice WHERE idx > #{idx}
+		]]>
+	</select>
+	<delete id="deletePost">
+		<![CDATA[
+		DELETE FROM event_notice WHERE idx= #{idx}
+		]]>
+	</delete>
+	<insert id="writePost">
+		<![CDATA[
+		INSERT INTO event_notice(idx, category, title, content, write_date, hitcount, file_name) 
+		VALUES ( EN_SEQ.nextval, #{category}, #{title}, #{content}, sysdate, 0, #{fileName} )
+		]]>
+	</insert>
+	<update id="updatePost">
+		<![CDATA[
+		UPDATE event_notice SET category = #{category}, title = #{title}, content = #{content}, file_name = #{fileName}  WHERE idx = #{idx}
+		]]>
+	</update>
 </mapper>
 
