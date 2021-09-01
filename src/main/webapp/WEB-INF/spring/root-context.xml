@@ -57,14 +57,11 @@
 	<bean id="roomServiceImpl" class="com.josun.service.RoomServiceImpl"/>
 	<bean id="reservationDAOImpl" class="com.josun.dao.ReservationDAOImpl"/>
 	<bean id="reservationServiceImpl" class="com.josun.service.ReservationServiceImpl"/>
-<<<<<<< HEAD
 	<bean id="BoardEventNoticeDAOImpl" class="com.josun.dao.BoardEventNoticeDAOImpl"/>
 	
 	<bean id="VisitDAO" class="com.josun.dao.VisitDAO"/>
 	<bean id="SalesStatusDAOImpl" class="com.josun.dao.SalesStatusDAOImpl"/>
-=======
 	<bean id="reviewDAOImpl" class="com.josun.dao.ReviewDAOImpl"></bean>
->>>>>>> origin/Kim_Gyeom
 	
 	<context:component-scan base-package="com.josun.service" />
 </beans>
