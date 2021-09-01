@@ -7,7 +7,7 @@
   저희 팀은 '지난 일상의 그리움'과 '아쉬움' 그리고 언젠가 '코로나가 꼭 종식되기를 바라는 마음'으로 
   조선호텔리조트 사이트를 타겟 사이트로 선정하여 그 기능을 연구해 구현하였습니다.
 - 개발환경 : Eclipse, Windows 10
-- 개발언어 및 프레임워크 : Java, Servlet&JSP, Oracle 11gR2
+- 개발언어 및 프레임워크 : Java, spring, Servlet&JSP, Oracle 11gR2
 
 👍 수행 기간
 
