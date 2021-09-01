@@ -96,3 +96,16 @@ $(document).ready(function () {
 	  });
 	}
 	
+	function checkSize(input) {
+	      var fileVal = $("#uploadFile").val();
+	      fileVal = fileVal.slice(fileVal.indexOf(".") + 1).toLowerCase();
+	      
+	      if (fileVal != "jpg" && fileVal != "png" && fileVal != "jpeg") {
+	         alert("이미지 파일만 가능합니다. 확장자명을 확인해주세요.");
+	         input.value = null;
+	      } else if (input.files && input.files[0].size > (5 * 1024 * 1024)) {
+	         alert("파일 사이즈가 5mb 를 넘습니다.");
+	         input.value = null;
+	      }
+	}
+	

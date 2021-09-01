@@ -34,4 +34,6 @@ public interface BoardEventNoticeService {
 	//글쓰기
 	boolean writePost(int category, String title, String content, String fileName);
 	
+	//글수정
+	boolean updatePost(int category, String title, String content, String fileName, int idx);
 }

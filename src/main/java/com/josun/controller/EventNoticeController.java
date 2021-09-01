@@ -62,4 +62,28 @@ public class EventNoticeController {
 		 return map;
 	 }
 	 
+	//글수정
+	 @RequestMapping("/modifyPostAction")
+	 public Map<String, String>enmodifyPostAction(@RequestBody Map<String, String>param) {
+		 Map<String, String> map = new HashMap<String, String>();
+		 int idx = Integer.parseInt(param.get("idx"));
+		 int category = Integer.parseInt(param.get("cate"));
+		 String title = param.get("tit");
+		 String content = param.get("con");
+		 String fileName = param.get("fileN");
+		 
+		 boolean result = enService.updatePost(category, title, content, fileName, idx);
+		 
+		 String msg = "글이";
+		 if(result) {
+			 msg = "수정되었습니다.";
+		 } else {
+			 msg = "수정되지 않았습니다.";
+		 }
+		 
+		 map.put("msg", msg);
+		 
+		 return map;
+	 }
+	 
 }

@@ -46,10 +46,15 @@
 		]]>
 	</delete>
 	<insert id="writePost">
-	<![CDATA[
+		<![CDATA[
 		INSERT INTO event_notice(idx, category, title, content, write_date, hitcount, file_name) 
 		VALUES ( EN_SEQ.nextval, #{category}, #{title}, #{content}, sysdate, 0, #{fileName} )
-	]]>
+		]]>
 	</insert>
+	<update id="updatePost">
+		<![CDATA[
+		UPDATE event_notice SET category = #{category}, title = #{title}, content = #{content}, file_name = #{fileName}  WHERE idx = #{idx}
+		]]>
+	</update>
 </mapper>
 

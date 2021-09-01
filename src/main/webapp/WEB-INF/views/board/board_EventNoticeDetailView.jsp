@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>EVENT &amp; NOTICE | 그랜드 조선 호텔</title>
+<title>EVENT &amp; NOTICE 상세보기 | 그랜드 조선 호텔</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/header.js"></script>
 <script type="text/javascript" src="resources/js/board/board_EventNoticeView.js"></script>
@@ -19,14 +19,14 @@
 	}
 	
 	//수정하기
-	function writeModify() {
-		var curIdx = ${curIdx};
+	function writeModify(ci) {
+		var curIdx = ci;
 		location.href='/www/enModify?idx='+curIdx;
 	}
 	
 	//삭제하기
-	function writeDel() {
-		var curIdx = ${curIdx};
+	function writeDel(ci) {
+		var curIdx = ci;
 		var idx = { idx : curIdx };
 		
 		$.ajax({
@@ -46,8 +46,8 @@
 	}
 	
 	//이전 글
-	function movePrevPost() {
-		var idx = ${prevIdx};
+	function movePrevPost(pi) {
+		var idx = pi;
 		if(idx == 0) {
 			alert('이전 글이 없습니다. 목록으로 이동합니다.');
 			location.href='/www/enList';
@@ -57,8 +57,8 @@
 	}
 	
 	//다음 글
-	function moveNextPost() {
-		var idx = ${nextIdx};
+	function moveNextPost(ni) {
+		var idx = ni;
 		if(idx == 0) {
 			alert('다음 글이 없습니다. 목록으로 이동합니다.');
 			location.href='/www/enList';
@@ -135,11 +135,11 @@
 					<ul class="shortList">
 						<li class="prev">
 							<span>이전 글</span>
-							<a class="ellipsis" href="#none" onclick="movePrevPost();">${prevTitle}</a>
+							<a class="ellipsis" href="#none" onclick="movePrevPost(${prevIdx});">${prevTitle}</a>
 						</li>
 						<li class="next">
 							<span>다음 글</span>
-							<a class="ellipsis" href="#none" onclick="moveNextPost();">${nextTitle}</a>
+							<a class="ellipsis" href="#none" onclick="moveNextPost(${nextIdx});">${nextTitle}</a>
 						</li>
 					</ul>
 					<div class="btnArea">
@@ -147,8 +147,8 @@
 						<%if(id == null) {%>
 							<div></div>
 						<%} else if(id.equals("admin")) {%>
-							<a href="#none" onclick="writeModify();" class="btnSC writeL">수정</a> 
-							<a href="#none" onclick="writeDel();" class="btnSC writeD">삭제</a>
+							<a href="#none" onclick="writeModify(${curIdx});" class="btnSC writeL">수정</a> 
+							<a href="#none" onclick="writeDel(${curIdx});" class="btnSC writeD">삭제</a>
 						<%} %>
 					</div>
 				</div>

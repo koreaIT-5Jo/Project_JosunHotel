@@ -82,25 +82,21 @@ public class HomeController {
 	@RequestMapping(value = "/enList")
 	public String enList(Model model, String page, String category, String keyword) {
 
-		int curPage = 1;//현재페이지
+		int curPage = 1;
 		if(page != null) curPage = Integer.parseInt(page);
+		System.out.println("현재페이지 : " + curPage);
 		
-		//검색을 하지 않았을 때
+		//검색을 하지 않았을 때 카테고리와 검색어 셋팅
 		if((category == null && keyword == null) || (category == null && keyword.equals(""))) {
 	         keyword = "%%";
 	         category = "%%";
-	         
 	    //검색을 했을 때
 		} else if (category != null || keyword.equals("") || keyword != null) {
-			
 			if(category.equals("0")) { category = "%%"; }
 								else { category = "%"+ category +"%"; }
-			
 			keyword = "%"+keyword+"%";
 		}
 		
-		int start = enService.startPage(keyword, category);
-		int end = enService.endPage(keyword, category);
 		int totalPage = enService.totalCountSize(keyword, category);
 		
 		List<BoardEventNoticeDTO> list = enService.enList(keyword, category, curPage);
@@ -122,11 +118,11 @@ public class HomeController {
 			url += "?"+param; 
 		}
 		
-		System.out.println(url);
-		
 		StringBuffer pageNav = new StringBuffer();
 		
-		for(int i=1; i<=totalPage; i++){ 
+		for(int i = curPage; i <= curPage; i++) { 
+			int start = enService.startPage(keyword, category);
+			int end = enService.endPage(keyword, category);
 			
 			int prev = i-1; 
 			if(prev == 0) prev = start;
@@ -134,13 +130,12 @@ public class HomeController {
 			int next = i+1; 
 			if(end < next) next = end;
 		  	
-		  	if(curPage == i) {
-		  		pageNav.append("<a class=\"first\" href=\""+url+"page="+start+"\">"+start+"<span class=\"hidden\">first</span></a>&nbsp;");
-		  		pageNav.append("<a class=\"prev\" href=\""+url+"page="+prev+"\">"+prev+"<span class=\"hidden\">prev</span></a>&nbsp;");
-		  		pageNav.append("<a class=\"current\" href=\""+url+"page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
-		  		pageNav.append("<a class=\"next\" href=\""+url+"page="+next+"\">"+next+"<span class=\"hidden\">next</span></a>&nbsp;");
-		  		pageNav.append("<a class=\"last\" href=\""+url+"page="+end+"\">"+end+"<span class=\"hidden\">last</span></a>&nbsp;"); 
-		 	} 
+		  		pageNav.append("<a class=\"first\" href=\""+url+"&page="+start+"\"><span class=\"hidden\">first</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"prev\" href=\""+url+"&page="+prev+"\"><span class=\"hidden\">prev</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"current\" href=\""+url+"&page="+i+"\">"+i+"<span class=\"hidden\">현재페이지</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"next\" href=\""+url+"&page="+next+"\"><span class=\"hidden\">next</span></a>&nbsp;");
+		  		pageNav.append("<a class=\"last\" href=\""+url+"&page="+end+"\"><span class=\"hidden\">last</span></a>&nbsp;"); 
+		  		System.out.println("페이지 클릭시 : " + start + prev + i + next + end);
 		 }
 		 
 		model.addAttribute("enList", list);
@@ -178,21 +173,36 @@ public class HomeController {
 		if(nextIdx == 0) { nextTitle = "다음 글이 없습니다."; }
 		else { nextTitle = enService.detailView(nextIdx).getTitle(); }
 		
-		System.out.println(prevTitle + " : 이전타이틀 / 다음 타이틀 : " + nextTitle);
-		
 		model.addAttribute("prevTitle", prevTitle);
 		model.addAttribute("nextTitle", nextTitle);
 			
 		return "board/board_EventNoticeDetailView";
 	}
+	
 	//게시판 - 이벤트, 공지사항 글쓰기
 	@RequestMapping(value = "/enWrite")
 	public String enWrite() {
 		return "board/board_EventNoticeWrite";
 	}
+		
 	//게시판 - 이벤트, 공지사항 수정
 	@RequestMapping(value = "/enModify")
-	public String enModify() {
+	public String enModify(int idx, HttpServletRequest request) {
+		BoardEventNoticeDTO dto = enService.detailView(idx);
+		
+		if(dto.getCategory() == 1) {
+			request.setAttribute("cate1", dto.getCategory());
+			request.setAttribute("cate2", "");
+		} else if(dto.getCategory() == 2) {
+			request.setAttribute("cate1", "");
+			request.setAttribute("cate2", dto.getCategory());
+		}
+		
+		request.setAttribute("idx", idx);
+		request.setAttribute("tit", dto.getTitle());
+		request.setAttribute("con", dto.getContent());
+		request.setAttribute("fileName", dto.getFile_name());
+		
 		return "board/board_EventNoticeModify";
 	}
 	

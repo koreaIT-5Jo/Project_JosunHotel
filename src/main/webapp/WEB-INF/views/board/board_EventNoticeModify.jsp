@@ -5,8 +5,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>EVENT &amp; NOTICE 글쓰기 | 그랜드 조선 호텔</title>
-<!-- 글쓰기 라이브러리 -->
+<title>EVENT &amp; NOTICE 글수정 | 그랜드 조선 호텔</title>
 <script type="text/javascript" src="resources/smarteditor2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="resources/js/board/board_EventNoticeWrite.js"></script>
@@ -16,48 +15,52 @@
 <link rel="stylesheet" href="resources/css/default.css">
 <script>
 	//취소하기
-	function writeCancle() {
-		location.href = '/www/enList';
+	function writeCancle(idx) {
+		var idx = idx;
+		location.href='/www/enDetailView?idx='+idx;
 	}
 	
-	//저장하기
-	function writeSave() {
-		oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);  
-	
+	//글쓰기
+	function writeSave(curPage) {
+		oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);
+		
+		var idx = (Number)($("#idx").val());
+		
 		var cate = 0;
-		if(1 == $("input[name=cateselect]").val()) {
-			cate = 1;
-		} else if(2 == $("input[name=cateselect]").val()) {
-			cate = 2;
+		if(1 == ($("#a1").val())) {
+			cate = (Number)($("#a1").val());
+		} else if(2 == ($("#a2").val())) {
+			cate = (Number)($("#a2").val());
 		}
+		
 		var tit = $("#title").val();
+		
 		var con = document.getElementById("txtContent").value;
+		
 		var fileN = $("#nmFile1").val();
 		if(''!=$("#nmFile1").val()) {
 			fileN = $("#nmFile1").val();
 		} else {
 			fileN = '';
-		}
+		} 
 		
-		var writePostData = { cate : cate, tit : tit, con : con, fileN : fileN }
-	    		
+		var writePostData = { idx : idx, cate : cate, tit : tit, con : con, fileN : fileN }
+		
 		$.ajax({
 			type:'post',
-			url:'/www/eventNotice/writePostAction',
+			url:'/www/eventNotice/modifyPostAction',
 			data:JSON.stringify(writePostData),
 			datatype: 'json',
 			contentType: 'application/json; charset=utf-8',
 			success: function(response) {
 				alert(response.msg);
-				location.href = '/www/enList';
+				location.href = '/www/enDetailView?idx='+idx;
 			},
 			error:function(request, status, error) { 
 				alert("code: " + request.status + "\n" + "massage: " + request.responseText + "\n" + "error: " + error);  
 			}
 		});
 	}
-	
-	
 </script>
 </head>
 <body>
@@ -117,14 +120,27 @@
 		<!-- Start. contents -->
 		<div class="topArea">
 			<div class="topInner">
-				<h2 class="titDep">EVENT & NOTICE</h2>
-				<p class="pageGuide">조선호텔앤리조트 EVENT & NOTICE 게시판 글쓰기 입니다.</p>
+				<h2 class="titDep">News</h2>
+				<p class="pageGuide">조선호텔앤리조트 멤버를 위한 다양한 소식을 만나보세요.</p>
 			</div>	
 		</div>
 			<div class="inner">
 				<div class="contents">
 					<ul class="intList">
 						<li class="intList-address">
+							<div class="intBox">
+								<div class="intWrap">
+									<span class="idx"> 
+										<label for="idx">WRITE NUMBER</label> <span class="essential">*</span>
+									</span>
+									<span class="intInner">
+										<span class="intArea"> 
+											<input type="text" id="idx" name="idx" style="width: 10%; background-color: white; text-align: center;" aria-required="true" value="${idx}" disabled>
+										</span>
+									</span>
+								</div>
+							</div>
+						</li>
 						<li>
 							<div class="intBox">
 								<div class="intWrap">
@@ -132,11 +148,11 @@
 								</div>
 								<div class="intBox">
 									<span class="frm">
-										<input type="radio" id="a1" name="cateselect" value="1">
+										<input type="radio" id="a1" name="cateselect" value="${cate1}">
 										<label for="a1">EVENT</label>
 									</span>
 									<span class="frm">
-										<input type="radio" id="a2" name="cateselect" value="2">
+										<input type="radio" id="a2" name="cateselect" value="${cate2}" checked>
 										<label for="a2">NOTICE</label>
 									</span> 
 								</div>
@@ -151,7 +167,7 @@
 								</div>
 								<div class="intInner">
 									<span class="intArea"> 
-										<input type="text" id="title" name="title" style="width: 100%" aria-required="true" placeholder="제목을 입력해주세요." value="${smartediortVO.bo_title }">
+										<input type="text" id="title" name="title" style="width: 100%" aria-required="true" placeholder="제목을 입력해주세요." value="${tit}">
 									</span>
 								</div>
 							</div>
@@ -163,26 +179,28 @@
 								</div>
 								<div class="intInner">
 									<span class="intArea">
-										<textarea id="txtContent" rows="10" cols="100" name="content" class="noLine" style="min-height:300px; width:100%;" placeholder="내용을 입력해주세요.">${smarteditorVO.bo_content }</textarea>
-										<script id="smartEditor" type="text/javascript">
-											var oEditors = [];
-		
-											nhn.husky.EZCreator.createInIFrame({
-											    oAppRef: oEditors,
-											    elPlaceHolder: "txtContent",  									//textarea ID 입력
-											    sSkinURI: "resources/smarteditor2/SmartEditor2Skin.html",		//martEditor2Skin.html 경로 입력
-											    fCreator: "createSEditor2",
-											    htParams : { 
-											    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
-											        bUseToolbar : true, 
-													// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
-													bUseVerticalResizer : false, 
-													// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
-													bUseModeChanger : false 
-											    }
-											});
-										</script>
+										<textarea id="txtContent" rows="10" cols="100" name="content" class="noLine" style="min-height:300px; width:100%;" placeholder="내용을 입력해주세요." value=${smarteditorVO.bo_content }>
+										${con}
+										</textarea>
 									</span>
+									<script id="smartEditor" type="text/javascript">
+										var oEditors = [];
+	
+										nhn.husky.EZCreator.createInIFrame({
+										    oAppRef: oEditors,
+										    elPlaceHolder: "txtContent",  									//textarea ID 입력
+										    sSkinURI: "resources/smarteditor2/SmartEditor2Skin.html",		//martEditor2Skin.html 경로 입력
+										    fCreator: "createSEditor2",
+										    htParams : { 
+										    	// 툴바 사용 여부 (true:사용/ false:사용하지 않음) 
+										        bUseToolbar : true, 
+												// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음) 
+												bUseVerticalResizer : false, 
+												// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음) 
+												bUseModeChanger : false 
+										    }
+										});
+									</script>
 								</div>
 							</div>
 						</li>
@@ -195,7 +213,7 @@
 									<!-- 스크립트 위임 적용 commonJs.setFileUpload('.fileUpload'); -->
 									<div class="fileUpload">
 										<div class="intDel">
-											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px">
+											<input type="text" id="nmFile1" class="fileName" name="fileName" style="width: 554px" value="${fileName}">
 											<!-- btnDel -->
 											<button type="button" class="btnDel">삭제</button>
 											<!-- //btnDel -->
@@ -210,8 +228,8 @@
 					</ul>
 					<div>
 						<div class="btnArea">
-							<a class="btnL btnSC cancel" href="#none" onclick="writeCancle();">취소</a> 
-							<a class="btnL btnSC active" id="se2_sample" href="#none" onclick="writeSave();">저장</a>
+							<a class="btnL btnSC cancel" href="#none" onclick="writeCancle(${idx});">취소</a> 
+							<a class="btnL btnSC active" href="#none" onclick="writeSave(${idx})">저장</a>
 							<div style="clear:both;"></div> 
 						</div>
 					</div>

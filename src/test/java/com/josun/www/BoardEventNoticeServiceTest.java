@@ -20,7 +20,7 @@ public class BoardEventNoticeServiceTest {
 	
 	@Test
 	public void testEnList() throws Exception {
-		List <BoardEventNoticeDTO> list = service.enList("%%", "%%", 3); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
+		List <BoardEventNoticeDTO> list = service.enList("%%", "%%", 2); //현재페이지가 페이징 수보다 크면 아무것도 출력안됌.
 		for(BoardEventNoticeDTO dto : list) {
 			System.out.println(dto.getIdx() + " / " + dto.getCategory() + " / " + dto.getTitle() + " / " + dto.getContent() + " / " + dto.getFile_name() + " / " + dto.getHitCount() + " / " + dto.getWrite_date() );
 		}
@@ -73,6 +73,11 @@ public class BoardEventNoticeServiceTest {
 	
 	@Test
 	public void testWritePost() throws Exception {
-		System.out.println(service.writePost(2, "서비스테스트", "서비스테스트성공", "null")); //true
+		System.out.println(service.writePost(2, "서비스테스트", "서비스테스트성공", null)); //true
+	}
+	
+	@Test
+	public void testUpdatePost() throws Exception {
+		System.out.println(service.updatePost(1, "게시글제목", "게시글내용", null, 3));
 	}
 }

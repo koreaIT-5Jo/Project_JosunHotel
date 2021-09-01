@@ -28,4 +28,7 @@ public interface BoardEventNoticeDAO {
 	
 	//글쓰기
 	int postWrite(int category, String title, String content, String fileName);
+	
+	//글수정
+	int postUpdate(int category, String title, String content, String fileName, int idx);
 }
