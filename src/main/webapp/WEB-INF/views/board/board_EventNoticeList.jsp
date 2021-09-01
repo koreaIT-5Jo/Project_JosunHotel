@@ -115,32 +115,6 @@
 					</colgroup>
 					<thead>
 						<tr>
-<<<<<<< HEAD
-							<td><c:out value="${eventNotice.category}" /></td>
-							<td id = "td" class="tleft"><a href=""><c:out value="${eventNotice.title}" /></a></td>
-							<!-- <td>&#x2714;</td> -->
-							<td><c:out value="${eventNotice.fileName}"/></td>
-							<td class="date"><fmt:formatDate value="${eventNotice.writeDate}" pattern="yyMMdd"/></td>
-						</tr>					
-					</c:forEach>
-				</tbody>
-			</table>
-			<div class="pagination">
-				
-			</div> 
-<%-- 			<div class="btnArea">
- 				<%if(id.equals("admin")) {%>
-					<a class="btnSC writeL" onclick="enWrite();">글쓰기</a>
-				<%} else {%>
-				<%} %> 
-			</div> --%>
-		</div>
-		<!-- Start. footer -->
-		<div style="background: #000;">
-			<div id="footer">
-				<div class="foot-logo">
-					<img src="resources/img/01.main/bg_logo_footer.png" alt="그랜드 조선 제주">
-=======
 							<th scope="col">카테고리</th>
 							<th scope="col">제목</th>
 							<th scope="col">조회수</th>
@@ -178,7 +152,6 @@
 					<%}else{ %>
 						<div></div>
 					<%} %>
->>>>>>> origin/chiWorld
 				</div>
 			</div>
 			<!-- Start. footer -->

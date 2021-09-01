@@ -227,7 +227,7 @@
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
 								<li><a href="qna">Q&amp;A</a></li>
-								<li><a href="reviewboard?command=reviewmain">REVIEW</a></li>
+								<li><a href="review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -236,14 +236,17 @@
 			<!-- //allMenu -->
 			<div class="gnbUtil">
 				<ul>
-					<%if(id.equals("admin")){ %>
+					<%if(session.getAttribute("id")!=null){
+						if(id.equals("admin")){
+					%>
 					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<li><a href="adminMember">관리자페이지</a></li>
+					<li><a href="admin">관리자페이지</a></li>
 					<%}else{ %>
 					<li><a href="logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
-					<%} %>
+					<%} 
+						}%>
 				</ul>
 			</div>
 			<!-- //gnbUtil -->

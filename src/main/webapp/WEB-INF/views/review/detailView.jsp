@@ -61,7 +61,7 @@
 								</li>
 								<li>CUSTOMER SERVICE
 									<ul class="menuDepth02">
-										<li><a href="qna">Q&amp;A</a></li>
+										<li><a href="/www/qna">Q&amp;A</a></li>
 										<li><a href="/www/review/main">REVIEW</a></li>
 									</ul>
 								</li>
@@ -77,7 +77,7 @@
 							<%}else if(id.equals("admin")){ %>
 							<li><a href="/www/logout">로그아웃</a></li>
 							<li><a href="/www/reserveConfirm">마이페이지</a></li>
-							<li><a href="/www/adminMember">관리자페이지</a></li>
+							<li><a href="/www/admin">관리자페이지</a></li>
 							<%}else{ %>
 							<li><a href="/www/logout">로그아웃</a></li>
 							<li><a href="/www/reserveConfirm">마이페이지</a></li>

@@ -97,26 +97,10 @@ public class HomeController {
 	//게시판 - 이벤트, 공지사항 목록
 	@RequestMapping(value = "/enList")
 	public String enList(Model model, String page, String category, String keyword) {
-
 		int curPage = 1;
 		if(page != null) curPage = Integer.parseInt(page);
 		System.out.println("현재페이지 : " + curPage);
 		
-<<<<<<< HEAD
-		if((category == null && content == null) || (category == null && content.equals(""))) {
-			content = "%%";
-			category = "%%";
-		}else if(category != null || content.equals("") || content != null) {
-			if(category.equals("0")) {
-				category = "%%";
-			}else {
-				category = "%"+category+"%";
-			}
-			content = "%"+content+"%";
-		}
-		
-		System.out.println("93번째 줄 확인 : 키워드 : " + content +" /카테고리: " + category + " /페이지 : " + page);
-=======
 		//검색을 하지 않았을 때 카테고리와 검색어 셋팅
 		if((category == null && keyword == null) || (category == null && keyword.equals(""))) {
 	         keyword = "%%";
@@ -124,13 +108,11 @@ public class HomeController {
 	    //검색을 했을 때
 		} else if (category != null || keyword.equals("") || keyword != null) {
 			if(category.equals("0")) { category = "%%"; }
-								else { category = "%"+ category +"%"; }
+			else { category = "%"+ category +"%"; }
 			keyword = "%"+keyword+"%";
 		}
->>>>>>> origin/chiWorld
 		
 		int totalPage = enService.totalCountSize(keyword, category);
-		
 		List<BoardEventNoticeDTO> list = enService.enList(keyword, category, curPage);
 		for(BoardEventNoticeDTO dto : list) {
 			if(dto.getCategory() == 1) { dto.setCateName("이벤트");}
@@ -171,7 +153,6 @@ public class HomeController {
 		 
 		model.addAttribute("enList", list);
 		model.addAttribute("pageNav", pageNav.toString());
-		
 		return "board/board_EventNoticeList";
 	}
 	

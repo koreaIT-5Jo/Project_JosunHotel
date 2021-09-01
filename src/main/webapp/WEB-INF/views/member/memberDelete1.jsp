@@ -41,7 +41,7 @@
 						<li>CUSTOMER SERVICE
 							<ul class="menuDepth02">
 								<li><a href="/www/qna">Q&amp;A</a></li>
-								<li><a href="/www/review/main">REVIEW</a></li>
+								<li><a href="review/main">REVIEW</a></li>
 							</ul>
 						</li>
 					</ul>
@@ -51,18 +51,12 @@
 			<div class="gnbUtil">
 				<ul>
 					<%if(id.equals("admin")){ %>
-<<<<<<< HEAD
 					<li><a href="Logout">로그아웃</a></li>
 					<li><a href="reserveConfirm">마이페이지</a></li>
 					<li><a href="admin">관리자페이지</a></li>
-=======
-					<li><a href="/www/Logout">로그아웃</a></li>
-					<li><a href="/www/reserveConfirm">마이페이지</a></li>
-					<li><a href="/www/adminMember">관리자페이지</a></li>
->>>>>>> origin/chiWorld
 					<%}else{ %>
-					<li><a href="/www/Logout">로그아웃</a></li>
-					<li><a href="/www/reserveConfirm">마이페이지</a></li>
+					<li><a href="logout">로그아웃</a></li>
+					<li><a href="reserveConfirm">마이페이지</a></li>
 					<%} %>
 				</ul>
 			</div>

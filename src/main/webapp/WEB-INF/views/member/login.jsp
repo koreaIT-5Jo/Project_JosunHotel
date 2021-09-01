@@ -29,15 +29,6 @@ if(request.getAttribute("msg") != null){
 <%}%>
 </head>
 <body>
-<%
-	if(session.getAttribute("idKey")!=null){
-		PrintWriter script = response.getWriter();
-		script.println("<script>");
-		script.println("alert('이미 로그인됨')");
-		script.println("location.href = 'main.jsp'");
-		script.println("</script>");
-	}
-%>
 	<div class="wrapper">
 		<div class="header">
 			<div class="headArea">
@@ -65,7 +56,7 @@ if(request.getAttribute("msg") != null){
 							<li>CUSTOMER SERVICE
 								<ul class="menuDepth02">
 									<li><a href="qna">Q&amp;A</a></li>
-									<li><a href="reviewboard">REVIEW</a></li>
+									<li><a href="review/main">REVIEW</a></li>
 								</ul>
 							</li>
 						</ul>
