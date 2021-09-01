@@ -45,7 +45,7 @@
 
 👍 스토리보드
 
-https://docs.google.com/presentation/d/197nvtOZbm2csEU8T9lEj4BHzo5-ivte4qIOqjfjyTkc/edit?usp=sharing
+https://drive.google.com/file/d/1tfgpbU6LfRlL10xzFwKeywQMoe4mDPc4/view?usp=sharing
 
 
 
