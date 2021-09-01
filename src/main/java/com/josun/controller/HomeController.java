@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,14 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.josun.dto.BoardQnaCommentDTO;
 import com.josun.dto.BoardQnaDTO;
 import com.josun.dto.MemberDTO;
+import com.josun.dto.ReservationDTO;
 import com.josun.service.BoardQnaCommentService;
 import com.josun.service.BoardQnaService;
 import com.josun.service.MemberService;
-
-import com.josun.dto.ReservationDTO;
-import com.josun.dto.RoomDTO;
-import com.josun.service.RoomService;
-import com.josun.util.DateUtil;
 
 @Controller
 public class HomeController {
@@ -139,6 +133,33 @@ public class HomeController {
 			return "member/login";
 		}
 	}
+	
+	//로그인 액션 로그인 하기전 화면으로 가기위한 액션
+	@RequestMapping(value = "/loginActionUrl")
+	public String loginActionUrl(HttpServletRequest request,MemberDTO memberDto,ReservationDTO reservationDto) {
+		List<MemberDTO> list = memberservice.login(memberDto.getId(), memberDto.getPw());		
+		HttpSession session = request.getSession();
+		String url = (String)request.getParameter("nextUrl");
+		if(list.size() > 0) {
+			session.setAttribute("id", memberDto.getId());
+			for(MemberDTO dto : list) {
+				session.setAttribute("name", dto.getName());
+				session.setAttribute("addr", dto.getAddress());
+				session.setAttribute("phone", dto.getPhone());
+				session.setAttribute("email", dto.getEmail());
+			}
+			if(url.equals("reservation/step1Go")) {
+				request.setAttribute("reservationDto", reservationDto);
+			}
+			return url;
+		}else {
+			request.setAttribute("msg", "입력된 정보가 없습니다. 아이디 또는 비밀번호를 확인해주세요.");
+			return "member/login";
+		}
+		
+	}
+	
+	
 	//로그아웃
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {

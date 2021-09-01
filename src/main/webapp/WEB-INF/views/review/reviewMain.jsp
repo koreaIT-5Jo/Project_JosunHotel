@@ -168,7 +168,7 @@
 		</div>
 		<!-- End. header -->
 	<form name="loginForm" id="loginForm" method="post" action="">
-		<input type="hidden" name="url" id="nextURL" value="review/main">
+		<input type="hidden" name="nextURL" id="nextURL" value="review/mainGo">
 	</form>
 	<form id="reviewForm" name="reviewForm" method="post">
 	<input type="hidden" id="page" name="currentPage" value="${pageVo.getCurrentPage() }">

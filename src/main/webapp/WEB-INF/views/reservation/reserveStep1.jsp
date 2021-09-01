@@ -280,7 +280,7 @@ function roomReserveBtn(roomNum){
 		</div>
 		<!-- End. header -->
 		<form action="" name="step1Form" id="step1Form" method="post">
-			<input type="hidden" name="nextURL" id="nextURL" value="reservation/step1">
+			<input type="hidden" name="nextURL" id="nextURL" value="reservation/step1Go">
 			<input type="hidden" name="startDate" id="startDate" value="${reservationDto.startDate}">
 			<input type="hidden" name="endDate" id="endDate" value="${reservationDto.endDate }">
 			<input type="hidden" name="adultCnt" id="adultCnt" value="${reservationDto.adultCnt}">

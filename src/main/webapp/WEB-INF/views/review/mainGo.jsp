@@ -6,7 +6,7 @@
 </head>
 <body>
 	<script>
-		location.href="main";
+		location.href="/www/review/main";
 	</script>
 </body>
 </html>

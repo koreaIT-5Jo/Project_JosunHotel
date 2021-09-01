@@ -119,6 +119,14 @@ if(request.getAttribute("msg") != null){
 					return false;
 				}
 				
+				/* 추가 21.09.01  로그인 하기전 화면으로 가기위한 기능 추가*/
+				nextUrl = $('#nextUrl').val();
+				if(nextUrl != ''){
+					$('#loginform').attr("action","loginActionUrl");
+					$('#loginform').submit();
+				}
+				/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
+				
 				$('#loginform').submit();
 			}
 		</script>
