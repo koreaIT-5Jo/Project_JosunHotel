@@ -7,12 +7,14 @@
   저희 팀은 '지난 일상의 그리움'과 '아쉬움' 그리고 언젠가 '코로나가 꼭 종식되기를 바라는 마음'으로 
   조선호텔리조트 사이트를 타겟 사이트로 선정하여 그 기능을 연구해 구현하였습니다.
 - 개발환경 : Eclipse, Windows 10
-- 개발언어 및 프레임워크 : Java, Servlet&JSP, Oracle 11gR2
+- 개발언어 및 프레임워크 : Java, spring, Servlet&JSP, Oracle 11gR2
 
 👍 수행 기간
 
 
-2021.05.10 ~ 2021.07.26
+- Servlet&JSP : 2021.05.10 ~ 2021.07.26
+
+- Spring : 2021.08.23 ~ 2021.09.01
 
 👍 참여자
 
@@ -29,7 +31,7 @@
 - 이벤트&공지사항 게시판
 - 고객 리뷰 게시판
 - Q&A 게시판
-- 관리자 페이지(회원/예약/Q&A관리)
+- 관리자 페이지(대시보드/회원/예약/Q&A관리)
 
 
 
@@ -43,7 +45,7 @@
 
 👍 스토리보드
 
-https://docs.google.com/presentation/d/197nvtOZbm2csEU8T9lEj4BHzo5-ivte4qIOqjfjyTkc/edit?usp=sharing
+https://drive.google.com/file/d/1tfgpbU6LfRlL10xzFwKeywQMoe4mDPc4/view?usp=sharing
 
 
 
