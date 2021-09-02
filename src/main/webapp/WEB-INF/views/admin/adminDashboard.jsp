@@ -275,7 +275,7 @@
 				</div>
 				<div class="sec">
 					<div class="visitChartWarp box">
-			            <canvas id="visitChart" style="width:100%;height:100%;"></canvas>
+			            <canvas id="visitChart" style="width:100%; height:100%;"></canvas>
 					</div>
 					<div class="salesChartWarp box">
 				    	<canvas id="salesChart" style="width:100%; height:100%;"></canvas>
