@@ -204,9 +204,7 @@ public class HomeController {
 		
 		if(dto.getCategory() == 1) {
 			request.setAttribute("cate1", dto.getCategory());
-			request.setAttribute("cate2", "");
 		} else if(dto.getCategory() == 2) {
-			request.setAttribute("cate1", "");
 			request.setAttribute("cate2", dto.getCategory());
 		}
 		

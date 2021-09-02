@@ -20,29 +20,24 @@
 		location.href='/www/enDetailView?idx='+idx;
 	}
 	
-	//글쓰기
+	//글수정
 	function writeSave(curPage) {
 		oEditors[0].exec("UPDATE_CONTENTS_FIELD", []);
 		
 		var idx = (Number)($("#idx").val());
 		
-		var cate = 0;
-		if(1 == ($("#a1").val())) {
-			cate = (Number)($("#a1").val());
-		} else if(2 == ($("#a2").val())) {
-			cate = (Number)($("#a2").val());
-		}
+		var cate = $('input[name=cateselect]:checked').val();
+		
+		if(cate == 1) { cate = 1; } 
+		else if(cate == 2) { cate = 2; }
 		
 		var tit = $("#title").val();
 		
 		var con = document.getElementById("txtContent").value;
 		
 		var fileN = $("#nmFile1").val();
-		if(''!=$("#nmFile1").val()) {
-			fileN = $("#nmFile1").val();
-		} else {
-			fileN = '';
-		} 
+		if(''!=$("#nmFile1").val()) { fileN = $("#nmFile1").val(); } 
+		else { fileN = ''; } 
 		
 		var writePostData = { idx : idx, cate : cate, tit : tit, con : con, fileN : fileN }
 		
@@ -147,14 +142,25 @@
 									<span class="tit"><label for="category">CATEGORY</label><span class="essential">*</span></span>
 								</div>
 								<div class="intBox">
-									<span class="frm">
-										<input type="radio" id="a1" name="cateselect" value="${cate1}">
-										<label for="a1">EVENT</label>
-									</span>
-									<span class="frm">
-										<input type="radio" id="a2" name="cateselect" value="${cate2}" checked>
-										<label for="a2">NOTICE</label>
-									</span> 
+										<%	if(request.getAttribute("cate1") != null) {%>
+										<span class="frm">
+											<input type="radio" id="a1" name="cateselect" value="1" checked>
+											<label for="a1">EVENT</label>
+										</span>
+										<span class="frm">
+											<input type="radio" id="a2" name="cateselect" value="2">
+											<label for="a2">NOTICE</label>
+										</span> 
+										<%	} else if(request.getAttribute("cate2") != null) {%>
+										<span class="frm">
+											<input type="radio" id="a1" name="cateselect" value="1">
+											<label for="a1">EVENT</label>
+										</span>
+										<span class="frm">
+											<input type="radio" id="a2" name="cateselect" value="2" checked>
+											<label for="a2">NOTICE</label>
+										</span> 
+										<%	} %>
 								</div>
 							</div>
 						</li>

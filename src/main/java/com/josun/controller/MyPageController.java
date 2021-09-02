@@ -63,15 +63,16 @@ public class MyPageController {
 		
 		System.out.println("contorller로 전송 된 값 확인 " + loginPw + curPw + newPw);
 		
-		int check = 0;
 		Map<String, Object>map = new HashMap<String, Object>();
+		boolean check = false;
+		String msg = "";
 		
 		if(loginPw.equals(curPw)) {
-			check = service.updatePw(loginId, newPw); //제대로 업데이트 되면 1
-			System.out.println("check 값 : " + check);
+			int updatePw = service.updatePw(loginId, newPw); //제대로 업데이트 되면 1
+			if(updatePw == 1) { check= true; }
 			session.invalidate();
 		} else {
-			check = 0;
+			check = false;
 		}
 		
 		map.put("result", check);
